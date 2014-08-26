@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="head">
-		<title>Items</title>
+		<title>Rooms</title>
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
@@ -13,14 +13,19 @@
 			<!-- add/edit -->
 			<div class="col-sm-4">
 				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Item
-						<span class="pull-right"><a href="/secure/item">Add New</a></span>
+					<div class="panel-heading">Add or Update Room
+						<span class="pull-right"><a href="/secure/room">Add New</a></span>
 					</div>
 					<div class="panel-body">
-						<form role="form" method="post" action="/secure/item">
+						<form role="form" method="post" action="/secure/room">
+
+							<div class="form-group">
+								<input type="text" id="desc" name="desc" class="form-control"
+									   placeholder="Description" required="true" />
+							</div>
 
 
-							<input type="hidden" name="id" value="${(item.id)!}"/>
+							<input type="hidden" name="id" value="${(room.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
 						</form>
@@ -31,30 +36,28 @@
 			<!-- view all -->
 			<div class="col-sm-8">
 				<div class="panel panel-default">
-					<div class="panel-heading">Current Items</div>
+					<div class="panel-heading">Current Rooms</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
 
-										<th>Material</th>
-										<th>Count</th>
+										<th>Description</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<#list items as item>
+									<#list rooms as room>
 										<tr>
 
-											<td>${(item.mid.desc)!}</td>
-											<td>${(item.count)!}</td>
+											<td>${(room.desc)!}</td>
 
 											<td>
-												<a href="/secure/item/${(item.id)!}" class="btn btn-xs btn-primary">
+												<a href="/secure/room/${(room.id)!}" class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(item.id)!}"
+												<a href="#" class="btn btn-danger btn-xs" data-id="${(room.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>
@@ -79,15 +82,15 @@
 						<h4 class="modal-title">Are you sure?</h4>
 					</div>
 					<div class="modal-body">
-						Permantly remove item? This action cannot be undone.
+						Permantly remove room? This action cannot be undone.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="delete">
-							<form role="form" method="post" action="/secure/item/{id}">
+							<form role="form" method="post" action="/secure/room/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Item</button>
+								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Room</button>
 							</form>
 						</span>
 

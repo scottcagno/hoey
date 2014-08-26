@@ -17,28 +17,28 @@ import org.springframework.stereotype.Service
 @Service(value = "roomService")
 class RoomService {
 
-    @Autowired
-    RoomRepository repo
+	@Autowired
+	RoomRepository repo
 
-    List<Room> findAll() {
-        repo.findAll()
-    }
+	List<Room> findAll() {
+		repo.findAll()
+	}
 
-    Page<Room> findAll(int page, int size, String... fields) {
-        repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
-    }
+	Page<Room> findAll(int page, int size, String... fields) {
+		repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
+	}
 
-    Room findOne(Long id) {
-        repo.findOne id
-    }
+	Room findOne(Long id) {
+		repo.findOne id
+	}
 
-    Room save(Room room) {
-        repo.save room
-    }
+	Room save(Room room) {
+		repo.save room
+	}
 
-    def delete(Long id) {
-        repo.delete id
-    }
+	def delete(Long id) {
+		repo.delete id
+	}
 
 }
 

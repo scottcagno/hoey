@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head id="head">
-    <title>Template</title>
-    <#include "../stubs/header.ftl">
-</head>
-    <body id="body">
+	<head id="head">
+		<title>Template</title>
+		<#include "../stubs/header.ftl"/>
+	</head>
+	<body id="body">
 
-        <#include "../stubs/navbar.ftl">
+		<#include "../stubs/navbar.ftl"/>
 
-        <!-- content -->
-        <div class="jumbotron">
-            <div class="container">
+		<!-- content -->
+		<div class="jumbotron">
+			<div class="container">
                 <span class="pull-left col-sm-8">
                     <img class="img-responsive logo" src="/static/img/logo.png"/>
                     <p class="text-muted">Custom engineered software solutions built specifically for you.</p>
@@ -21,13 +21,13 @@
                     more efficiently, to avoid possible errors or pitfalls and ultimatly to outperform your
                     competion are what enable your business to succeed.
                 </span>
-            </div>
-        </div>
-        <!-- content -->
+			</div>
+		</div>
+		<!-- content -->
 
-        <#include "../stubs/footer.ftl">
+		<#include "../stubs/footer.ftl"/>
 
-        <#include "../stubs/scripts.ftl">
+		<#include "../stubs/scripts.ftl"/>
 
-    </body>
+	</body>
 </html>

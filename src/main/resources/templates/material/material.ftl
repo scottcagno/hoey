@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="head">
-		<title>Items</title>
+		<title>Materials</title>
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
@@ -13,14 +13,31 @@
 			<!-- add/edit -->
 			<div class="col-sm-4">
 				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Item
-						<span class="pull-right"><a href="/secure/item">Add New</a></span>
+					<div class="panel-heading">Add or Update Material
+						<span class="pull-right"><a href="/secure/material">Add New</a></span>
 					</div>
 					<div class="panel-body">
-						<form role="form" method="post" action="/secure/item">
+						<form role="form" method="post" action="/secure/material">
 
+							<div class="form-group">
+								<input type="text" id="cat" name="cat" class="form-control"
+									   placeholder="Category" required="true" />
+							</div>
+							<div class="form-group">
+								<input type="text" id="desc" name="desc" class="form-control"
+									   placeholder="Description" required="true" />
+							</div>
+							<div class="form-group">
+								<input type="number" id="cost" name="cost" class="form-control"
+									   placeholder="Cost" required="true" />
+							</div>
+							<div class="form-group">
+								<input type="number" id="price" name="price" class="form-control"
+									   placeholder="Price" required="true" />
+							</div>
+							
 
-							<input type="hidden" name="id" value="${(item.id)!}"/>
+							<input type="hidden" name="id" value="${(material.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
 						</form>
@@ -31,30 +48,35 @@
 			<!-- view all -->
 			<div class="col-sm-8">
 				<div class="panel panel-default">
-					<div class="panel-heading">Current Items</div>
+					<div class="panel-heading">Current Materials</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
 
-										<th>Material</th>
-										<th>Count</th>
+										<th>Category</th>
+										<th>Description</th>
+										<th>Cost</th>
+										<th>Price</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<#list items as item>
+									<#list materials as material>
 										<tr>
 
-											<td>${(item.mid.desc)!}</td>
-											<td>${(item.count)!}</td>
+											<td>${(material.cat)!}</td>
+											<td>${(material.desc)!}</td>
+											<td>${(material.cost)!}</td>
+											<td>${(material.price)!}</td>
 
 											<td>
-												<a href="/secure/item/${(item.id)!}" class="btn btn-xs btn-primary">
+												<a href="/secure/material/${(material.id)!}"
+												   class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(item.id)!}"
+												<a href="#" class="btn btn-danger btn-xs" data-id="${(material.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>
@@ -79,15 +101,15 @@
 						<h4 class="modal-title">Are you sure?</h4>
 					</div>
 					<div class="modal-body">
-						Permantly remove item? This action cannot be undone.
+						Permantly remove material? This action cannot be undone.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="delete">
-							<form role="form" method="post" action="/secure/item/{id}">
+							<form role="form" method="post" action="/secure/material/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Item</button>
+								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Material</button>
 							</form>
 						</span>
 

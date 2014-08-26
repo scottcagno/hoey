@@ -16,13 +16,13 @@ import javax.persistence.Table
 @Table(name = "user")
 class User {
 
-    @Id
-    @GeneratedValue
-    Long id
-    String name, email, username, password, role = "ROLE_USER"
-    Long creation, lastSeen
-    Short active = 1
+	@Id
+	@GeneratedValue
+	Long id
+	String name, email, username, password, role = "ROLE_USER"
+	Long creation, lastSeen
+	Short active = 1
 
-    // 0% (no markup by default)
-    Float markup = 1.0
+	// 0% (no markup by default)
+	float markup = 1.00
 }

@@ -21,43 +21,43 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 @RequestMapping(value = "/secure/user")
 class UserController {
 
-    @Autowired
-    UserService userService
+	@Autowired
+	UserService userService
 
-    @RequestMapping(method = RequestMethod.GET)
-    String viewAll(Model model) {
-        model.addAttribute "users", userService.findAll()
-        "user/user"
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	String viewAll(Model model) {
+		model.addAttribute "users", userService.findAll()
+		"user/user"
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    String addOrEdit(User user, RedirectAttributes attr) {
-        if(userService.canUpdate(user.id, user.username)) {
-            if(user.id == null || user.password[0] != '$')
-                user.password = new BCryptPasswordEncoder().encode(user.password)
-            userService.save user
-            attr.addFlashAttribute "alertSuccess", "Successfully saved user ${user.name}"
-            return "redirect:/secure/user/${user.id}"
-        }
-        attr.addFlashAttribute "alertError", "Unable to save user ${user.name}"
-        "redirect:/secure/user"
-    }
+	@RequestMapping(method = RequestMethod.POST)
+	String addOrEdit(User user, RedirectAttributes attr) {
+		if(userService.canUpdate(user.id, user.username)) {
+			if(user.id == null || user.password[0] != '$')
+				user.password = new BCryptPasswordEncoder().encode(user.password)
+			userService.save user
+			attr.addFlashAttribute "alertSuccess", "Successfully saved user ${user.name}"
+			return "redirect:/secure/user/${user.id}"
+		}
+		attr.addFlashAttribute "alertError", "Unable to save user ${user.name}"
+		"redirect:/secure/user"
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    String view(@PathVariable Long id, Model model, @RequestParam(required = false) Boolean active) {
-        def user = userService.findOne id
-        if(active != null) {
-            user.active = (active) ? 1 as short : 0 as short
-            userService.save user
-        }
-        model.addAllAttributes([user: user, users: userService.findAll()])
-        "user/user"
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	String view(@PathVariable Long id, Model model, @RequestParam(required = false) Boolean active) {
+		def user = userService.findOne id
+		if(active != null) {
+			user.active = (active) ? 1 as short : 0 as short
+			userService.save user
+		}
+		model.addAllAttributes([user: user, users: userService.findAll()])
+		"user/user"
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    String delete(@PathVariable Long id) {
-        userService.delete id
-        "redirect:/secure/user"
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	String delete(@PathVariable Long id) {
+		userService.delete id
+		"redirect:/secure/user"
+	}
 
 }

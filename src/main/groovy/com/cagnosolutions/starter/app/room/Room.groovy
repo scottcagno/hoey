@@ -5,6 +5,7 @@ import com.cagnosolutions.starter.app.item.Item
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.JoinColumn
 import javax.persistence.OneToMany
 
 /**
@@ -15,10 +16,11 @@ import javax.persistence.OneToMany
 @Entity
 class Room {
 
-    @Id
-    @GeneratedValue
-    Long id
-    String desc, total
-    @OneToMany
-    Item items
+	@Id
+	@GeneratedValue
+	Long id
+	String name, total
+	@OneToMany
+	@JoinColumn(name = "room_id")
+	List<Item> items
 }

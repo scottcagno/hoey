@@ -20,38 +20,38 @@ import org.springframework.stereotype.Service
 @Service(value = "userService")
 class UserService {
 
-    @Autowired
-    UserRepository repo
+	@Autowired
+	UserRepository repo
 
-    List<User> findAll() {
-        repo.findAll()
-    }
+	List<User> findAll() {
+		repo.findAll()
+	}
 
-    Page<User> findAll(int page, int size, String... fields) {
-        repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
-    }
+	Page<User> findAll(int page, int size, String... fields) {
+		repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
+	}
 
-    boolean canUpdate(Long id, String username) {
-        (repo.canUpdate(id, username) == 0 || id == null)
-    }
+	boolean canUpdate(Long id, String username) {
+		(repo.canUpdate(id, username) == 0 || id == null)
+	}
 
-    User findOne(Long id) {
-        repo.findOne id
-    }
+	User findOne(Long id) {
+		repo.findOne id
+	}
 
-    User findOne(String username) {
-        repo.findOne username
-    }
+	User findOne(String username) {
+		repo.findOne username
+	}
 
-    User save(User user) {
-        if(user.id == null)
-            user.creation = System.currentTimeMillis()
-        repo.save user
-    }
+	User save(User user) {
+		if(user.id == null)
+			user.creation = System.currentTimeMillis()
+		repo.save user
+	}
 
-    def delete(Long id) {
-        repo.delete id
-    }
+	def delete(Long id) {
+		repo.delete id
+	}
 
 }
 
@@ -59,9 +59,9 @@ class UserService {
 @Repository
 interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT COUNT(u.id) FROM User u WHERE u.id<>:id AND u.username=:username")
-    int canUpdate(@Param("id") Long id, @Param("username") String username)
+	@Query("SELECT COUNT(u.id) FROM User u WHERE u.id<>:id AND u.username=:username")
+	int canUpdate(@Param("id") Long id, @Param("username") String username)
 
-    @Query("SELECT u FROM User u WHERE u.username=:username")
-    User findOne(@Param("username") String username)
+	@Query("SELECT u FROM User u WHERE u.username=:username")
+	User findOne(@Param("username") String username)
 }

@@ -18,28 +18,28 @@ import org.springframework.stereotype.Service
 @Service(value = "jobService")
 class JobService {
 
-    @Autowired
-    JobRepository repo
+	@Autowired
+	JobRepository repo
 
-    List<Job> findAll() {
-        repo.findAll()
-    }
+	List<Job> findAll() {
+		repo.findAll()
+	}
 
-    Page<Job> findAll(int page, int size, String... fields) {
-        repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
-    }
+	Page<Job> findAll(int page, int size, String... fields) {
+		repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
+	}
 
-    Job findOne(Long id) {
-        repo.findOne id
-    }
+	Job findOne(Long id) {
+		repo.findOne id
+	}
 
-    Job save(Job job) {
-        repo.save job
-    }
+	Job save(Job job) {
+		repo.save job
+	}
 
-    def delete(Long id) {
-        repo.delete id
-    }
+	def delete(Long id) {
+		repo.delete id
+	}
 
 }
 

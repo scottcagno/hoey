@@ -17,32 +17,32 @@ import org.springframework.web.bind.annotation.RequestMethod
 @RequestMapping(value = "/secure/item")
 class ItemController {
 
-    @Autowired
-    ItemService itemService
+	@Autowired
+	ItemService itemService
 
-    @RequestMapping(method = RequestMethod.GET)
-    String viewAll(Model model) {
-        model.addAttribute "items", itemService.findAll()
-        "item/item"
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	String viewAll(Model model) {
+		model.addAttribute "items", itemService.findAll()
+		"item/item"
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    String addOrEdit(Item item) {
-        // TODO: add guts to add or edit
-        "redirect:/secure/item"
-    }
+	@RequestMapping(method = RequestMethod.POST)
+	String addOrEdit(Item item) {
+		// TODO: add guts to add or edit
+		"redirect:/secure/item"
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    String view(@PathVariable Long id, Model model) {
-        def item = itemService.findOne id
-        model.addAllAttributes([item: item, items: itemService.findAll()])
-        "item/item"
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	String view(@PathVariable Long id, Model model) {
+		def item = itemService.findOne id
+		model.addAllAttributes([item: item, items: itemService.findAll()])
+		"item/item"
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    String delete(@PathVariable Long id) {
-        itemService.delete id
-        "redirect:/secure/item"
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	String delete(@PathVariable Long id) {
+		itemService.delete id
+		"redirect:/secure/item"
+	}
 
 }

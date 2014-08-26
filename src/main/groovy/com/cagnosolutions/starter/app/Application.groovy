@@ -27,17 +27,17 @@ import javax.sql.DataSource
 @EnableJpaRepositories
 @EnableAutoConfiguration
 class Application {
-    static void main(String... args) {
-        SpringApplication.run Application, args
-    }
+	static void main(String... args) {
+		SpringApplication.run Application, args
+	}
 }
 
 @CompileStatic
 @Configuration
 class StaticMapping extends WebMvcConfigurerAdapter {
-    void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-    }
+	void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+	}
 }
 
 @CompileStatic
@@ -45,20 +45,20 @@ class StaticMapping extends WebMvcConfigurerAdapter {
 @EnableWebMvcSecurity
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    DataSource dataSource;
+	@Autowired
+	DataSource dataSource;
 
-    @Autowired
-    void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN")
-        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(new BCryptPasswordEncoder())
-                .usersByUsernameQuery("SELECT username, password, active FROM user WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?")
-    }
+	@Autowired
+	void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN")
+		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(new BCryptPasswordEncoder())
+				.usersByUsernameQuery("SELECT username, password, active FROM user WHERE username=?")
+				.authoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?")
+	}
 
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/secure/**").hasAnyRole("ADMIN", "USER")
-        http.formLogin().loginPage("/login")
-        http.logout().logoutSuccessUrl("/").logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-    }
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/secure/**").hasAnyRole("ADMIN", "USER")
+		http.formLogin().loginPage("/login")
+		http.logout().logoutSuccessUrl("/").logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+	}
 }

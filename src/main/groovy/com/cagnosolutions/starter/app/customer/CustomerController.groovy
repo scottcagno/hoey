@@ -1,5 +1,6 @@
 package com.cagnosolutions.starter.app.customer
 
+import com.cagnosolutions.starter.app.job.Job
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -17,32 +18,37 @@ import org.springframework.web.bind.annotation.RequestMethod
 @RequestMapping(value = "/secure/customer")
 class CustomerController {
 
-    @Autowired
-    CustomerService customerService
+	@Autowired
+	CustomerService customerService
 
-    @RequestMapping(method = RequestMethod.GET)
-    String viewAll(Model model) {
-        model.addAttribute "customers", customerService.findAll()
-        "customer/customer"
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	String viewAll(Model model) {
+		model.addAttribute "customers", customerService.findAll()
+		"customer/customer"
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    String addOrEdit(Customer customer) {
-        // TODO: add guts to add or edit
-        "redirect:/secure/customer"
-    }
+	@RequestMapping(method = RequestMethod.POST)
+	String addOrEdit(Customer customer) {
+		customer.jobs =  new ArrayList<Job>()
+		if (customer.id !=null) {
+			Customer existingCustomer = customerService.findOne(customer.id)
+			customer.jobs = existingCustomer.jobs
+		}
+		customerService.save(customer)
+		"redirect:/secure/customer"
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    String view(@PathVariable Long id, Model model) {
-        def customer = customerService.findOne id
-        model.addAllAttributes([customer: customer, customers: customerService.findAll()])
-        "customer/customer"
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	String view(@PathVariable Long id, Model model) {
+		def customer = customerService.findOne id
+		model.addAllAttributes([customer: customer, customers: customerService.findAll()])
+		"customer/customer"
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    String delete(@PathVariable Long id) {
-        customerService.delete id
-        "redirect:/secure/customer"
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	String delete(@PathVariable Long id) {
+		customerService.delete id
+		"redirect:/secure/customer"
+	}
 
 }

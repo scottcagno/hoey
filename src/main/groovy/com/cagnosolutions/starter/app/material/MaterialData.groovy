@@ -17,28 +17,28 @@ import org.springframework.stereotype.Service
 @Service(value = "materialService")
 class MaterialService {
 
-    @Autowired
-    MaterialRepository repo
+	@Autowired
+	MaterialRepository repo
 
-    List<Material> findAll() {
-        repo.findAll()
-    }
+	List<Material> findAll() {
+		repo.findAll()
+	}
 
-    Page<Material> findAll(int page, int size, String... fields) {
-        repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
-    }
+	Page<Material> findAll(int page, int size, String... fields) {
+		repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
+	}
 
-    Material findOne(Long id) {
-        repo.findOne id
-    }
+	Material findOne(Long id) {
+		repo.findOne id
+	}
 
-    Material save(Material material) {
-        repo.save material
-    }
+	Material save(Material material) {
+		repo.save material
+	}
 
-    def delete(Long id) {
-        repo.delete id
-    }
+	def delete(Long id) {
+		repo.delete id
+	}
 
 }
 

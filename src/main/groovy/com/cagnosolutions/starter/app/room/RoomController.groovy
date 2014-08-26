@@ -16,32 +16,32 @@ import org.springframework.web.bind.annotation.RequestMethod
 @RequestMapping(value = "/secure/room")
 class RoomController {
 
-    @Autowired
-    RoomService roomService
+	@Autowired
+	RoomService roomService
 
-    @RequestMapping(method = RequestMethod.GET)
-    String viewAll(Model model) {
-        model.addAttribute "rooms", roomService.findAll()
-        "room/room"
-    }
+	@RequestMapping(method = RequestMethod.GET)
+	String viewAll(Model model) {
+		model.addAttribute "rooms", roomService.findAll()
+		"room/room"
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    String addOrEdit(Room room) {
-        // TODO: add guts to add or edit
-        "redirect:/secure/room"
-    }
+	@RequestMapping(method = RequestMethod.POST)
+	String addOrEdit(Room room) {
+		// TODO: add guts to add or edit
+		"redirect:/secure/room"
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    String view(@PathVariable Long id, Model model) {
-        def room = roomService.findOne id
-        model.addAllAttributes([room: room, rooms: roomService.findAll()])
-        "room/room"
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	String view(@PathVariable Long id, Model model) {
+		def room = roomService.findOne id
+		model.addAllAttributes([room: room, rooms: roomService.findAll()])
+		"room/room"
+	}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    String delete(@PathVariable Long id) {
-        roomService.delete id
-        "redirect:/secure/room"
-    }
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	String delete(@PathVariable Long id) {
+		roomService.delete id
+		"redirect:/secure/room"
+	}
 
 }

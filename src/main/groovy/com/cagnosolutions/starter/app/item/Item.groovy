@@ -6,7 +6,6 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.OneToOne
-
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -15,10 +14,10 @@ import javax.persistence.OneToOne
 @Entity
 class Item {
 
-    @Id
-    @GeneratedValue
-    Long id
-    @OneToOne
-    Material mid
-    Integer count, total
+	@Id
+	@GeneratedValue
+	Long id
+	@OneToOne
+	Material material
+	Integer count, total
 }

@@ -18,28 +18,28 @@ import org.springframework.stereotype.Service
 @Service(value = "customerService")
 class CustomerService {
 
-    @Autowired
-    CustomerRepository repo
+	@Autowired
+	CustomerRepository repo
 
-    List<Customer> findAll() {
-        repo.findAll()
-    }
+	List<Customer> findAll() {
+		repo.findAll()
+	}
 
-    Page<Customer> findAll(int page, int size, String... fields) {
-        repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
-    }
+	Page<Customer> findAll(int page, int size, String... fields) {
+		repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
+	}
 
-    Customer findOne(Long id) {
-        repo.findOne id
-    }
+	Customer findOne(Long id) {
+		repo.findOne id
+	}
 
-    Customer save(Customer customer) {
-        repo.save customer
-    }
+	Customer save(Customer customer) {
+		repo.save customer
+	}
 
-    def delete(Long id) {
-        repo.delete id
-    }
+	def delete(Long id) {
+		repo.delete id
+	}
 
 }
 

@@ -12,9 +12,9 @@ import javax.persistence.Id
 @Entity
 class Material {
 
-    @Id
-    @GeneratedValue
-    Long id
-    String cat, desc
-    Integer cost, price
+	@Id
+	@GeneratedValue
+	Long id
+	String cat, name
+	Integer cost, price
 }
