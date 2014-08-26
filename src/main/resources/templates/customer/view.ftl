@@ -1,58 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="head">
-		<title>Jobs</title>
+		<title>Customer</title>
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
 
 		<#include "../stubs/navbar.ftl"/>
 
-		<!-- content -->
 		<div id="content" class="container">
 			<!-- add/edit -->
 			<div class="col-sm-4">
 				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Job
-						<span class="pull-right"><a href="/secure/job">Add New</a></span>
-					</div>
+					<div class="panel-heading">Update Customer</div>
 					<div class="panel-body">
-						<form role="form" method="post" action="/secure/job">
+						<form role="form" method="post" action="/secure/customer">
 
 							<div class="form-group">
+								<input type="text" id="company" name="company" class="form-control"
+									   placeholder="Company" required="true" value="${(customer.company)!}"/>
+							</div>
+							<div class="form-group">
 								<input type="text" id="name" name="name" class="form-control"
-									   placeholder="Name" required="true" value="${(job.name)!}"/>
+									   placeholder="Name" required="true" value="${(customer.name)!}"/>
+							</div>
+							<div class="form-group">
+								<input type="email" id="email" name="email" class="form-control"
+									   placeholder="Email" required="true" value="${(customer.email)!}"/>
+							</div>
+							<div class="form-group">
+								<input type="text" id="phone" name="phone" class="form-control"
+									   placeholder="Phone number" required="true" value="${(customer.phone)!}"/>
 							</div>
 
-
-							<input type="hidden" name="id" value="${(job.id)!}"/>
+							<input type="hidden" name="id" value="${(customer.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
 						</form>
 					</div>
 				</div>
 			</div>
-			<!-- add/edit -->
-			<!-- view all -->
 			<div class="col-sm-8">
 				<div class="panel panel-default">
-					<div class="panel-heading">Current Jobs</div>
+					<div class="panel-heading col-sm-12">
+						Jobs
+						<form role="form" class="col-sm-5 pull-right" method="post" action="/secure/customer/addjob">
+							<div class="input-group">
+								<input type="text" name="name" class="form-control input-sm" placeholder="Job Name" required="true"/>
+								<span class="input-group-btn">
+									<button class="btn btn-default btn-sm" type="submit">Save</button>
+								</span>
+							</div>
+							<input type="hidden" name="customerId" value="${(customer.id)!}"/>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						</form>
+					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
-
 										<td>Name</td>
-
 									</tr>
 								</thead>
 								<tbody>
-									<#list jobs as job>
+									<#list customer.jobs as job>
 										<tr>
-
 											<td>${(job.name)!}</td>
-
 											<td>
 												<a href="/secure/job/${(job.id)!}" class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>
@@ -70,7 +84,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- view all -->
 		</div>
 
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
@@ -98,7 +111,6 @@
 			</div>
 		</div>
 
-		<!-- content -->
 
 		<#include "../stubs/footer.ftl"/>
 
@@ -114,7 +126,7 @@
 					form.html(form.html().replace('{id}',id));
 				});
 			});
-		
+
 		</script>
 
 	</body>

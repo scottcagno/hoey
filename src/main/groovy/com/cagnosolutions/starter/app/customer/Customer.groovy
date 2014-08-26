@@ -1,9 +1,7 @@
 package com.cagnosolutions.starter.app.customer
-
 import com.cagnosolutions.starter.app.job.Job
 
 import javax.persistence.*
-
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -16,7 +14,11 @@ class Customer {
 	@GeneratedValue
 	Long id
 	String company, name, email, phone
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_id")
 	List<Job> jobs
+
+	def addJob(Job job) {
+		jobs.add(job)
+	}
 }

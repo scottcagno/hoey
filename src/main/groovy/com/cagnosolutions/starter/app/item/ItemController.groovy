@@ -28,7 +28,11 @@ class ItemController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	String addOrEdit(Item item) {
-		// TODO: add guts to add or edit
+		if (item.id != null) {
+			Item existingItem = itemService.findOne(item.id)
+			item.material = existingItem.material
+		}
+		itemService.save(item)
 		"redirect:/secure/item"
 	}
 

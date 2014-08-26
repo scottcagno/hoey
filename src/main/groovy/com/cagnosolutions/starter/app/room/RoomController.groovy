@@ -1,4 +1,6 @@
 package com.cagnosolutions.starter.app.room
+
+import com.cagnosolutions.starter.app.item.Item
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -27,7 +29,12 @@ class RoomController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	String addOrEdit(Room room) {
-		// TODO: add guts to add or edit
+		room.items = new ArrayList<Item>()
+		if (room.id != null) {
+			Room existingRoom = roomService.findOne(room.id)
+			room.items = existingRoom.items
+		}
+		roomService.save(room)
 		"redirect:/secure/room"
 	}
 

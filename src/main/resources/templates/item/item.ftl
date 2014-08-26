@@ -90,7 +90,6 @@
 								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Item</button>
 							</form>
 						</span>
-
 					</div>
 				</div>
 			</div>

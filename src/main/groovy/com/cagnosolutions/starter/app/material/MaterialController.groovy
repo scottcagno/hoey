@@ -29,7 +29,7 @@ class MaterialController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	String addOrEdit(Material material) {
-		// TODO: add guts to add or edit
+		materialService.save(material)
 		"redirect:/secure/material"
 	}
 

@@ -1,6 +1,6 @@
 package com.cagnosolutions.starter.app.customer
-
 import com.cagnosolutions.starter.app.job.Job
+import com.cagnosolutions.starter.app.job.JobService
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -8,6 +8,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -20,6 +21,9 @@ class CustomerController {
 
 	@Autowired
 	CustomerService customerService
+
+	@Autowired
+	JobService jobService
 
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model) {
@@ -41,14 +45,22 @@ class CustomerController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	String view(@PathVariable Long id, Model model) {
 		def customer = customerService.findOne id
-		model.addAllAttributes([customer: customer, customers: customerService.findAll()])
-		"customer/customer"
+		model.addAllAttributes([customer: customer])
+		"customer/view"
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	String delete(@PathVariable Long id) {
 		customerService.delete id
 		"redirect:/secure/customer"
+	}
+
+	@RequestMapping(value = "/addjob")
+	String addJob(Job job, @RequestParam(value = "customerId") Long customerId) {
+		Customer customer = customerService.findOne(customerId)
+		customer.addJob(job)
+		customerService.save(customer)
+		"redirect:/secure/customer/${customerId}"
 	}
 
 }

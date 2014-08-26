@@ -21,19 +21,19 @@
 
 							<div class="form-group">
 								<input type="text" id="cat" name="cat" class="form-control"
-									   placeholder="Category" required="true" />
+									   placeholder="Category" required="true" value="${(material.category)!}"/>
 							</div>
 							<div class="form-group">
-								<input type="text" id="desc" name="desc" class="form-control"
-									   placeholder="Description" required="true" />
+								<input type="text" id="name" name="name" class="form-control"
+									   placeholder="Name" required="true" value="${(material.name)!}"/>
 							</div>
 							<div class="form-group">
 								<input type="number" id="cost" name="cost" class="form-control"
-									   placeholder="Cost" required="true" />
+									   placeholder="Cost" required="true" value="${(material.cost)!}"/>
 							</div>
 							<div class="form-group">
 								<input type="number" id="price" name="price" class="form-control"
-									   placeholder="Price" required="true" />
+									   placeholder="Price" required="true" value="${(material.price)!}"/>
 							</div>
 							
 
@@ -56,7 +56,7 @@
 									<tr>
 
 										<th>Category</th>
-										<th>Description</th>
+										<th>Name</th>
 										<th>Cost</th>
 										<th>Price</th>
 
@@ -67,7 +67,7 @@
 										<tr>
 
 											<td>${(material.cat)!}</td>
-											<td>${(material.desc)!}</td>
+											<td>${(material.name)!}</td>
 											<td>${(material.cost)!}</td>
 											<td>${(material.price)!}</td>
 

@@ -21,19 +21,19 @@
 
 							<div class="form-group">
 								<input type="text" id="company" name="company" class="form-control"
-									   placeholder="Company" required="true" />
+									   placeholder="Company" required="true" value="${(customer.company)!}"/>
 							</div>
 							<div class="form-group">
 								<input type="text" id="name" name="name" class="form-control"
-									   placeholder="Name" required="true"/>
+									   placeholder="Name" required="true" value="${(customer.name)!}"/>
 							</div>
 							<div class="form-group">
 								<input type="email" id="email" name="email" class="form-control"
-									   placeholder="Email" required="true" />
+									   placeholder="Email" required="true" value="${(customer.email)!}"/>
 							</div>
 							<div class="form-group">
 								<input type="text" id="phone" name="phone" class="form-control"
-									   placeholder="Phone number" required="true" />
+									   placeholder="Phone number" required="true" value="${(customer.phone)!}"/>
 							</div>
 
 							<input type="hidden" name="id" value="${(customer.id)!}"/>

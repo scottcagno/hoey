@@ -13,18 +13,15 @@
 			<!-- add/edit -->
 			<div class="col-sm-4">
 				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Room
+					<div class="panel-heading">Update Room
 						<span class="pull-right"><a href="/secure/room">Add New</a></span>
 					</div>
 					<div class="panel-body">
 						<form role="form" method="post" action="/secure/room">
-
 							<div class="form-group">
-								<input type="text" id="desc" name="desc" class="form-control"
-									   placeholder="Description" required="true" />
+								<input type="text" id="name" name="name" class="form-control"
+									   placeholder="Name" required="true" value="${(room.name)!}"/>
 							</div>
-
-
 							<input type="hidden" name="id" value="${(room.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
@@ -33,31 +30,28 @@
 				</div>
 			</div>
 			<!-- add/edit -->
-			<!-- view all -->
 			<div class="col-sm-8">
 				<div class="panel panel-default">
-					<div class="panel-heading">Current Rooms</div>
+					<div class="panel-heading">Current Items</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
-
-										<th>Description</th>
-
+										<th>Material</th>
+										<th>Count</th>
 									</tr>
 								</thead>
 								<tbody>
-									<#list rooms as room>
+									<#list room.items as item>
 										<tr>
-
-											<td>${(room.desc)!}</td>
-
+											<td>${(item.mid.desc)!}</td>
+											<td>${(item.count)!}</td>
 											<td>
-												<a href="/secure/room/${(room.id)!}" class="btn btn-xs btn-primary">
+												<a href="/secure/item/${(item.id)!}" class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(room.id)!}"
+												<a href="#" class="btn btn-danger btn-xs" data-id="${(item.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>
@@ -70,7 +64,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- view all -->
 		</div>
 
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
@@ -82,22 +75,23 @@
 						<h4 class="modal-title">Are you sure?</h4>
 					</div>
 					<div class="modal-body">
-						Permantly remove room? This action cannot be undone.
+						Permantly remove item? This action cannot be undone.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="delete">
-							<form role="form" method="post" action="/secure/room/{id}">
+							<form role="form" method="post" action="/secure/item/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Room</button>
+								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Item</button>
 							</form>
 						</span>
-
 					</div>
 				</div>
 			</div>
 		</div>
+
+
 
 		<!-- content -->
 
@@ -115,7 +109,6 @@
 					form.html(form.html().replace('{id}',id));
 				});
 			});
-		
 		</script>
 
 	</body>
