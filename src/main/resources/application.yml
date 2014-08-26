@@ -1,0 +1,51 @@
+spring:
+  profiles:
+    active: production
+
+  freemarker:
+    exposeSessionAttributes: true
+
+server:
+  port: 8080
+  address: 127.0.0.1
+
+security:
+  user:
+    role: ADMIN
+    name: admin
+    password: admin
+  enableCsrf: true
+  
+endpoints:
+  shutdown:
+    enabled: true
+
+http:
+  mappers:
+    jsonPrettyPrint: true
+
+---
+spring:
+  profiles: development
+
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:./h2data;MODE=MySQL
+    username: sa
+    password: sa
+
+  jpa:
+    generateDdl: true
+
+---
+spring:
+  profiles: production
+
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/application?createDatabaseIfNotExist=true
+    username: root
+    password: root
+
+  jpa:
+    generateDdl: true
