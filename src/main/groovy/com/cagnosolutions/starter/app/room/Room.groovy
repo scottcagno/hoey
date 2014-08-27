@@ -2,6 +2,7 @@ package com.cagnosolutions.starter.app.room
 
 import com.cagnosolutions.starter.app.item.Item
 
+import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -20,7 +21,11 @@ class Room {
 	@GeneratedValue
 	Long id
 	String name, total
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "room_id")
 	List<Item> items
+
+	def addItem(Item item) {
+		items.add(item)
+	}
 }

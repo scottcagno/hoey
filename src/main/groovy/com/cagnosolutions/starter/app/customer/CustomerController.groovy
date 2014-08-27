@@ -8,7 +8,6 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -55,12 +54,12 @@ class CustomerController {
 		"redirect:/secure/customer"
 	}
 
-	@RequestMapping(value = "/addjob")
-	String addJob(Job job, @RequestParam(value = "customerId") Long customerId) {
-		Customer customer = customerService.findOne(customerId)
+	@RequestMapping(value = "/{id}/addjob")
+	String addJob(Job job, @PathVariable Long id) {
+		Customer customer = customerService.findOne(id)
 		customer.addJob(job)
 		customerService.save(customer)
-		"redirect:/secure/customer/${customerId}"
+		"redirect:/secure/customer/${id}"
 	}
 
 }

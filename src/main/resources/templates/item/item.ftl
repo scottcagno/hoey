@@ -19,6 +19,7 @@
 					<div class="panel-body">
 						<form role="form" method="post" action="/secure/item">
 
+							bs.input
 
 							<input type="hidden" name="id" value="${(item.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -37,10 +38,8 @@
 							<table class="table table-striped">
 								<thead>
 									<tr>
-
 										<th>Material</th>
 										<th>Count</th>
-
 									</tr>
 								</thead>
 								<tbody>

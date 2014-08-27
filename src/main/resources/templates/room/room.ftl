@@ -13,9 +13,7 @@
 			<!-- add/edit -->
 			<div class="col-sm-4">
 				<div class="panel panel-default">
-					<div class="panel-heading">Update Room
-						<span class="pull-right"><a href="/secure/room">Add New</a></span>
-					</div>
+					<div class="panel-heading">Update Room</div>
 					<div class="panel-body">
 						<form role="form" method="post" action="/secure/room">
 							<div class="form-group">
@@ -32,7 +30,10 @@
 			<!-- add/edit -->
 			<div class="col-sm-8">
 				<div class="panel panel-default">
-					<div class="panel-heading">Current Items</div>
+					<div class="panel-heading col-sm-12">
+						Current Items
+						<a href="/secure/room/${room.id}/addItem" id="addItem" class="btn btn-default btn-sm pull-right">Add Item</a>
+					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">
@@ -45,7 +46,7 @@
 								<tbody>
 									<#list room.items as item>
 										<tr>
-											<td>${(item.mid.desc)!}</td>
+											<td>${(item.material.name)!}</td>
 											<td>${(item.count)!}</td>
 											<td>
 												<a href="/secure/item/${(item.id)!}" class="btn btn-xs btn-primary">

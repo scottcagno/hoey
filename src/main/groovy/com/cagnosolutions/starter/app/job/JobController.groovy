@@ -1,5 +1,4 @@
 package com.cagnosolutions.starter.app.job
-
 import com.cagnosolutions.starter.app.room.Room
 import com.cagnosolutions.starter.app.room.RoomService
 import groovy.transform.CompileStatic
@@ -9,8 +8,6 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -57,12 +54,12 @@ class JobController {
 		"redirect:/secure/job"
 	}
 
-	@RequestMapping(value = "/addRoom")
-	String addRoom(@RequestParam(value = "jobId") Long jobId, Room room) {
-		Job job = jobService.findOne(jobId)
+	@RequestMapping(value = "/{id}/addRoom")
+	String addRoom(@PathVariable Long id, Room room) {
+		Job job = jobService.findOne(id)
 		job.addRoom(room)
 		jobService.save(job)
-		"redirect:/secure/job/${jobId}"
+		"redirect:/secure/job/${id}"
 	}
 
 }

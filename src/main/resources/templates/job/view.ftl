@@ -32,14 +32,13 @@
 				<div class="panel panel-default">
 					<div class="panel-heading col-sm-12">
 						Job ${job.name}'s Rooms
-						<form role="form" method="post" action="/secure/job/addRoom" class="col-sm-5 pull-right">
+						<form role="form" method="post" action="/secure/job/${job.id}/addRoom" class="col-sm-5 pull-right">
 							<div class="input-group">
 								<input type="text" class="form-control input-sm" name="name" placeholder="Room Name"/>
     							<span class="input-group-btn">
     								<button type="submit" class="btn btn-default btn-sm">Add Room</button>
     							</span>
 							</div>
-							<input type="hidden" id="jobId" name="jobId" value="${job.id}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						</form>
 					</div>

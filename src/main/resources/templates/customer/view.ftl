@@ -44,14 +44,13 @@
 				<div class="panel panel-default">
 					<div class="panel-heading col-sm-12">
 						Jobs
-						<form role="form" class="col-sm-5 pull-right" method="post" action="/secure/customer/addjob">
+						<form role="form" class="col-sm-5 pull-right" method="post" action="/secure/customer/${customer.id}/addjob">
 							<div class="input-group">
 								<input type="text" name="name" class="form-control input-sm" placeholder="Job Name" required="true"/>
 								<span class="input-group-btn">
 									<button class="btn btn-default btn-sm" type="submit">Save</button>
 								</span>
 							</div>
-							<input type="hidden" name="customerId" value="${(customer.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						</form>
 					</div>
