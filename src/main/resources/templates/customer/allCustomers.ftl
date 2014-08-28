@@ -13,9 +13,7 @@
 			<!-- add/edit -->
 			<div class="col-sm-4">
 				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Customer
-						<span class="pull-right"><a href="/secure/customer">Add New</a></span>
-					</div>
+					<div class="panel-heading">Add Customer</div>
 					<div class="panel-body">
 						<form role="form" method="post" action="/secure/customer">
 
@@ -47,7 +45,7 @@
 			<!-- view all -->
 			<div class="col-sm-8">
 				<div class="panel panel-default">
-					<div class="panel-heading">Current Customers</div>
+					<div class="panel-heading">All Customers</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">

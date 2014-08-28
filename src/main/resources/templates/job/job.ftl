@@ -32,7 +32,6 @@
 				<div class="panel panel-default">
 					<div class="panel-heading col-sm-12">
 						Job ${job.name}'s Rooms
-						<a href="/secure/job/${job.id}/calc" id="" class="btn btn-default btn-sm">Calculate Totals</a>
 						<form role="form" method="post" action="/secure/job/${job.id}/addroom" class="col-sm-5 pull-right">
 							<div class="input-group">
 								<input type="text" class="form-control input-sm" name="name" placeholder="Room Name"/>
@@ -43,22 +42,21 @@
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						</form>
 					</div>
-					<div class="panel-body">
 						<div class="table-responsive">
-							<table class="table table-striped">
+							<table class="table table-bordered table-hover">
 								<thead>
 									<tr>
-										<th>Name</th>
-										<th class="text-right">Total</th>
-										<th></th>
+										<th colspan="4">Room Name</th>
+										<th class="text-right">Room Total</th>
+										<th class="text-center" colspan="2">Room Options</th>
 									</tr>
 								</thead>
 								<tbody>
 									<#list job.rooms as room>
-										<tr>
-											<td>${(room.name)!}</td>
+										<tr class="clickable" data-toggle="collapse" id="${room.id}" data-target=".room_${room.id}">
+											<td colspan="4">${(room.name)!}</td>
 											<td class="text-right">${(room.total?string.currency)!}</td>
-											<td>
+											<td colspan="2" class="text-center">
 												<a href="/secure/room/${(room.id)!}" class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
@@ -68,14 +66,46 @@
 												</a>
 											</td>
 										</tr>
+										<tr class="collapse room_${room.id}"><td colspan="7"></td></tr>
+										<tr class="collapse room_${room.id}">
+											<th></th>
+											<th>Item Name</th>
+											<th>Category</th>
+											<th>Count</th>
+											<th class="text-right">Item Total</th>
+											<th class="text-center">Delete Item</th>
+											<th></th>
+										</tr>
+										<#list room.items as item>
+											<tr class="collapse room_${room.id}">
+												<td></td>
+												<td>${item.material.name}</td>
+												<td>${item.material.cat}</td>
+												<td>${item.count}</td>
+												<td class="text-right">${item.total?string.currency}</td>
+												<td class="text-center">
+													<a href="#" class="btn btn-danger btn-xs">
+														<i class="fa fa-trash-o"></i>
+													</a>
+												</td>
+												<td></td>
+											</tr>
+										</#list>
+										<tr class="collapse room_${room.id}">
+											<td></td>
+											<td colspan="4" class="text-right">Room Total: ${(room.total?string.currency)!}</td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr class="collapse room_${room.id}"><td colspan="7"></td></tr>
 									</#list>
 									<tr>
-										<td colspan="2" class="text-right">${(job.total?string.currency)!}</td>
+										<td colspan="5" class="text-right">Job Total: ${(job.total?string.currency)!}</td>
+										<td></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>

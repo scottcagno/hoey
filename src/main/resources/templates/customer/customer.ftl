@@ -59,13 +59,16 @@
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<td>Name</td>
+										<th>Name</th>
+										<th>Total</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<#list customer.jobs as job>
 										<tr>
 											<td>${(job.name)!}</td>
+											<td>${(job.total?string.currency)!}</td>
 											<td>
 												<a href="/secure/job/${(job.id)!}" class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>

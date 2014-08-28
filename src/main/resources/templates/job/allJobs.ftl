@@ -10,49 +10,28 @@
 
 		<!-- content -->
 		<div id="content" class="container">
-			<!-- add/edit -->
-			<div class="col-sm-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Job
-						<span class="pull-right"><a href="/secure/job">Add New</a></span>
-					</div>
-					<div class="panel-body">
-						<form role="form" method="post" action="/secure/job">
-
-							<div class="form-group">
-								<input type="text" id="name" name="name" class="form-control"
-									   placeholder="Name" required="true" value="${(job.name)!}"/>
-							</div>
-
-
-							<input type="hidden" name="id" value="${(job.id)!}"/>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
-						</form>
-					</div>
-				</div>
-			</div>
-			<!-- add/edit -->
 			<!-- view all -->
-			<div class="col-sm-8">
+			<div class="col-sm-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Current Jobs</div>
+					<div class="panel-heading col-sm-12">
+						All Jobs
+						<a href="/secure/job/calc" id="" class="btn btn-default btn-sm">Calculate Totals</a>
+					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
-
-										<td>Name</td>
-
+										<th>Name</th>
+										<th>Total</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<#list jobs as job>
 										<tr>
-
 											<td>${(job.name)!}</td>
-
+											<td>${(job.total?string.currency)!}</td>
 											<td>
 												<a href="/secure/job/${(job.id)!}" class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>

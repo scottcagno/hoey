@@ -6,3 +6,7 @@ body {
 .footer {
     margin-top: 25px;
 }
+
+table .collapse.in {
+	display:table-row;
+}

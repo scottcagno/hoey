@@ -55,8 +55,9 @@ class JobController {
 
 	// POST delete job
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	String delete(@PathVariable Long id) {
+	String delete(@PathVariable Long id, RedirectAttributes attr) {
 		jobService.delete id
+		attr.addFlashAttribute("alertSuccess", "Job deleted successfully")
 		"redirect:/secure/job"
 	}
 
@@ -79,13 +80,16 @@ class JobController {
 
 
 	// POST temp handler to calculate all totals from job down
-	@RequestMapping(value = "/{id}/calc", method = RequestMethod.POST)
-	String calcTotals(@PathVariable Long id, RedirectAttributes attr) {
-		Job job = jobService.findOne(id)
-		job.calcTotal()
-		jobService.save(job)
+	@RequestMapping(value = "/calc", method = RequestMethod.GET)
+	String calcTotals(RedirectAttributes attr) {
+		List<Job> jobs = jobService.findAll()
+		jobs.collect { Job job ->
+			job.calcTotal()
+			jobService.save(job)
+
+		}
 		attr.addFlashAttribute("alertSuccess", "Totals Calculated")
-		"redirect:/secure/job/${id}"
+		"redirect:/secure/job"
 	}
 
 }
