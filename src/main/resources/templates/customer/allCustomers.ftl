@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="head">
-		<title>Jobs</title>
+		<title>Customers</title>
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
@@ -13,71 +13,82 @@
 			<!-- add/edit -->
 			<div class="col-sm-4">
 				<div class="panel panel-default">
-					<div class="panel-heading">Update Job</div>
+					<div class="panel-heading">Add or Update Customer
+						<span class="pull-right"><a href="/secure/customer">Add New</a></span>
+					</div>
 					<div class="panel-body">
-						<form role="form" method="post" action="/secure/job">
+						<form role="form" method="post" action="/secure/customer">
+
+							<div class="form-group">
+								<input type="text" id="company" name="company" class="form-control"
+									   placeholder="Company" required="true" value="${(customer.company)!}"/>
+							</div>
 							<div class="form-group">
 								<input type="text" id="name" name="name" class="form-control"
-									   placeholder="Name" required="true" value="${(job.name)!}"/>
+									   placeholder="Name" required="true" value="${(customer.name)!}"/>
 							</div>
-							<input type="hidden" name="id" value="${(job.id)!}"/>
+							<div class="form-group">
+								<input type="email" id="email" name="email" class="form-control"
+									   placeholder="Email" required="true" value="${(customer.email)!}"/>
+							</div>
+							<div class="form-group">
+								<input type="text" id="phone" name="phone" class="form-control"
+									   placeholder="Phone number" required="true" value="${(customer.phone)!}"/>
+							</div>
+
+							<input type="hidden" name="id" value="${(customer.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
 						</form>
 					</div>
 				</div>
 			</div>
-
+			<!-- add/edit -->
+			<!-- view all -->
 			<div class="col-sm-8">
 				<div class="panel panel-default">
-					<div class="panel-heading col-sm-12">
-						Job ${job.name}'s Rooms
-						<a href="/secure/job/${job.id}/calc" id="" class="btn btn-default btn-sm">Calculate Totals</a>
-						<form role="form" method="post" action="/secure/job/${job.id}/addroom" class="col-sm-5 pull-right">
-							<div class="input-group">
-								<input type="text" class="form-control input-sm" name="name" placeholder="Room Name"/>
-    							<span class="input-group-btn">
-    								<button type="submit" class="btn btn-default btn-sm">Add Room</button>
-    							</span>
-							</div>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						</form>
-					</div>
+					<div class="panel-heading">Current Customers</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
+
+										<th>Company</th>
 										<th>Name</th>
-										<th class="text-right">Total</th>
-										<th></th>
+										<th>Email</th>
+										<th>Phone</th>
+
 									</tr>
 								</thead>
 								<tbody>
-									<#list job.rooms as room>
+									<#list customers as customer>
 										<tr>
-											<td>${(room.name)!}</td>
-											<td class="text-right">${(room.total?string.currency)!}</td>
+
+											<td>${(customer.company)!}</td>
+											<td>${(customer.name)!}</td>
+											<td>${(customer.email)!}</td>
+											<td>${(customer.phone)!}</td>
+
 											<td>
-												<a href="/secure/room/${(room.id)!}" class="btn btn-xs btn-primary">
+												<a href="/secure/customer/${(customer.id)!}"
+												   class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(room.id)!}"
+												<a href="#" class="btn btn-danger btn-xs" data-id="${(customer.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>
 											</td>
 										</tr>
 									</#list>
-									<tr>
-										<td colspan="2" class="text-right">${(job.total?string.currency)!}</td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- view all -->
 		</div>
 
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
@@ -89,15 +100,15 @@
 						<h4 class="modal-title">Are you sure?</h4>
 					</div>
 					<div class="modal-body">
-						Permantly remove room? This action cannot be undone.
+						Permantly remove customer? This action cannot be undone.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="delete">
-							<form role="form" method="post" action="/secure/job/${job.id}/delroom/{id}">
+							<form role="form" method="post" action="/secure/customer/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Room</button>
+								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Customer</button>
 							</form>
 						</span>
 
@@ -122,6 +133,7 @@
 					form.html(form.html().replace('{id}',id));
 				});
 			});
+		
 		</script>
 
 	</body>

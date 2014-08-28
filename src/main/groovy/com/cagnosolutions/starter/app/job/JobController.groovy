@@ -30,7 +30,7 @@ class JobController {
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model) {
 		model.addAttribute "jobs", jobService.findAll()
-		"job/job"
+		"job/allJobs"
 	}
 
 	// POST edit job
@@ -50,7 +50,7 @@ class JobController {
 	String view(@PathVariable Long id, Model model) {
 		def job = jobService.findOne id
 		model.addAllAttributes([job: job, jobs: jobService.findAll()])
-		"job/view"
+		"job/job"
 	}
 
 	// POST delete job

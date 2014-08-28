@@ -31,7 +31,7 @@ class CustomerController {
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model) {
 		model.addAttribute "customers", customerService.findAll()
-		"customer/customer"
+		"customer/allCustomers"
 	}
 
 	// POST add/edit customer
@@ -53,7 +53,7 @@ class CustomerController {
 	String view(@PathVariable Long id, Model model) {
 		def customer = customerService.findOne id
 		model.addAllAttributes([customer: customer])
-		"customer/view"
+		"customer/customer"
 	}
 
 	// POST delete customer

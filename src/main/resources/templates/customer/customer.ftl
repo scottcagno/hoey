@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="head">
-		<title>Customers</title>
+		<title>Customer</title>
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
 
 		<#include "../stubs/navbar.ftl"/>
 
-		<!-- content -->
 		<div id="content" class="container">
 			<!-- add/edit -->
 			<div class="col-sm-4">
 				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Customer
-						<span class="pull-right"><a href="/secure/customer">Add New</a></span>
-					</div>
+					<div class="panel-heading">Update Customer</div>
 					<div class="panel-body">
 						<form role="form" method="post" action="/secure/customer">
 
@@ -43,39 +40,37 @@
 					</div>
 				</div>
 			</div>
-			<!-- add/edit -->
-			<!-- view all -->
 			<div class="col-sm-8">
 				<div class="panel panel-default">
-					<div class="panel-heading">Current Customers</div>
+					<div class="panel-heading col-sm-12">
+						Jobs
+						<form role="form" class="col-sm-5 pull-right" method="post" action="/secure/customer/${customer.id}/addjob">
+							<div class="input-group">
+								<input type="text" name="name" class="form-control input-sm" placeholder="Job Name" required="true"/>
+								<span class="input-group-btn">
+									<button class="btn btn-default btn-sm" type="submit">Save</button>
+								</span>
+							</div>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						</form>
+					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
-
-										<th>Company</th>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Phone</th>
-
+										<td>Name</td>
 									</tr>
 								</thead>
 								<tbody>
-									<#list customers as customer>
+									<#list customer.jobs as job>
 										<tr>
-
-											<td>${(customer.company)!}</td>
-											<td>${(customer.name)!}</td>
-											<td>${(customer.email)!}</td>
-											<td>${(customer.phone)!}</td>
-
+											<td>${(job.name)!}</td>
 											<td>
-												<a href="/secure/customer/${(customer.id)!}"
-												   class="btn btn-xs btn-primary">
+												<a href="/secure/job/${(job.id)!}" class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(customer.id)!}"
+												<a href="#" class="btn btn-danger btn-xs" data-id="${(job.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>
@@ -88,7 +83,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- view all -->
 		</div>
 
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
@@ -100,24 +94,22 @@
 						<h4 class="modal-title">Are you sure?</h4>
 					</div>
 					<div class="modal-body">
-						Permantly remove customer? This action cannot be undone.
+						Permantly remove job? This action cannot be undone.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="delete">
-							<form role="form" method="post" action="/secure/customer/{id}">
+							<form role="form" method="post" action="/secure/customer/${customer.id}/deljob/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Customer</button>
+								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Job</button>
 							</form>
 						</span>
-
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- content -->
 
 		<#include "../stubs/footer.ftl"/>
 
@@ -133,7 +125,7 @@
 					form.html(form.html().replace('{id}',id));
 				});
 			});
-		
+
 		</script>
 
 	</body>
