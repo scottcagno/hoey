@@ -48,6 +48,7 @@
 										<tr>
 											<td>${(item.material.name)!}</td>
 											<td>${(item.count)!}</td>
+											<td>${(item.total)!}</td>
 											<td>
 												<a href="/secure/item/${(item.id)!}" class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>

@@ -28,4 +28,13 @@ class Room {
 	def addItem(Item item) {
 		items.add(item)
 	}
+
+	def calcTotal() {
+		def newTotal = 0
+		for (Item item : items) {
+			item.calcTotal()
+			newTotal = newTotal + item.total
+		}
+		this.total = newTotal
+	}
 }

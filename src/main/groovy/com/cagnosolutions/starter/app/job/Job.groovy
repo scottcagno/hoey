@@ -28,4 +28,13 @@ class Job {
 	def addRoom(Room room) {
 		rooms.add(room)
 	}
+
+	def calcTotal() {
+		def newTotal = 0
+		for (Room room : rooms) {
+			room.calcTotal()
+			newTotal = newTotal + room.total
+		}
+		this.total = newTotal
+	}
 }

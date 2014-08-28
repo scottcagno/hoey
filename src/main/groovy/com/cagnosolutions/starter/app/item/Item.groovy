@@ -20,4 +20,8 @@ class Item {
 	@OneToOne
 	Material material
 	Integer count, total
+
+	void calcTotal() {
+		this.total = count * material.price
+	}
 }
