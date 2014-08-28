@@ -32,7 +32,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading col-sm-12">
 						Current Items
-						<a href="/secure/room/${room.id}/addItem" id="addItem" class="btn btn-default btn-sm pull-right">Add Item</a>
+						<a href="/secure/room/${room.id}/additem" id="addItem" class="btn btn-default btn-sm pull-right">Add Item</a>
 					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
@@ -49,7 +49,13 @@
 									<#list room.items as item>
 										<tr>
 											<td>${(item.material.name)!}</td>
-											<td>${(item.count)!}</td>
+											<td id="${item.id}" class="text-center col-sm-1 count">
+												<form role="form" id="count_${item.id}" action="/secure/room/${room.id}/addItem" method="post">
+													<input class="input-sm form-control" id="${item.id}" name="count" value="${item.count}" disabled="disabled">
+													<input name="id" type="hidden" value="${item.id}">
+													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+												</form>
+											</td>
 											<td class="text-right">${(item.total?string.currency)!}</td>
 											<td>
 												<a href="#" class="btn btn-danger btn-xs" data-id="${(item.id)!}"
@@ -79,13 +85,13 @@
 						<h4 class="modal-title">Are you sure?</h4>
 					</div>
 					<div class="modal-body">
-						Permantly remove item? This action cannot be undone.
+						Permanently remove item? This action cannot be undone.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="delete">
-							<form role="form" method="post" action="/secure/item/{id}">
+							<form role="form" method="post" action="/secure/room/${room.id}/delitem/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Item</button>
 							</form>
@@ -112,6 +118,26 @@
 					var form = $('.modal #delete');
 					form.html(form.html().replace('{id}',id));
 				});
+
+
+				/*
+				*
+				* change item count
+				*
+				*/
+
+				// enable quantity field on td click
+				$('td.count').click(function() {
+					$('input[id="'+this.id+'"]').removeAttr('disabled');
+					$('input[id="'+this.id+'"]').focus();
+				});
+
+				// register submit, disable, and focus actions on count fields
+				$('input[name="count"]').focus(function() {
+					this.onblur = function() {this.setAttribute('disabled', true)}
+					this.onchange = function() {$('form[id="count_' + this.id + '"]').submit()}
+				});
+
 			});
 		</script>
 

@@ -1,4 +1,5 @@
 package com.cagnosolutions.starter.app.customer
+
 import com.cagnosolutions.starter.app.job.Job
 import com.cagnosolutions.starter.app.job.JobService
 import groovy.transform.CompileStatic
@@ -8,6 +9,8 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -51,8 +54,9 @@ class CustomerController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	String delete(@PathVariable Long id) {
+	String delete(@PathVariable Long id, RedirectAttributes attr) {
 		customerService.delete id
+		attr.addFlashAttribute("alertSuccess", "Successfully deleted customer")
 		"redirect:/secure/customer"
 	}
 
@@ -63,5 +67,13 @@ class CustomerController {
 		customerService.save(customer)
 		"redirect:/secure/customer/${id}"
 	}
+
+	@RequestMapping(value = "/{customerId}/deljob/{jobId}")
+	String delJob(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
+		jobService.delete(jobId)
+		attr.addFlashAttribute("alertSuccess", "Successfully deleted job")
+		"redirect:/secure/customer/{customerId}"
+	}
+
 
 }

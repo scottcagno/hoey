@@ -100,7 +100,7 @@
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="delete">
-							<form role="form" method="post" action="/secure/job/{id}">
+							<form role="form" method="post" action="/secure/customer/${customer.id}/deljob/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Job</button>
 							</form>

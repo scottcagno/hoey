@@ -33,7 +33,7 @@
 					<div class="panel-heading col-sm-12">
 						Job ${job.name}'s Rooms
 						<a href="/secure/job/${job.id}/calc" id="" class="btn btn-default btn-sm">Calculate Totals</a>
-						<form role="form" method="post" action="/secure/job/${job.id}/addRoom" class="col-sm-5 pull-right">
+						<form role="form" method="post" action="/secure/job/${job.id}/addroom" class="col-sm-5 pull-right">
 							<div class="input-group">
 								<input type="text" class="form-control input-sm" name="name" placeholder="Room Name"/>
     							<span class="input-group-btn">
@@ -95,7 +95,7 @@
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="delete">
-							<form role="form" method="post" action="/secure/room/{id}">
+							<form role="form" method="post" action="/secure/job/${job.id}/delroom/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Room</button>
 							</form>

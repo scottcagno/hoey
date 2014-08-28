@@ -56,13 +56,21 @@ class JobController {
 		"redirect:/secure/job"
 	}
 
-	@RequestMapping(value = "/{id}/addRoom")
+	@RequestMapping(value = "/{id}/addroom")
 	String addRoom(@PathVariable Long id, Room room) {
 		Job job = jobService.findOne(id)
 		job.addRoom(room)
 		jobService.save(job)
 		"redirect:/secure/job/${id}"
 	}
+
+	@RequestMapping(value = "/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
+	String delRoom(@PathVariable Long jobId, @PathVariable Long roomId, RedirectAttributes attr) {
+		roomservice.delete(roomId)
+		attr.addFlashAttribute("alertSuccess", "Successfully deleted room")
+		"redirect:/secure/job/${jobId}"
+	}
+
 
 	@RequestMapping(value = "/{id}/calc")
 	String calcTotals(@PathVariable Long id, RedirectAttributes attr) {

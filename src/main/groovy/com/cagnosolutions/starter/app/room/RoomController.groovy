@@ -1,5 +1,6 @@
 package com.cagnosolutions.starter.app.room
 import com.cagnosolutions.starter.app.item.Item
+import com.cagnosolutions.starter.app.item.ItemService
 import com.cagnosolutions.starter.app.material.MaterialService
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,6 +27,9 @@ class RoomController {
 
 	@Autowired
 	MaterialService materialService
+
+	@Autowired
+	ItemService itemService
 
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model) {
@@ -57,22 +61,36 @@ class RoomController {
 		"redirect:/secure/room"
 	}
 
-	@RequestMapping(value = "/{id}/addItem", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}/additem", method = RequestMethod.GET)
 	String items(@PathVariable Long id, Model model) {
 		model.addAllAttributes([room : roomService.findOne(id), materials : materialService.findAll()])
 		"room/materials"
 	}
 
 
-	@RequestMapping(value = "/{id}/addItem", method = RequestMethod.POST)
-	String addItem(@PathVariable Long id, Item item, @RequestParam Long materialId, RedirectAttributes attr) {
+	@RequestMapping(value = "/{id}/additem", method = RequestMethod.POST)
+	String addItem(@PathVariable Long id, Item item, @RequestParam(required = false) Long materialId, RedirectAttributes attr) {
+		if (item.id != null) {
+			Item existingItem = itemService.findOne(item.id)
+			item.material = existingItem.material
+			itemService.save(item)
+			attr.addFlashAttribute("alertSuccess", "Successfully updated item count")
+			return "redirect:/secure/room/${id}"
+		}
 		Room room = roomService.findOne(id)
 		item.material = materialService.findOne(materialId)
 		item.total = item.count * item.material.price
 		room.addItem(item)
 		roomService.save(room)
 		attr.addFlashAttribute("alertSuccess", "${item.count} ${item.material.name}(s) have been added to ${room.name}")
-		"redirect:/secure/room/${id}/addItem"
+		"redirect:/secure/room/${id}/additem"
+	}
+
+	@RequestMapping(value = "/{roomId}/delitem/{itemId}", method = RequestMethod.POST)
+	String delItem(@PathVariable Long roomId, @PathVariable Long itemId, RedirectAttributes attr) {
+		itemService.delete(itemId)
+		attr.addFlashAttribute("alertSuccess", "Successfully deleted item")
+		"redirect:/secure/room/${roomId}"
 	}
 
 }
