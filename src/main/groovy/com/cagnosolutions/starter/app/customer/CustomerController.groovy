@@ -27,12 +27,14 @@ class CustomerController {
 	@Autowired
 	JobService jobService
 
+	// GET view all customers
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model) {
 		model.addAttribute "customers", customerService.findAll()
 		"customer/customer"
 	}
 
+	// POST add/edit customer
 	@RequestMapping(method = RequestMethod.POST)
 	String addOrEdit(Customer customer) {
 		customer.jobs =  new ArrayList<Job>()
@@ -46,6 +48,7 @@ class CustomerController {
 		"redirect:/secure/customer"
 	}
 
+	// GET view customer
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	String view(@PathVariable Long id, Model model) {
 		def customer = customerService.findOne id
@@ -53,6 +56,7 @@ class CustomerController {
 		"customer/view"
 	}
 
+	// POST delete customer
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	String delete(@PathVariable Long id, RedirectAttributes attr) {
 		customerService.delete id
@@ -60,7 +64,8 @@ class CustomerController {
 		"redirect:/secure/customer"
 	}
 
-	@RequestMapping(value = "/{id}/addjob")
+	// POST add job
+	@RequestMapping(value = "/{id}/addjob", method = RequestMethod.POST)
 	String addJob(Job job, @PathVariable Long id) {
 		Customer customer = customerService.findOne(id)
 		customer.addJob(job)
@@ -68,7 +73,8 @@ class CustomerController {
 		"redirect:/secure/customer/${id}"
 	}
 
-	@RequestMapping(value = "/{customerId}/deljob/{jobId}")
+	// POSt delete job
+	@RequestMapping(value = "/{customerId}/deljob/{jobId}", method = RequestMethod.POST)
 	String delJob(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
 		jobService.delete(jobId)
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted job")

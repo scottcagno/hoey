@@ -26,12 +26,14 @@ class JobController {
 	@Autowired
 	RoomService roomservice
 
+	// GET view all jobs
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model) {
 		model.addAttribute "jobs", jobService.findAll()
 		"job/job"
 	}
 
+	// POST edit job
 	@RequestMapping(method = RequestMethod.POST)
 	String edit(Job job) {
 		job.rooms = new ArrayList<Room>()
@@ -43,6 +45,7 @@ class JobController {
 		"redirect:/secure/job/${job.id}"
 	}
 
+	// GET view job
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	String view(@PathVariable Long id, Model model) {
 		def job = jobService.findOne id
@@ -50,13 +53,15 @@ class JobController {
 		"job/view"
 	}
 
+	// POST delete job
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	String delete(@PathVariable Long id) {
 		jobService.delete id
 		"redirect:/secure/job"
 	}
 
-	@RequestMapping(value = "/{id}/addroom")
+	// POST add room
+	@RequestMapping(value = "/{id}/addroom", method = RequestMethod.POST)
 	String addRoom(@PathVariable Long id, Room room) {
 		Job job = jobService.findOne(id)
 		job.addRoom(room)
@@ -64,6 +69,7 @@ class JobController {
 		"redirect:/secure/job/${id}"
 	}
 
+	// POST delete room
 	@RequestMapping(value = "/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
 	String delRoom(@PathVariable Long jobId, @PathVariable Long roomId, RedirectAttributes attr) {
 		roomservice.delete(roomId)
@@ -72,7 +78,8 @@ class JobController {
 	}
 
 
-	@RequestMapping(value = "/{id}/calc")
+	// POST temp handler to calculate all totals from job down
+	@RequestMapping(value = "/{id}/calc", method = RequestMethod.POST)
 	String calcTotals(@PathVariable Long id, RedirectAttributes attr) {
 		Job job = jobService.findOne(id)
 		job.calcTotal()

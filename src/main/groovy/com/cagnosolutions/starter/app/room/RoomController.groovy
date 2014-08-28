@@ -31,12 +31,7 @@ class RoomController {
 	@Autowired
 	ItemService itemService
 
-	@RequestMapping(method = RequestMethod.GET)
-	String viewAll(Model model) {
-		model.addAttribute "rooms", roomService.findAll()
-		"room/room"
-	}
-
+	// POST edit room
 	@RequestMapping(method = RequestMethod.POST)
 	String edit(Room room) {
 		room.items = new ArrayList<Item>()
@@ -48,6 +43,7 @@ class RoomController {
 		"redirect:/secure/room/${room.id}"
 	}
 
+	// GET view room
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	String view(@PathVariable Long id, Model model) {
 		def room = roomService.findOne id
@@ -55,19 +51,14 @@ class RoomController {
 		"room/room"
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	String delete(@PathVariable Long id) {
-		roomService.delete id
-		"redirect:/secure/room"
-	}
-
+	// GET add item
 	@RequestMapping(value = "/{id}/additem", method = RequestMethod.GET)
 	String items(@PathVariable Long id, Model model) {
 		model.addAllAttributes([room : roomService.findOne(id), materials : materialService.findAll()])
 		"room/materials"
 	}
 
-
+	// POST add/update item
 	@RequestMapping(value = "/{id}/additem", method = RequestMethod.POST)
 	String addItem(@PathVariable Long id, Item item, @RequestParam(required = false) Long materialId, RedirectAttributes attr) {
 		if (item.id != null) {
@@ -86,6 +77,7 @@ class RoomController {
 		"redirect:/secure/room/${id}/additem"
 	}
 
+	// POST delete item
 	@RequestMapping(value = "/{roomId}/delitem/{itemId}", method = RequestMethod.POST)
 	String delItem(@PathVariable Long roomId, @PathVariable Long itemId, RedirectAttributes attr) {
 		itemService.delete(itemId)
