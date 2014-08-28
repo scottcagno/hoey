@@ -16,5 +16,5 @@ class Material {
 	@GeneratedValue
 	Long id
 	String cat, name
-	Integer cost, price
+	Float cost, price
 }

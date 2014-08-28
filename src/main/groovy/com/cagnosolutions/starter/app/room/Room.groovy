@@ -20,7 +20,8 @@ class Room {
 	@Id
 	@GeneratedValue
 	Long id
-	String name, total
+	String name
+	Float total
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "room_id")
 	List<Item> items

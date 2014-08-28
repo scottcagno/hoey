@@ -34,14 +34,14 @@ class RoomController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	String addOrEdit(Room room) {
+	String edit(Room room) {
 		room.items = new ArrayList<Item>()
 		if (room.id != null) {
 			Room existingRoom = roomService.findOne(room.id)
 			room.items = existingRoom.items
 		}
 		roomService.save(room)
-		"redirect:/secure/room"
+		"redirect:/secure/room/${room.id}"
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

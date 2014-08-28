@@ -33,9 +33,11 @@ class CustomerController {
 	@RequestMapping(method = RequestMethod.POST)
 	String addOrEdit(Customer customer) {
 		customer.jobs =  new ArrayList<Job>()
-		if (customer.id !=null) {
+		if (customer.id != null) {
 			Customer existingCustomer = customerService.findOne(customer.id)
 			customer.jobs = existingCustomer.jobs
+			customerService.save(customer)
+			return "redirect:/secure/customer/${customer.id}"
 		}
 		customerService.save(customer)
 		"redirect:/secure/customer"

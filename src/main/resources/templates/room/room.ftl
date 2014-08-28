@@ -41,6 +41,8 @@
 									<tr>
 										<th>Material</th>
 										<th>Count</th>
+										<th class="text-right">Total</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -48,11 +50,8 @@
 										<tr>
 											<td>${(item.material.name)!}</td>
 											<td>${(item.count)!}</td>
-											<td>${(item.total)!}</td>
+											<td class="text-right">${(item.total?string.currency)!}</td>
 											<td>
-												<a href="/secure/item/${(item.id)!}" class="btn btn-xs btn-primary">
-													<i class="fa fa-pencil"></i>
-												</a>
 												<a href="#" class="btn btn-danger btn-xs" data-id="${(item.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
@@ -60,6 +59,9 @@
 											</td>
 										</tr>
 									</#list>
+									<tr>
+										<td colspan="3" class="text-right">${(room.total?string.currency)!}</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>

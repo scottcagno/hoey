@@ -8,6 +8,8 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -31,14 +33,14 @@ class JobController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	String addOrEdit(Job job) {
+	String edit(Job job) {
 		job.rooms = new ArrayList<Room>()
 		if (job.id !=null) {
 			Job existingJob = jobService.findOne(job.id)
 			job.rooms = existingJob.rooms
 		}
 		jobService.save job
-		"redirect:/secure/job"
+		"redirect:/secure/job/${job.id}"
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -59,6 +61,15 @@ class JobController {
 		Job job = jobService.findOne(id)
 		job.addRoom(room)
 		jobService.save(job)
+		"redirect:/secure/job/${id}"
+	}
+
+	@RequestMapping(value = "/{id}/calc")
+	String calcTotals(@PathVariable Long id, RedirectAttributes attr) {
+		Job job = jobService.findOne(id)
+		job.calcTotal()
+		jobService.save(job)
+		attr.addFlashAttribute("alertSuccess", "Totals Calculated")
 		"redirect:/secure/job/${id}"
 	}
 

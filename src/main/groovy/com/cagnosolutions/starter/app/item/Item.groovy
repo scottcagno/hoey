@@ -19,7 +19,7 @@ class Item {
 	Long id
 	@OneToOne
 	Material material
-	Integer count, total
+	Float count, total
 
 	void calcTotal() {
 		this.total = count * material.price

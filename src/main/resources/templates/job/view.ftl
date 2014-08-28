@@ -32,6 +32,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading col-sm-12">
 						Job ${job.name}'s Rooms
+						<a href="/secure/job/${job.id}/calc" id="" class="btn btn-default btn-sm">Calculate Totals</a>
 						<form role="form" method="post" action="/secure/job/${job.id}/addRoom" class="col-sm-5 pull-right">
 							<div class="input-group">
 								<input type="text" class="form-control input-sm" name="name" placeholder="Room Name"/>
@@ -48,12 +49,15 @@
 								<thead>
 									<tr>
 										<th>Name</th>
+										<th class="text-right">Total</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<#list job.rooms as room>
 										<tr>
 											<td>${(room.name)!}</td>
+											<td class="text-right">${(room.total?string.currency)!}</td>
 											<td>
 												<a href="/secure/room/${(room.id)!}" class="btn btn-xs btn-primary">
 													<i class="fa fa-pencil"></i>
@@ -65,6 +69,9 @@
 											</td>
 										</tr>
 									</#list>
+									<tr>
+										<td colspan="2" class="text-right">${(job.total?string.currency)!}</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
