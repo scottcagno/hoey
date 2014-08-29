@@ -50,7 +50,7 @@
 										<tr>
 											<td>${(item.material.name)!}</td>
 											<td id="${item.id}" class="text-center col-sm-1 count">
-												<form role="form" id="count_${item.id}" action="/secure/room/${room.id}/addItem" method="post">
+												<form role="form" id="count_${item.id}" action="/secure/room/${room.id}/additem" method="post">
 													<input class="input-sm form-control" id="${item.id}" name="count" value="${item.count}" disabled="disabled">
 													<input name="id" type="hidden" value="${item.id}">
 													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

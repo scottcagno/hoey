@@ -11,7 +11,10 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<div id="materialTablePanel" class="panel panel-default">
-				<div class="panel-heading">Materials</div>
+				<div class="panel-heading col-sm-12">
+					Materials
+					<a href="/secure/job/${jobId}" id="" class="btn btn-default pull-right">Back to job</a>
+				</div>
 				<div class="panel-body">
 					<div id="materialTable" class="table-responsive">
 						<table class="table table-striped">
@@ -32,7 +35,7 @@
 										<td>${material.cost}</td>
 										<td>${material.price}</td>
 										<td colspan="3">
-											<form role="form" method="post" action="/secure/room/${room.id}/addItem" class="pull-right">
+											<form role="form" method="post" action="/secure/job/${jobId}/room/${room.id}/additem" class="pull-right">
 												<div class="input-group">
 													<input type="text" class="form-control input-sm" name="count" placeholder="Quantity"/>
     												<span class="input-group-btn">

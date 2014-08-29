@@ -80,14 +80,11 @@ class JobController {
 
 
 	// POST temp handler to calculate all totals from job down
-	@RequestMapping(value = "/calc", method = RequestMethod.GET)
-	String calcTotals(RedirectAttributes attr) {
-		List<Job> jobs = jobService.findAll()
-		jobs.collect { Job job ->
-			job.calcTotal()
-			jobService.save(job)
-
-		}
+	@RequestMapping(value = "/{id}/calc", method = RequestMethod.GET)
+	String calcTotals(@PathVariable Long id, RedirectAttributes attr) {
+		Job job = jobService.findOne(id)
+		job.calcTotal()
+		jobService.save(job)
 		attr.addFlashAttribute("alertSuccess", "Totals Calculated")
 		"redirect:/secure/job"
 	}
