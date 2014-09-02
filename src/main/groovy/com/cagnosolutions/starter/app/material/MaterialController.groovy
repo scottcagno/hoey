@@ -7,6 +7,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 
 /**
  * Created by Scott Cagno.
@@ -22,8 +23,13 @@ class MaterialController {
 	MaterialService materialService
 
 	@RequestMapping(method = RequestMethod.GET)
-	String viewAll(Model model) {
-		model.addAttribute "materials", materialService.findAll()
+	String viewAll(Model model, @RequestParam String category, @RequestParam String sort) {
+		if(category == null) {
+			model.addAttribute("items", materialService.findAll());
+		} else {
+			model.addAttribute("items", materialService.findAllByCategory(category, sort));
+		}
+		model.addAllAttributes ([materials : materialService.findAll(), categories : materialService.getUniqueItemsByCategory()])
 		"material/material"
 	}
 

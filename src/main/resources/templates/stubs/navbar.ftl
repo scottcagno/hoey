@@ -13,6 +13,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="/secure/login?forward=customer">All Customers</a></li>
 				<li><a href="/secure/login?forward=job">All Jobs</a></li>
+				<li><a href="/secure/login?forward=material">Materials</a></li>
 				<#if authenticated??>
 					<li><a href="/logout"><i class="fa fa-unlock"></i> Logout (${authenticated})</a></li>
 				<#else/>

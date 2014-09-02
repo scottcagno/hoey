@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 /**
@@ -40,10 +42,27 @@ class MaterialService {
 		repo.delete id
 	}
 
+	List<Material> findAllByCategory(String cat, String sort) {
+		if (sort == null) {sort == "id"}
+		repo.findAllByCategory(cat, sort);
+	}
+
+	Set<String> getUniqueItemsByCategory() {
+		List<String> categories = new ArrayList<>();
+		List<Material> allMaterials = repo.findAll();
+		for(Material material : allMaterials) {
+			categories.add(material.cat);
+		}
+		new HashSet<String>(categories);
+	}
+
+
 }
 
 @CompileStatic
 @Repository
 interface MaterialRepository extends JpaRepository<Material, Long> {
+	@Query("SELECT m FROM Material m WHERE m.cat=:cat ORDER BY m.(:sort)")
+	List<Material> findAllByCategory(@Param("cat") String cat, @Param("sort") String sort);
 
 }
