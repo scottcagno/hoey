@@ -118,7 +118,7 @@
 													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 												</form>
 											</td>
-											<td class="text-right">${item.total?string.currency}</td>
+											<td class="text-right">${(item.total?string.currency)!}</td>
 											<td class="text-center">
 												<a href="#" class="btn btn-danger btn-xs" data-id="${(item.id?c)!}"
 												   data-toggle="modal" data-target="#itemDeleteCheck">

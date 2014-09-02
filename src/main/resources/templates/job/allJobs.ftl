@@ -15,7 +15,6 @@
 				<div class="panel panel-default">
 					<div class="panel-heading col-sm-12">
 						All Jobs
-						<a href="/secure/job/calc" id="" class="btn btn-default btn-sm">Calculate Totals</a>
 					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
