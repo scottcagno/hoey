@@ -27,15 +27,11 @@ class Room {
 	List<Item> items
 
 	def addItem(Item item) {
-		items.add(item)
+		items << item
 	}
 
-	def calcTotal() {
-		def newTotal = 0
-		for (Item item : items) {
-			item.calcTotal()
-			newTotal = newTotal + item.total
-		}
-		this.total = newTotal
-	}
+	Float updateTotals() {
+		this.total = items*.updateTotal().sum() as Float
+	    this.total
+    }
 }

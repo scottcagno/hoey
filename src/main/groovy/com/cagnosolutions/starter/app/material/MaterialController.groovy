@@ -22,14 +22,16 @@ class MaterialController {
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model, @RequestParam(required =false) String category, @RequestParam(required = false) String field) {
 		def materials = []
-		if(category == null) {
+		if(category == null)
 			materials = materialService.findAll()
-		} else {
+		else
 			materials = materialService.findAllByCategory(category)
-		}
-		if (field == null) { field = "id"}
-		def sorted = materials.sort { it.getAt(field) }
-
+        if(field == null) {
+            field = "id"
+        }
+        def sorted = materials.sort {
+            it.getAt(field)
+        }
 		model.addAllAttributes ([materials : sorted, categories : materialService.getUniqueItemsByCategory()])
 		"material/material"
 	}
@@ -41,17 +43,19 @@ class MaterialController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(@PathVariable Long id, Model model,  @RequestParam(required =false) String category, @RequestParam(required = false) String sort) {
+	String view(@PathVariable Long id, Model model,  @RequestParam(required =false) String category, @RequestParam(required = false) String field) {
 		def material = materialService.findOne id
 		def materials = []
-		if(category == null) {
+		if(category == null)
 			materials = materialService.findAll()
-		} else {
+		else
 			materials = materialService.findAllByCategory(category)
-		}
-		if (field == null) { field = "id"}
-		def sorted = materials.sort { it.getAt(field) }
-
+        if(field == null) {
+            field = "id"
+        }
+        def sorted = materials.sort {
+            it.getAt(field)
+        }
 		model.addAllAttributes ([material: material, materials : sorted, categories : materialService.getUniqueItemsByCategory()])
 		"material/material"
 	}

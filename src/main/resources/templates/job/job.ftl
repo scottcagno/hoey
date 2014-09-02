@@ -111,9 +111,10 @@
 											<td>${item.material.name}</td>
 											<td>${item.material.cat}</td>
 											<td id="${item.id?c}" class="text-center col-sm-1 count">
-												<form role="form" id="count_${item.id?c}" action="/secure/job/${job.id}/room/${room.id}/additem" method="post">
+												<form role="form" id="count_${item.id?c}" action="/secure/job/${job.id}/room/${room.id}/edititem" method="post">
 													<input class="input-sm form-control" id="${item.id?c}" name="count" value="${item.count?c}" disabled="disabled">
 													<input name="id" type="hidden" value="${item.id?c}">
+                                                    <input type="hidden" name="materialId" value="${item.material.id?c}">
 													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 												</form>
 											</td>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
+import javax.servlet.http.HttpSession
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -47,8 +48,14 @@ class JobController {
 
 	// GET view job
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(@PathVariable Long id, Model model) {
+	String view(HttpSession session, @PathVariable Long id, Model model) {
 		def job = jobService.findOne id
+        if(session.getAttribute("update") != null) {
+            session.removeAttribute("update")
+            job.updateTotals()
+            job = jobService.save job
+            model.addAttribute "alertSuccess", "Job total has been updated!"
+        }
 		model.addAllAttributes([job: job, jobs: jobService.findAll()])
 		"job/job"
 	}
@@ -57,7 +64,7 @@ class JobController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	String delete(@PathVariable Long id, RedirectAttributes attr) {
 		jobService.delete id
-		attr.addFlashAttribute("alertSuccess", "Job deleted successfully")
+		attr.addFlashAttribute "alertSuccess", "Job deleted successfully"
 		"redirect:/secure/job"
 	}
 
@@ -72,21 +79,11 @@ class JobController {
 
 	// POST delete room
 	@RequestMapping(value = "/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
-	String delRoom(@PathVariable Long jobId, @PathVariable Long roomId, RedirectAttributes attr) {
+	String delRoom(HttpSession session, @PathVariable Long jobId, @PathVariable Long roomId, RedirectAttributes attr) {
 		roomservice.delete(roomId)
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted room")
+        if(session.getAttribute("update") == null) session.setAttribute "update", true
 		"redirect:/secure/job/${jobId}"
-	}
-
-
-	// POST temp handler to calculate all totals from job down
-	@RequestMapping(value = "/{id}/calc", method = RequestMethod.GET)
-	String calcTotals(@PathVariable Long id, RedirectAttributes attr) {
-		Job job = jobService.findOne(id)
-		job.calcTotal()
-		jobService.save(job)
-		attr.addFlashAttribute("alertSuccess", "Totals Calculated")
-		"redirect:/secure/job"
 	}
 
 }

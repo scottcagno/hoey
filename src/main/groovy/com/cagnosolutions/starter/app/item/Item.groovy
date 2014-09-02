@@ -21,7 +21,8 @@ class Item {
 	Material material
 	Float count, total
 
-	void calcTotal() {
-		this.total = count * material.price
+	Float updateTotal() {
+		this.total = count * material.price as Float
+        this.total
 	}
 }

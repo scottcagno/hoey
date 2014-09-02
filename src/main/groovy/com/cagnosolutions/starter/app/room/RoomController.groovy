@@ -11,8 +11,9 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+
+import javax.servlet.http.HttpSession
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -52,14 +53,6 @@ class RoomController {
 		"redirect:/secure/job/${jobId}"
 	}
 
-	// GET view room
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(@PathVariable Long id, @PathVariable Long jobId, Model model) {
-		def room = roomService.findOne id
-		model.addAllAttributes([room: room, job : jobService.findOne(jobId)])
-		"job/job"
-	}
-
 	// GET add item
 	@RequestMapping(value = "/{id}/additem", method = RequestMethod.GET)
 	String items(@PathVariable Long id, @PathVariable Long jobId, Model model) {
@@ -67,39 +60,40 @@ class RoomController {
 		"room/materials"
 	}
 
-	// POST add/update item
-	@RequestMapping(value = "/{roomId}/additem", method = RequestMethod.POST)
-	String addItem(@PathVariable Long jobId, @PathVariable Long roomId, Item item, @RequestParam(required = false) Long materialId, RedirectAttributes attr) {
-		if (item.id != null) {
-			Item existingItem = itemService.findOne(item.id)
-			item.material = existingItem.material
-			itemService.save(item)
-			attr.addFlashAttribute("alertSuccess", "Successfully updated item count")
-			// TODO: change price update
-			Job job = jobService.findOne(jobId)
-			job.calcTotal()
-			jobService.save(job)
-			return "redirect:/secure/job/${jobId}/room/${roomId}"
+	// POST update item
+	@RequestMapping(value = "/{roomId}/edititem", method = RequestMethod.POST)
+	String editItem(HttpSession session, @PathVariable Long jobId, @PathVariable Long roomId, Long materialId, Item item, RedirectAttributes attr) {
+		if (item.id == null) {
+            attr.addFlashAttribute "alertError", "Could not update item count"
+            return "redirect:/secure/job/${jobId}/room/${roomId}"
 		}
-		Room room = roomService.findOne(roomId)
-		item.material = materialService.findOne(materialId)
-		item.total = item.count * item.material.price
-		room.addItem(item)
-		roomService.save(room)
-		attr.addFlashAttribute("alertSuccess", "${item.count} ${item.material.name}(s) have been added to ${room.name}")
-		// TODO: change price update
-		Job job = jobService.findOne(jobId)
-		job.calcTotal()
-		jobService.save(job)
-		"redirect:/secure/job/${jobId}/room/${roomId}/additem"
+        item.material = materialService.findOne materialId
+        item.updateTotal()
+        itemService.save item
+        if(session.getAttribute("update") == null) session.setAttribute "update", true
+        "redirect:/secure/job/${jobId}"
 	}
+
+    // POST add item
+    @RequestMapping(value = "/{roomId}/additem", method = RequestMethod.POST)
+    String addItem(HttpSession session, @PathVariable Long jobId, @PathVariable Long roomId, Float count, Long materialId, RedirectAttributes attr) {
+        def room = roomService.findOne(roomId)
+        def item = new Item([material: materialService.findOne(materialId), count: count])
+        item.updateTotal()
+        room.addItem item
+        roomService.save room
+        attr.addFlashAttribute "alertSuccess", "${item.count} ${item.material.name}(s) have been added to ${room.name}"
+        if(session.getAttribute("update") == null) session.setAttribute "update", true
+        "redirect:/secure/job/${jobId}/room/${roomId}/additem"
+    }
 
 	// POST delete item
 	@RequestMapping(value = "/delitem/{itemId}", method = RequestMethod.POST)
-	String delItem(@PathVariable Long jobId, @PathVariable Long itemId, RedirectAttributes attr) {
+	String delItem(HttpSession session, @PathVariable Long jobId, @PathVariable Long itemId, RedirectAttributes attr) {
 		itemService.delete(itemId)
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted item")
-		"redirect:/secure/job/${jobId}"
+        if(session.getAttribute("update") == null) session.setAttribute "update", true
+        "redirect:/secure/job/${jobId}"
 	}
 
 }

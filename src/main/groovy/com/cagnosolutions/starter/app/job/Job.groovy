@@ -27,15 +27,10 @@ class Job {
 	List<Room> rooms
 
 	def addRoom(Room room) {
-		rooms.add(room)
+        rooms << room
 	}
 
-	def calcTotal() {
-		def newTotal = 0
-		for (Room room : rooms) {
-			room.calcTotal()
-			newTotal = newTotal + room.total
-		}
-		this.total = newTotal
-	}
+	def updateTotals() {
+        this.total = rooms*.updateTotals().sum() as Float
+    }
 }
