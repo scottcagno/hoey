@@ -13,7 +13,8 @@
 			<!-- add/edit -->
 			<div class="col-sm-4">
 				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Material
+					<div class="panel-heading">
+						Add or Update Material
 						<span class="pull-right"><a href="/secure/material">Add New</a></span>
 					</div>
 					<div class="panel-body">
@@ -21,7 +22,7 @@
 
 							<div class="form-group">
 								<input type="text" id="cat" name="cat" class="form-control"
-									   placeholder="Category" required="true" value="${(material.category)!}"/>
+									   placeholder="Category" required="true" value="${(material.cat)!}"/>
 							</div>
 							<div class="form-group">
 								<input type="text" id="name" name="name" class="form-control"
@@ -48,18 +49,34 @@
 			<!-- view all -->
 			<div class="col-sm-8">
 				<div class="panel panel-default">
-					<div class="panel-heading">Current Materials</div>
+					<div class="panel-heading col-sm-12">
+						Current Materials
+						<div class="dropdown pull-right">
+							<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
+								Filter By Category
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="categoryFilter">
+								<#list categories as category>
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="/secure/material?category=${category}">${category}</a>
+									</li>
+								</#list>
+								<li role="presentation" class="divider"></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/admin/list/item">All Items</a></li>
+							</ul>
+						</div>
+					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
-
-										<th>Category</th>
-										<th>Name</th>
-										<th>Cost</th>
-										<th>Price</th>
-
+										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Catergory</a></th>
+										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
+										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
+										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=price">Price</a></th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>

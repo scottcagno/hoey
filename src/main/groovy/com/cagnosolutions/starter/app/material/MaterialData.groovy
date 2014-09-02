@@ -42,9 +42,8 @@ class MaterialService {
 		repo.delete id
 	}
 
-	List<Material> findAllByCategory(String cat, String sort) {
-		if (sort == null) {sort == "id"}
-		repo.findAllByCategory(cat, sort);
+	List<Material> findAllByCategory(String cat) {
+		repo.findAllByCategory(cat);
 	}
 
 	Set<String> getUniqueItemsByCategory() {
@@ -55,14 +54,12 @@ class MaterialService {
 		}
 		new HashSet<String>(categories);
 	}
-
-
 }
 
 @CompileStatic
 @Repository
 interface MaterialRepository extends JpaRepository<Material, Long> {
-	@Query("SELECT m FROM Material m WHERE m.cat=:cat ORDER BY m.(:sort)")
-	List<Material> findAllByCategory(@Param("cat") String cat, @Param("sort") String sort);
+	@Query("SELECT m FROM Material m WHERE m.cat=:cat")
+	List<Material> findAllByCategory(@Param("cat") String cat);
 
 }
