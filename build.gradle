@@ -34,6 +34,7 @@ dependencies {
     compile("org.codehaus.groovy:groovy")
     compile("mysql:mysql-connector-java")
     runtime("com.h2database:h2")
+	compile("javax.mail:mail:1.4.7")
 }
 
 task wrapper(type: Wrapper) {

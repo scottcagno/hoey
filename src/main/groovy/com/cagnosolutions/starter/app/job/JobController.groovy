@@ -1,4 +1,5 @@
 package com.cagnosolutions.starter.app.job
+
 import com.cagnosolutions.starter.app.room.Room
 import com.cagnosolutions.starter.app.room.RoomService
 import groovy.transform.CompileStatic
@@ -25,7 +26,7 @@ class JobController {
 	JobService jobService
 
 	@Autowired
-	RoomService roomservice
+	RoomService roomService
 
 	// GET view all jobs
 	@RequestMapping(method = RequestMethod.GET)
@@ -80,7 +81,7 @@ class JobController {
 	// POST delete room
 	@RequestMapping(value = "/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
 	String delRoom(HttpSession session, @PathVariable Long jobId, @PathVariable Long roomId, RedirectAttributes attr) {
-		roomservice.delete(roomId)
+		roomService.delete(roomId)
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted room")
         if(session.getAttribute("update") == null) session.setAttribute "update", true
 		"redirect:/secure/job/${jobId}"

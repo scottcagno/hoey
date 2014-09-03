@@ -2,6 +2,8 @@ package com.cagnosolutions.starter.app.customer
 
 import com.cagnosolutions.starter.app.job.Job
 import com.cagnosolutions.starter.app.job.JobService
+import com.cagnosolutions.starter.app.mail.MailService
+import com.cagnosolutions.starter.app.room.Room
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -9,6 +11,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 /**
@@ -26,6 +29,9 @@ class CustomerController {
 
 	@Autowired
 	JobService jobService
+
+	@Autowired
+	MailService mailService
 
 	// GET view all customers
 	@RequestMapping(method = RequestMethod.GET)
@@ -81,5 +87,18 @@ class CustomerController {
 		"redirect:/secure/customer/{customerId}"
 	}
 
-
+	// GET mail to customer
+	@RequestMapping(value = "/{customerId}/mail", method = RequestMethod.POST)
+	String mail(@PathVariable Long customerId, @RequestParam Long jobId, RedirectAttributes attr) {
+		// TODO: change emailer
+		def customer = customerService.findOne(customerId)
+		def map = new HashMap()
+		def job = jobService.findOne(jobId)
+		List<Room> rooms = job.rooms
+		map.put("job", job)
+		map.put("allRooms", rooms)
+		mailService.test("test@noreplyhoey.com", "Job quote", "mail/mail.ftl", map, customer.email)
+		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")
+		"redirect:/secure/customer/${customerId}"
+	}
 }

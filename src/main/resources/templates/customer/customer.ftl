@@ -62,6 +62,7 @@
 										<th>Name</th>
 										<th>Total</th>
 										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -77,6 +78,13 @@
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>
+											</td>
+											<td>
+												<form action="/secure/customer/${customer.id}/mail" method="post">
+													<input type="hidden" name="jobId" value="${job.id}"/>
+													<button class="btn btn-default btn-sm " type="submit">Send to customer</button>
+													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+												</form>
 											</td>
 										</tr>
 									</#list>

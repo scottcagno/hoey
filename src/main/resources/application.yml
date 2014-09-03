@@ -24,6 +24,12 @@ http:
   mappers:
     jsonPrettyPrint: true
 
+mail:
+    host: smtp.mandrillapp.com
+    port: 587
+    user: scottiecagno@gmail.com
+    pass: AyRsB5cI5H4bcrbheDKfzQ
+
 ---
 spring:
   profiles: development

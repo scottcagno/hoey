@@ -21,7 +21,7 @@ class Job {
 	@GeneratedValue
 	Long id
 	String name
-	Float total
+	Double total
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "job_id")
 	List<Room> rooms

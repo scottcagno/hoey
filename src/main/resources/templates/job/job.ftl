@@ -47,21 +47,6 @@
 				<div class="panel panel-default">
 					<div class="panel-heading col-sm-12">
 						Job ${job.name}'s Rooms
-
-
-						<!--
-						<form role="form" method="post" action="/secure/job/${job.id}/addroom" class="col-sm-5 pull-right">
-							<div class="input-group">
-								<input type="text" class="form-control input-sm" name="name" placeholder="Room Name"/>
-    							<span class="input-group-btn">
-    								<button type="submit" class="btn btn-default btn-sm">Add Room</button>
-    							</span>
-							</div>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						</form>
-						-->
-
-
 					</div>
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover">
