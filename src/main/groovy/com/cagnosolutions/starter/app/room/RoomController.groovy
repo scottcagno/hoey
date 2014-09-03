@@ -4,13 +4,13 @@ import com.cagnosolutions.starter.app.item.ItemService
 import com.cagnosolutions.starter.app.job.Job
 import com.cagnosolutions.starter.app.job.JobService
 import com.cagnosolutions.starter.app.material.MaterialService
-import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 import javax.servlet.http.HttpSession
@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession
  * Copyright Cagno Solutions. All rights reserved.
  */
 
-@CompileStatic
 @Controller(value = "roomController")
 @RequestMapping(value = "/secure/job/{jobId}/room")
 class RoomController {
@@ -35,6 +34,14 @@ class RoomController {
 
 	@Autowired
 	ItemService itemService
+
+	// GET view room
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	String view(@PathVariable Long id, @PathVariable Long jobId, Model model) {
+		def room = roomService.findOne id
+		model.addAllAttributes([room: room, job : jobService.findOne(jobId)])
+		"job/job"
+	}
 
 	// POST add/edit room
 	@RequestMapping(method = RequestMethod.POST)
@@ -55,8 +62,20 @@ class RoomController {
 
 	// GET add item
 	@RequestMapping(value = "/{id}/additem", method = RequestMethod.GET)
-	String items(@PathVariable Long id, @PathVariable Long jobId, Model model) {
-		model.addAllAttributes([room : roomService.findOne(id), materials : materialService.findAll(), jobId : jobId])
+	String items(@PathVariable Long id, @PathVariable Long jobId,
+				 Model model, @RequestParam(required =false) String category,
+				 @RequestParam(required = false) String field) {
+		def materials = []
+		if(category == null || category == "") {
+			materials = materialService.findAll()
+		} else {
+			materials = materialService.findAllByCategory(category)
+		}
+		if (field == null) { field = "id"}
+		def sorted = materials.sort { it.getAt(field) }
+
+		model.addAllAttributes([room : roomService.findOne(id), materials : sorted,
+								categories : materialService.getUniqueItemsByCategory(), jobId : jobId])
 		"room/materials"
 	}
 
@@ -76,7 +95,7 @@ class RoomController {
 
     // POST add item
     @RequestMapping(value = "/{roomId}/additem", method = RequestMethod.POST)
-    String addItem(HttpSession session, @PathVariable Long jobId, @PathVariable Long roomId, Float count, Long materialId, RedirectAttributes attr) {
+    String addItem(HttpSession session, @PathVariable Long jobId, @PathVariable Long roomId, Double count, Long materialId, RedirectAttributes attr) {
         def room = roomService.findOne(roomId)
         def item = new Item([material: materialService.findOne(materialId), count: count])
         item.updateTotal()

@@ -31,6 +31,6 @@ class Job {
 	}
 
 	def updateTotals() {
-        this.total = rooms*.updateTotals().sum() as Float
+        this.total = rooms*.updateTotals().sum() as Double
     }
 }

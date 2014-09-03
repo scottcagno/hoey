@@ -63,7 +63,7 @@
 									</li>
 								</#list>
 								<li role="presentation" class="divider"></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="/admin/list/item">All Items</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="/secure/material">All Items</a></li>
 							</ul>
 						</div>
 					</div>

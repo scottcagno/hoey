@@ -20,10 +20,10 @@ class Item {
 	Long id
 	@OneToOne
 	Material material
-	Float count, total
+	Double count, total
 
-	Float updateTotal() {
-		this.total = count * material.price as Float
+	Double updateTotal() {
+		this.total = count * material.price as Double
         this.total
 	}
 }
