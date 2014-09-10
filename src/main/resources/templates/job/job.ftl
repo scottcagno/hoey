@@ -11,7 +11,7 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<!-- edit job-->
-			<div class="col-sm-4">
+			<div class="col-lg-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">Update Job</div>
 					<div class="panel-body">
@@ -43,9 +43,9 @@
 				</div>
 			</div>
 			<!-- all rooms -->
-			<div class="col-sm-8">
+			<div class="col-lg-8">
 				<div class="panel panel-default">
-					<div class="panel-heading col-sm-12">
+					<div class="panel-heading col-lg-12">
 						Job ${job.name}'s Rooms
 					</div>
 					<div class="table-responsive">
@@ -95,7 +95,7 @@
 											<td></td>
 											<td>${item.material.name}</td>
 											<td>${item.material.cat}</td>
-											<td id="${item.id?c}" class="text-center col-sm-1 count">
+											<td id="${item.id?c}" class="text-center col-lg-1 count">
 												<form role="form" id="count_${item.id?c}" action="/secure/job/${job.id}/room/${room.id}/edititem" method="post">
 													<input class="input-sm form-control" id="${item.id?c}" name="count" value="${item.count?c}" disabled="disabled">
 													<input name="id" type="hidden" value="${item.id?c}">

@@ -11,9 +11,9 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<!-- view all -->
-			<div class="col-sm-12">
+			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading col-sm-12">
+					<div class="panel-heading col-lg-12">
 						All Jobs
 					</div>
 					<div class="panel-body">

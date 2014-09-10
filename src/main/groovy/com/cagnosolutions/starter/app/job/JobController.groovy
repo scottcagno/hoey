@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession
 
 @CompileStatic
 @Controller(value = "jobController")
-@RequestMapping(value = "/secure/job")
+@RequestMapping(value = "/secure")
 class JobController {
 
 	@Autowired
@@ -30,7 +30,7 @@ class JobController {
 	RoomService roomService
 
 	// GET view all jobs
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/job", method = RequestMethod.GET)
 	String viewAll(Model model, @RequestParam(required = false) Integer page,
 				   @RequestParam(required = false) String sort) {
 
@@ -48,20 +48,20 @@ class JobController {
 	}
 
 	// POST edit job
-	@RequestMapping(method = RequestMethod.POST)
-	String edit(Job job) {
+	@RequestMapping(value = "/customer/{customerId}/job", method = RequestMethod.POST)
+	String edit(@PathVariable Long customerId, Job job) {
 		job.rooms = new ArrayList<Room>()
 		if (job.id !=null) {
 			Job existingJob = jobService.findOne(job.id)
 			job.rooms = existingJob.rooms
 		}
 		jobService.save job
-		"redirect:/secure/job/${job.id}"
+		"redirect:/secure/customer/${customerId}/job/${job.id}"
 	}
 
 	// GET view job
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(HttpSession session, @PathVariable Long id, Model model) {
+	@RequestMapping(value = "/customer/{customerId}/job/{id}", method = RequestMethod.GET)
+	String view(HttpSession session, @PathVariable Long id, @PathVariable Long customerId, Model model) {
 		def job = jobService.findOne id
         if(session.getAttribute("update") != null) {
             session.removeAttribute("update")
@@ -69,7 +69,7 @@ class JobController {
             job = jobService.save job
             model.addAttribute "alertSuccess", "Job total has been updated!"
         }
-		model.addAllAttributes([job: job, jobs: jobService.findAll()])
+		model.addAllAttributes([job: job, jobs: jobService.findAll(), customeID : customerId])
 		"job/job"
 	}
 
@@ -82,12 +82,12 @@ class JobController {
 	}
 
 	// POST add room
-	@RequestMapping(value = "/{id}/addroom", method = RequestMethod.POST)
-	String addRoom(@PathVariable Long id, Room room) {
+	@RequestMapping(value = "/customer/{customerId}/job/{id}/addroom", method = RequestMethod.POST)
+	String addRoom(@PathVariable Long id, @PathVariable Long customerId, Room room) {
 		Job job = jobService.findOne(id)
 		job.addRoom(room)
 		jobService.save(job)
-		"redirect:/secure/job/${id}"
+		"redirect:/secure/customer/${customerId}/job/${id}"
 	}
 
 	// POST delete room

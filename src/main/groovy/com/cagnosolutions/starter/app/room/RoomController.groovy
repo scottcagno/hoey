@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession
  */
 
 @Controller(value = "roomController")
-@RequestMapping(value = "/secure/job/{jobId}/room")
+@RequestMapping(value = "/secure/customer/{customerId}/job/{jobId}/room")
 class RoomController {
 
 	@Autowired
@@ -37,15 +37,15 @@ class RoomController {
 
 	// GET view room
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(@PathVariable Long id, @PathVariable Long jobId, Model model) {
+	String view(@PathVariable Long id, @PathVariable Long jobId, @PathVariable Long customerId, Model model) {
 		def room = roomService.findOne id
-		model.addAllAttributes([room: room, job : jobService.findOne(jobId)])
+		model.addAllAttributes([room: room, job : jobService.findOne(jobId), customerId : customerId])
 		"job/job"
 	}
 
 	// POST add/edit room
 	@RequestMapping(method = RequestMethod.POST)
-	String edit(@PathVariable Long jobId, Room room) {
+	String edit(@PathVariable Long jobId, @PathVariable Long customerId, Room room) {
 		room.items = new ArrayList<Item>()
 		if (room.id != null) {
 			Room existingRoom = roomService.findOne(room.id)
@@ -57,12 +57,12 @@ class RoomController {
 			job.addRoom(room)
 			jobService.save(job)
 		}
-		"redirect:/secure/job/${jobId}"
+		"redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 
 	// GET add item
 	@RequestMapping(value = "/{id}/additem", method = RequestMethod.GET)
-	String items(@PathVariable Long id, @PathVariable Long jobId,
+	String items(@PathVariable Long id, @PathVariable Long jobId, @PathVariable Long customerId,
 				 Model model, @RequestParam(required =false) String category,
 				 @RequestParam(required = false) String field) {
 		def materials = []
@@ -75,27 +75,30 @@ class RoomController {
 		def sorted = materials.sort { it.getAt(field) }
 
 		model.addAllAttributes([room : roomService.findOne(id), materials : sorted,
-								categories : materialService.getUniqueItemsByCategory(), jobId : jobId])
+								categories : materialService.getUniqueItemsByCategory(),
+								jobId : jobId, customerId : customerId])
 		"room/materials"
 	}
 
 	// POST update item
 	@RequestMapping(value = "/{roomId}/edititem", method = RequestMethod.POST)
-	String editItem(HttpSession session, @PathVariable Long jobId, @PathVariable Long roomId, Long materialId, Item item, RedirectAttributes attr) {
+	String editItem(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
+					HttpSession session, Long materialId, Item item, RedirectAttributes attr) {
 		if (item.id == null) {
             attr.addFlashAttribute "alertError", "Could not update item count"
-            return "redirect:/secure/job/${jobId}/room/${roomId}"
+            return "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}"
 		}
         item.material = materialService.findOne materialId
         item.updateTotal()
         itemService.save item
         if(session.getAttribute("update") == null) session.setAttribute "update", true
-        "redirect:/secure/job/${jobId}"
+        "redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 
     // POST add item
     @RequestMapping(value = "/{roomId}/additem", method = RequestMethod.POST)
-    String addItem(HttpSession session, @PathVariable Long jobId, @PathVariable Long roomId, Double count, Long materialId, RedirectAttributes attr) {
+    String addItem(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
+					HttpSession session, Double count, Long materialId, RedirectAttributes attr) {
         def room = roomService.findOne(roomId)
         def item = new Item([material: materialService.findOne(materialId), count: count])
         item.updateTotal()
@@ -103,16 +106,17 @@ class RoomController {
         roomService.save room
         attr.addFlashAttribute "alertSuccess", "${item.count} ${item.material.name}(s) have been added to ${room.name}"
         if(session.getAttribute("update") == null) session.setAttribute "update", true
-        "redirect:/secure/job/${jobId}/room/${roomId}/additem"
+        "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}/additem"
     }
 
 	// POST delete item
 	@RequestMapping(value = "/delitem/{itemId}", method = RequestMethod.POST)
-	String delItem(HttpSession session, @PathVariable Long jobId, @PathVariable Long itemId, RedirectAttributes attr) {
+	String delItem(@PathVariable Long jobId, @PathVariable Long itemId, @PathVariable Long customerId,
+					HttpSession session, RedirectAttributes attr) {
 		itemService.delete(itemId)
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted item")
         if(session.getAttribute("update") == null) session.setAttribute "update", true
-        "redirect:/secure/job/${jobId}"
+        "redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 
 }
