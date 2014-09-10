@@ -38,7 +38,7 @@ class CustomerController {
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model, @RequestParam(required = false) Integer page, @RequestParam(required = false) String sort) {
 
-		def customers = customerService.findAll(page? page-1 :0 , 20, sort?:"id")
+		def customers = customerService.findAll(page? page-1 :0 , 10, sort?:"id")
 		page = (page? page :1)
 		def ub = (((customers.totalPages - page) >= 4)? page + 4 : customers.totalPages)
 		if (page < 6) {

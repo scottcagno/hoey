@@ -15,7 +15,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Update Job</div>
 					<div class="panel-body">
-						<form role="form" method="post" action="/secure/job">
+						<form role="form" method="post" action="/secure/customer/${customerId}/job">
 							<div class="form-group">
 								<input type="text" id="name" name="name" class="form-control"
 									   placeholder="Name" required="true" value="${(job.name)!}"/>
@@ -30,7 +30,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Add or Update Room</div>
 					<div class="panel-body">
-						<form role="form" method="post" action="/secure/job/${job.id}/room">
+						<form role="form" method="post" action="/secure/customer/${customerId}/job/${job.id}/room">
 							<div class="form-group">
 								<input type="text" id="name" name="name" class="form-control"
 									   placeholder="Name" required="true" value="${(room.name)!}"/>
@@ -67,14 +67,14 @@
 										</td>
 										<td class="text-right">${(room.total?string.currency)!}</td>
 										<td colspan="2" class="text-center">
-											<a href="/secure/job/${job.id}/room/${(room.id)!}" class="btn btn-xs btn-primary">
+											<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-xs btn-primary">
 												<i class="fa fa-pencil"></i>
 											</a>
 											<a href="#" class="btn btn-danger btn-xs" data-id="${(room.id)!}"
 											   data-toggle="modal" data-target="#roomDeleteCheck">
 												<i class="fa fa-trash-o"></i>
 											</a>
-											<a href="/secure/job/${job.id}/room/${room.id}/additem" class="btn btn-success btn-xs">
+											<a href="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/additem" class="btn btn-success btn-xs">
 												Add Item
 											</a>
 										</td>
@@ -96,7 +96,7 @@
 											<td>${item.material.name}</td>
 											<td>${item.material.cat}</td>
 											<td id="${item.id?c}" class="text-center col-lg-1 count">
-												<form role="form" id="count_${item.id?c}" action="/secure/job/${job.id}/room/${room.id}/edititem" method="post">
+												<form role="form" id="count_${item.id?c}" action="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/edititem" method="post">
 													<input class="input-sm form-control" id="${item.id?c}" name="count" value="${item.count?c}" disabled="disabled">
 													<input name="id" type="hidden" value="${item.id?c}">
                                                     <input type="hidden" name="materialId" value="${item.material.id?c}">
@@ -147,7 +147,7 @@
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="roomDelete">
-							<form role="form" method="post" action="/secure/job/${job.id}/delroom/{id}">
+							<form role="form" method="post" action="/secure/customer/${customerId}/job/${job.id}/delroom/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Room</button>
 							</form>
@@ -173,7 +173,7 @@
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="itemDelete">
-							<form role="form" method="post" action="/secure/job/${job.id}/room/delitem/{id}">
+							<form role="form" method="post" action="/secure/customer/${customerId}/job/${job.id}/room/delitem/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Item</button>
 							</form>
