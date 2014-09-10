@@ -20,8 +20,12 @@ class Job {
 	@Id
 	@GeneratedValue
 	Long id
-	String name
+
+    String name, notes
 	Double total
+    Integer status, terms // status codes: 0 - quote, 1 - active, 2 - invoiced, 3 - paid
+    Date created, invoiced
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "job_id")
 	List<Room> rooms

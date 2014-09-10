@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="head">
-		<title>Landing Page</title>
+		<title>Shock & Awe</title>
         <#include "stubs/header.ftl">
 	</head>
 	<body id="body">
@@ -12,6 +12,7 @@
         <div class="jumbotron">
             <div class="container">
                 <span class="pull-left col-sm-8">
+                    <h1>Sock & Awe. <small>Quality electrical work</small></h1>
                     <img class="img-responsive logo" src="/static/img/logo.png"/>
                     <p class="text-muted">Custom engineered software solutions built specifically for you.</p>
                 </span>
