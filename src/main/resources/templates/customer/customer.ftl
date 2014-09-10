@@ -10,7 +10,7 @@
 
 		<div id="content" class="container">
 			<!-- add/edit -->
-			<div class="col-sm-4">
+			<div class="col-lg-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">Update Customer</div>
 					<div class="panel-body">
@@ -40,11 +40,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-8">
+			<div class="col-lg-8">
 				<div class="panel panel-default">
-					<div class="panel-heading col-sm-12">
+					<div class="panel-heading col-lg-12">
 						Jobs
-						<form role="form" class="col-sm-5 pull-right" method="post" action="/secure/customer/${customer.id}/addjob">
+						<form role="form" class="col-lg-5 pull-right" method="post" action="/secure/customer/${customer.id}/addjob">
 							<div class="input-group">
 								<input type="text" name="name" class="form-control input-sm" placeholder="Job Name" required="true"/>
 								<span class="input-group-btn">
@@ -60,6 +60,8 @@
 								<thead>
 									<tr>
 										<th>Name</th>
+										<th>Created</th>
+										<th>Status</th>
 										<th>Total</th>
 										<th></th>
 										<th></th>
@@ -69,6 +71,23 @@
 									<#list customer.jobs as job>
 										<tr>
 											<td>${(job.name)!}</td>
+											<td>${job.created?string.short}</td>
+											<td>
+												<#switch job.status>
+													<#case 0>
+														Quote
+														<#break>
+													<#case 1>
+														Active
+														<#break>
+													<#case 2>
+														Invoiced
+														<#break>
+													<#case 3>
+														Paid
+														<#break>
+												</#switch>
+											</td>
 											<td>${(job.total?string.currency)!}</td>
 											<td>
 												<a href="/secure/job/${(job.id)!}" class="btn btn-xs btn-primary">

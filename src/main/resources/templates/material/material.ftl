@@ -14,8 +14,8 @@
 			<div class="col-sm-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						Add or Update Material
-						<span class="pull-right"><a href="/secure/material">Add New</a></span>
+						Add/Edit Material
+						<span class="pull-right"><a href="/secure/material">Clear</a></span>
 					</div>
 					<div class="panel-body">
 						<form role="form" method="post" action="/secure/material">

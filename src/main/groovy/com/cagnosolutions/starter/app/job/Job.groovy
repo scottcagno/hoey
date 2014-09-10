@@ -23,7 +23,7 @@ class Job {
 
     String name, notes
 	Double total
-    Integer status, terms // status codes: 0 - quote, 1 - active, 2 - invoiced, 3 - paid
+    Integer status // status codes: 0 - quote, 1 - active, 2 - invoiced, 3 - paid
     Date created, invoiced
 
 	@OneToMany(cascade = CascadeType.ALL)
