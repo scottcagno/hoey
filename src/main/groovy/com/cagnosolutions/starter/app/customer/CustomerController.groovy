@@ -1,9 +1,8 @@
 package com.cagnosolutions.starter.app.customer
-
+import com.cagnosolutions.starter.app.email.Email
+import com.cagnosolutions.starter.app.email.EmailService
 import com.cagnosolutions.starter.app.job.Job
 import com.cagnosolutions.starter.app.job.JobService
-import com.cagnosolutions.starter.app.mail.MailService
-import com.cagnosolutions.starter.app.room.Room
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -30,8 +28,11 @@ class CustomerController {
 	@Autowired
 	JobService jobService
 
+	/*@Autowired
+	MailService mailService*/
+
 	@Autowired
-	MailService mailService
+	EmailService emailService
 
 	// GET view all customers
 	@RequestMapping(method = RequestMethod.GET)
@@ -102,13 +103,13 @@ class CustomerController {
 	@RequestMapping(value = "/{customerId}/mail", method = RequestMethod.POST)
 	String mail(@PathVariable Long customerId, @RequestParam Long jobId, RedirectAttributes attr) {
 		// TODO: change emailer
-		def customer = customerService.findOne(customerId)
-		def map = new HashMap()
-		def job = jobService.findOne(jobId)
-		List<Room> rooms = job.rooms
-		map.put("job", job)
-		map.put("allRooms", rooms)
-		mailService.test("test@noreplyhoey.com", "Job quote", "mail/mail.ftl", map, customer.email)
+		def map = [job : jobService.findOne(jobId), customer : customerService.findOne(customerId)]
+		Email email = emailService.CreateEmail("mail/mail.ftl", map)
+		email.setAll("noreply@hoeynoreply.com", "Job Quote", ((map.customer as Customer).email as String))
+		emailService.sendEmailThreaded(email)
+
+
+//		mailService.test("test@noreplyhoey.com", "Job quote", "mail/mail.ftl", map, customer.email)
 		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")
 		"redirect:/secure/customer/${customerId}"
 	}

@@ -21,7 +21,7 @@ class Room {
 	@GeneratedValue
 	Long id
 	String name
-	Double total
+	Double total = 0D
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "room_id")
 	List<Item> items
@@ -31,7 +31,7 @@ class Room {
 	}
 
 	Double updateTotals() {
-		this.total = items*.updateTotal().sum() as Double
+		this.total = (items.size() <=0)? 0D : (items*.updateTotal().sum() as Double)
 	    this.total
     }
 }
