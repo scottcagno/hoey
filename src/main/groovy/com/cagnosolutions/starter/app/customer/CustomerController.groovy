@@ -35,9 +35,20 @@ class CustomerController {
 
 	// GET view all customers
 	@RequestMapping(method = RequestMethod.GET)
-	String viewAll(Model model) {
-		model.addAttribute "customers", customerService.findAll()
+	String viewAll(Model model, @RequestParam(required = false) Integer page, @RequestParam(required = false) String sort) {
+
+		def customers = customerService.findAll(page? page-1 :0 , 20, sort?:"id")
+		page = (page? page :1)
+		def ub = (((customers.totalPages - page) >= 4)? page + 4 : customers.totalPages)
+		if (page < 6) {
+			ub = ((customers.totalPages > 10)? 10 : ((customers.totalPages > 0)? customers.totalPages : 1))
+		}
+		def lb = (((ub - 9) > 0)? ub-9: 1)
+		model.addAllAttributes([customers: customers, lb: lb, ub : ub])
 		"customer/allCustomers"
+
+		/*model.addAttribute "customers", customerService.findAll()
+		"customer/allCustomers"*/
 	}
 
 	// POST add/edit customer
@@ -79,7 +90,7 @@ class CustomerController {
 		"redirect:/secure/customer/${id}"
 	}
 
-	// POSt delete job
+	// POST delete job
 	@RequestMapping(value = "/{customerId}/deljob/{jobId}", method = RequestMethod.POST)
 	String delJob(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
 		jobService.delete(jobId)

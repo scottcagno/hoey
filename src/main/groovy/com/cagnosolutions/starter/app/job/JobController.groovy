@@ -9,6 +9,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 import javax.servlet.http.HttpSession
@@ -30,9 +31,20 @@ class JobController {
 
 	// GET view all jobs
 	@RequestMapping(method = RequestMethod.GET)
-	String viewAll(Model model) {
-		model.addAttribute "jobs", jobService.findAll()
+	String viewAll(Model model, @RequestParam(required = false) Integer page,
+				   @RequestParam(required = false) String sort) {
+
+		def jobs = jobService.findAll(page? page-1 :0 , 20, sort?:"id")
+		page = (page? page :1)
+		def ub = (((jobs.totalPages - page) >= 4)? page + 4 : jobs.totalPages)
+		if (page < 6) {
+			ub = ((jobs.totalPages > 10)? 10 : ((jobs.totalPages > 0)? jobs.totalPages : 1))
+		}
+		def lb = (((ub - 9) > 0)? ub-9: 1)
+		model.addAllAttributes([jobs: jobs, lb: lb, ub : ub])
 		"job/allJobs"
+	/*	model.addAttribute "jobs", jobService.findAll()
+		"job/allJobs"*/
 	}
 
 	// POST edit job

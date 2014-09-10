@@ -17,17 +17,30 @@
 						All Jobs
 					</div>
 					<div class="panel-body">
+						<div id="pagenator" class="text-center">
+							<#assign prev = ((jobs.firstPage) ? string('1', jobs.number))/>
+							<#assign next = ((jobs.lastPage) ? string (jobs.number +1, jobs.number + 2)) />
+							<ul class="pagination">
+								<li ${(jobs.firstPage)?string('class="disabled"', '')}><a href="/secure/job?page=1&sort=${(RequestParameters.sort)!}">First</a></li>
+								<li ${(jobs.firstPage)?string('class="disabled"', '')}><a href="/secure/job?page=${prev}&sort=${(RequestParameters.sort)!}">&laquo;</a></li>
+								<#list lb..ub as n>
+									<li ${(n == jobs.number + 1)?string('class="active"', '')}><a href="/secure/job?page=${n}&sort=${(RequestParameters.sort)!}">${n}</a></li>
+								</#list>
+								<li ${(jobs.lastPage)?string('class="disabled"', '')}><a href="/secure/job?page=${next}&sort=${(RequestParameters.sort)!}">&raquo;</a></li>
+								<li ${(jobs.lastPage)?string('class="disabled"', '')}><a href="/secure/job?page=${jobs.totalPages}&sort=${(RequestParameters.sort)!}">Last</a></li>
+							</ul>
+						</div>
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th>Name</th>
-										<th>Total</th>
+										<th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=name">Name</a></th>
+										<th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=total">Total</a></th>
 										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									<#list jobs as job>
+									<#list jobs.content as job>
 										<tr>
 											<td>${(job.name)!}</td>
 											<td>${(job.total?string.currency)!}</td>
