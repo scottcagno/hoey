@@ -1,8 +1,6 @@
-<div class="text-center footer">
-    <p class="text-muted">
-        <small>
-           Copyright Cagno Solutions <br/>
-            A Domain of Cagno Enterprises, Inc.
-        </small>
+<hr/>
+<footer>
+    <p class="text-center text-muted">
+        <small><i class="fa fa-copyright"></i> 2014, Hoey Enterprises</small>
     </p>
-</div>
+</footer>

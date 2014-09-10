@@ -1,68 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="head">
-		<title>Shock & Awe</title>
+		<title>Hoey Enterprises</title>
         <#include "stubs/header.ftl">
 	</head>
 	<body id="body">
 
-		<#include "stubs/navbar.ftl">
+        <!-- navbar -->		
+        <div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+        	<div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+        	            <span class="icon-bar"></span>
+        				<span class="icon-bar"></span>
+        				<span class="icon-bar"></span>
+        			</button>
+        			<a class="navbar-brand" href="#">Hoey Enterprises</a>
+        		</div>
+        		<div class="collapse navbar-collapse navbar-ex1-collapse">
+        			<ul class="nav navbar-nav navbar-right">
+        				<li><a href="/secure/customer">Login</a></li>
+        			</ul>
+        		</div>
+        	</div>
+        </div>
+        <!-- navbar -->
+
+        <!-- errors -->
+        <div class="container">
+            <#if alert??>
+                <div class="alert alert-info alert-dismissable text-center">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                ${alert}
+                </div>
+            <#elseif alertError??>
+                <div class="alert alert-danger alert-dismissable text-center">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                ${alertError}
+                </div>
+            <#elseif alertSuccess??>
+                <div class="alert alert-success alert-dismissable text-center">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                ${alertSuccess}
+                </div>
+            </#if>
+        </div>
+        <!-- errors -->
 
         <!-- content -->
         <div class="jumbotron">
             <div class="container">
-                <span class="pull-left col-sm-8">
-                    <h1>Sock & Awe. <small>Quality electrical work</small></h1>
+                <span class="pull-left col-lg-7">
                     <img class="img-responsive logo" src="/static/img/logo.png"/>
-                    <p class="text-muted">Custom engineered software solutions built specifically for you.</p>
                 </span>
-                <span class="pull-left">
-                    The decision between bespoke or off-the-shelf software is quickly taking priority in
-                    todays fast paced business environment.  The need to have better tools, to complete work
-                    more efficiently, to avoid possible errors or pitfalls and ultimatly to outperform your
-                    competion are what enable your business to succeed.
+                <span class="pull-right col-lg-4">
+                    <p class="lead">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
+                    </p>
                 </span>
-            </div>
-        </div>
-        <div class="container">
-            <div class="col-sm-4 text-center">
-                <h4><i class="fa fa-code fa-5x"></i></h4><br/>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <p>
-                            The real challange in developing bespoke software is to combine the 'instant turnaround' you get
-                            with an off-the-shelf solution with the obvious tailored nature that custom software offers.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 text-center">
-                <h4><i class="fa fa-cogs fa-5x"></i></h4><br/>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <p>
-                            Most off-the-shelf software simply echos a successful bespoke design pattern in mass quantity.
-                            The only way to accomplish this is to generalize the solution in order for it to 'fit' a wider range
-                            of users.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 text-center">
-                <h4><i class="fa fa-check-circle-o fa-5x"></i></h4><br/>
-                <div class="panel panel-default">
-                	<div class="panel-body">
-                        <p>
-                            Taking a pre-existing software design and generalizing it to fit a wider userbase comes with the same
-                            interesting caveat as a 'one size fits all' glove has.  The question is does it really fit?
-                        </p>
-                	</div>
-                </div>
+                <br/><br/><br/>
+                <span class="col-lg-12">
+                    <p class="text-muted">
+                        <small>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </small>
+                    </p>
+                </span>
             </div>
         </div>
         <!-- content -->
 
         <#include "stubs/footer.ftl">
+
+        <#include "stubs/scripts.ftl">
 
 	</body>
 </html>

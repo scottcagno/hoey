@@ -11,7 +11,7 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<!-- add/edit -->
-			<div class="col-sm-4">
+			<div class="col-lg-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">Update Room</div>
 					<div class="panel-body">
@@ -28,9 +28,9 @@
 				</div>
 			</div>
 			<!-- add/edit -->
-			<div class="col-sm-8">
+			<div class="col-lg-8">
 				<div class="panel panel-default">
-					<div class="panel-heading col-sm-12">
+					<div class="panel-heading col-lg-12">
 						Current Items
 						<a href="/secure/room/${room.id}/additem" id="addItem" class="btn btn-default btn-sm pull-right">Add Item</a>
 					</div>
@@ -49,7 +49,7 @@
 									<#list room.items as item>
 										<tr>
 											<td>${(item.material.name)!}</td>
-											<td id="${item.id}" class="text-center col-sm-1 count">
+											<td id="${item.id}" class="text-center col-lg-1 count">
 												<form role="form" id="count_${item.id}" action="/secure/room/${room.id}/additem" method="post">
 													<input class="input-sm form-control" id="${item.id}" name="count" value="${item.count}" disabled="disabled">
 													<input name="id" type="hidden" value="${item.id}">

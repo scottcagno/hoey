@@ -11,7 +11,7 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<!-- add/edit -->
-			<div class="col-sm-4">
+			<div class="col-lg-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						Add/Edit Material
@@ -47,9 +47,9 @@
 			</div>
 			<!-- add/edit -->
 			<!-- view all -->
-			<div class="col-sm-8">
+			<div class="col-lg-8">
 				<div class="panel panel-default">
-					<div class="panel-heading col-sm-12">
+					<div class="panel-heading col-lg-12">
 						Current Materials
 						<div class="dropdown pull-right">
 							<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">

@@ -11,9 +11,9 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<div id="materialTablePanel" class="panel panel-default">
-				<div class="panel-heading col-sm-12">
+				<div class="panel-heading col-lg-12">
 					<div class="pull-left">Materials</div>
-					<div class="col-sm-2">
+					<div class="col-lg-2">
 					<div class="dropdown">
 						<button class="btn btn-xs btn-default btn-block dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
 							Filter By Category

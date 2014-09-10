@@ -7,18 +7,14 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/"><i class="fa fa-home"></i> Home</a>
+			<a class="navbar-brand" href="/">Hoey Enterprises</a>
 		</div>
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/secure/login?forward=customer">All Customers</a></li>
-				<li><a href="/secure/login?forward=job">All Jobs</a></li>
-				<li><a href="/secure/login?forward=material">Materials</a></li>
-				<#if authenticated??>
-					<li><a href="/logout"><i class="fa fa-unlock"></i> Logout (${authenticated})</a></li>
-				<#else/>
-					<li><a href="/secure/login?forward=user"><i class="fa fa-user"></i> Login</a></li>
-				</#if>
+				<li><a href="/secure/customer">All Customers</a></li>
+				<li><a href="/secure/job">All Jobs</a></li>
+				<li><a href="/secure/material">Materials</a></li>
+                <li><a href="/logout">Logout</a></li>
 			</ul>
 		</div>
 	</div>
@@ -30,12 +26,12 @@
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			${alert}
 		</div>
-	<#elseif alertError??/>
+	<#elseif alertError??>
 		<div class="alert alert-danger alert-dismissable text-center">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			${alertError}
 		</div>
-	<#elseif alertSuccess??/>
+	<#elseif alertSuccess??>
 		<div class="alert alert-success alert-dismissable text-center">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			${alertSuccess}

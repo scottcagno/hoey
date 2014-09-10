@@ -10,7 +10,7 @@
 
         <!-- content -->
         <div id="content" class="container">
-            <div class="col-sm-10 col-sm-offset-1">
+            <div class="col-lg-10 col-lg-offset-1">
             <legend>${(error)!} <span class="text-danger">${(message)!}</span></legend>
             <pre>${(exception)!'An unknown error has occoured. That really sucks.'}</pre>
             </div>
