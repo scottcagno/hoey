@@ -59,9 +59,9 @@ class JobController {
 		job.rooms = new ArrayList<Room>()
 		if (job.id !=null) {
 			Job existingJob = jobService.findOne(job.id)
-			job.rooms = existingJob.rooms
+			jobService.mergeProperties(job, existingJob)
+			jobService.save existingJob
 		}
-		jobService.save job
 		"redirect:/secure/customer/${customerId}/job/${job.id}"
 	}
 
@@ -124,5 +124,4 @@ class JobController {
 		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")
 		"redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
-
 }

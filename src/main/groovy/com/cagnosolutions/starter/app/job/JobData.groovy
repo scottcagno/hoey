@@ -48,6 +48,14 @@ class JobService {
 	Long findCustomerIdByJob(Long jobId) {
 		repo.findCustomerIdByJob(jobId)
 	}
+
+	// helper method
+	def mergeProperties(source, target) {
+		source.properties.each { key, value ->
+			if (target.hasProperty(key as String) && !(key in ['class', 'metaClass']) && value != null)
+				target[key as String] = value
+		}
+	}
 }
 
 @CompileStatic
