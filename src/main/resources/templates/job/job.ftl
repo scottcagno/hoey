@@ -37,7 +37,7 @@
 				    	    		<button class="btn btn-md btn-primary btn-block" type="submit">Update Job</button>
                                     <hr/>
                                     <a href="#" class="btn btn-danger btn-block" data-id="${(job.id)!}"
-                                       data-toggle="modal" data-target="#deleteCheck">
+                                       data-toggle="modal" data-target="#jobDeleteCheck">
                                         Delete Job
                                     </a>
 				    	    	</form>
@@ -163,6 +163,31 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="jobDeleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Are you sure?</h4>
+					</div>
+					<div class="modal-body">
+						Permanently remove job? This action cannot be undone.
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
+						</button>
+						<span id="jobDelete">
+							<form role="form" method="post" action="/secure/customer/${customerId}/deljob/{id}">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Job</button>
+							</form>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="modal fade" id="roomDeleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -222,6 +247,13 @@
 
 		<script>
 			$(document).ready(function() {
+
+				// toggle safe delete modal popup
+				$('a[data-toggle="modal"]').click(function(){
+					var id = $(this).data('id');
+					var form = $('.modal #jobDelete');
+					form.html(form.html().replace('{id}',id));
+				});
 
 				// toggle safe delete modal popup
 				$('a[data-toggle="modal"]').click(function(){

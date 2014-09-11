@@ -143,17 +143,18 @@
 						<h4 class="modal-title">Are you sure?</h4>
 					</div>
 					<div class="modal-body">
-						Permantly remove job? This action cannot be undone.
+						Permanently remove customer? This action cannot be undone.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
 						</button>
 						<span id="delete">
-							<form role="form" method="post" action="/secure/customer/${customer.id}/deljob/{id}">
+							<form role="form" method="post" action="/secure/customer/{id}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Job</button>
+								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Customer</button>
 							</form>
 						</span>
+
 					</div>
 				</div>
 			</div>
