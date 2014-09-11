@@ -49,6 +49,13 @@
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
 						</form>
+						<#if room??>
+							<hr/>
+							<a href="#" class="btn btn-danger btn-md btn-block" data-id="${(room.id)!}"
+							   data-toggle="modal" data-target="#roomDeleteCheck">
+								Delete
+							</a>
+						</#if>
 					</div>
 				</div>
 			</div>
@@ -83,10 +90,6 @@
 										<td colspan="2" class="text-center">
 											<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-md btn-primary">
 												<i class="fa fa-pencil"></i>
-											</a>
-											<a href="#" class="btn btn-danger btn-md" data-id="${(room.id)!}"
-											   data-toggle="modal" data-target="#roomDeleteCheck">
-												<i class="fa fa-trash-o"></i>
 											</a>
 											<a href="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/additem" class="btn btn-success btn-md">
 												Add Item
@@ -129,7 +132,7 @@
 									</#list>
 									<tr class="collapse room_${room.id}">
 										<td></td>
-										<td colspan="4" class="text-right">Room Total: ${(room.total?string.currency)!}</td>
+										<td colspan="4" class="text-right">Room Total <small>* Includes global markup</small>: ${(room.total?string.currency)!}</td>
 										<td></td>
 										<td></td>
 									</tr>

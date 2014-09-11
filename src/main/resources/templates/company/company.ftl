@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <input type="tel" id="phone" name="phone" value="${(company.phone)!}" class="form-control" placeholder="Phone" required="true" />
                     </div>
-                    <input type="hidden" name="id" value="${(company.id)!}"/>
+                    <input type="hidden" name="id" value="1"/>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <button class="btn btn-md btn-primary btn-block" type="submit">Update Owner</button>
                 </form>
@@ -57,7 +57,7 @@
                             <input type="text" id="zip" name="zip" value="${(company.zip)!}" class="form-control" placeholder="Zip" required="true" />
                         </div>
                     </div>
-                    <input type="hidden" name="id" value="${(company.id)!}"/>
+                    <input type="hidden" name="id" value="1"/>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <button class="btn btn-md btn-primary btn-block" type="submit">Update Company</button>
                 </form>
@@ -76,15 +76,15 @@
                         <#--<img src="${(company.logo??)?string((company.logo)!, '/static/img/logo.png')}" class="img-responsive">-->
                     <#--</div>-->
                     <div class="form-group">
-                        <input type="url" id="logo" name="logo" value="${(company.logo)!}" class="form-control" placeholder="Logo URL" required="true" />
+                        <input type="url" id="logo" name="logo" value="${(company.logo)!}" class="form-control" placeholder="Logo URL"/>
                     </div>
                     <div class="form-group">
-                        <input type="number" id="markup" name="markup" value="${(company.markup)!}" class="form-control" placeholder="Global Markup" required="true" />
+                        <input type="number" id="markup" name="markup" value="${(company.markup)!}" class="form-control" placeholder="Global Markup"/>
                     </div>
                     <div class="form-group">
-                        <input type="number" id="terms" name="terms" value="${(company.terms)!}" class="form-control" placeholder="Payment Terms" required="true" />
+                        <input type="number" id="terms" name="terms" value="${(company.terms)!}" class="form-control" placeholder="Payment Terms"/>
                     </div>
-                    <input type="hidden" name="id" value="${(company.id)!}"/>
+                    <input type="hidden" name="id" value="1"/>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <button class="btn btn-md btn-primary btn-block" type="submit">Update Extras</button>
                 </form>

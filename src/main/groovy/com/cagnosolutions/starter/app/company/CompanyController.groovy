@@ -34,8 +34,12 @@ class CompanyController {
     @RequestMapping(method = RequestMethod.POST)
     String edit(Company company, RedirectAttributes attr) {
         def current = companyService.findOne()
-        mergeProperties(company, current)
-        companyService.save current
+		if (current == null) {
+			companyService.save company
+		} else {
+			mergeProperties(company, current)
+			companyService.save current
+		}
         attr.addFlashAttribute("alertSuccess", "Information has successfully been updated!")
         "redirect:/secure/company"
     }

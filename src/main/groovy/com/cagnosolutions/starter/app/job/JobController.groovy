@@ -79,6 +79,13 @@ class JobController {
 		"job/job"
 	}
 
+	// GET view job from all jobs
+	@RequestMapping(value = "/job/{id}", method = RequestMethod.GET)
+	String viewJob(@PathVariable Long JobId) {
+		//TODO: make custom sql statement
+	}
+
+
 	// POST delete job
 	@RequestMapping(value = "/job/{id}", method = RequestMethod.POST)
 	String delete(@PathVariable Long id, RedirectAttributes attr) {
