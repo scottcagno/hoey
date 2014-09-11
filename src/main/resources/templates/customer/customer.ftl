@@ -11,54 +11,49 @@
 		<div id="content" class="container">
 			<!-- add/edit -->
 			<div class="col-md-4">
-
                 <div class="panel-group" id="accordion">
-
-				<div id="customer" class="panel panel-default">
-					<div class="panel-heading">
-                        Update Customer
-                        <a data-toggle="collapse" data-target="#collapseCustomer"
-                           href="#collapseCustomer" class="pull-right">
-                            Collapse
-                        </a>
+				    <div id="customer" class="panel panel-default">
+					    <div class="panel-heading">
+                            Customer Details
+                            <a data-toggle="collapse" data-target="#toggle"
+                                href="#toggle" class="pull-right">
+                                View
+                            </a>
+                        </div>
+                        <div id="toggle" class="panel-collapse collapse">
+    					    <div class="panel-body">
+						        <form role="form" method="post" action="/secure/customer">
+						        	<div class="form-group">
+						        		<input type="text" id="company" name="company" class="form-control"
+						        			   placeholder="Company" required="true" value="${(customer.company)!}"/>
+						        	</div>
+						        	<div class="form-group">
+						        		<input type="text" id="name" name="name" class="form-control"
+						        			   placeholder="Name" required="true" value="${(customer.name)!}"/>
+						        	</div>
+						        	<div class="form-group">
+						        		<input type="email" id="email" name="email" class="form-control"
+						        			   placeholder="Email" required="true" value="${(customer.email)!}"/>
+						        	</div>
+						        	<div class="form-group">
+						        		<input type="text" id="phone" name="phone" class="form-control"
+						        			   placeholder="Phone number" required="true" value="${(customer.phone)!}"/>
+						        	</div>
+						        	<input type="hidden" name="id" value="${(customer.id)!}"/>
+						        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						        	<button class="btn btn-md btn-primary btn-block" type="submit">Update Customer</button>
+                                    <#if customer??>
+                                        <hr/>
+                                        <a href="#" class="btn btn-danger btn-block" data-id="${(customer.id)!}"
+                                           data-toggle="modal" data-target="#deleteCheck">
+                                            Delete Customer
+                                        </a>
+                                    </#if>
+                                </form>
+					        </div>
+				        </div>
                     </div>
-
-                    <div id="collapseCustomer" class="panel-collapse collapse in">
-
-					<div class="panel-body">
-						<form role="form" method="post" action="/secure/customer">
-
-							<div class="form-group">
-								<input type="text" id="company" name="company" class="form-control"
-									   placeholder="Company" required="true" value="${(customer.company)!}"/>
-							</div>
-							<div class="form-group">
-								<input type="text" id="name" name="name" class="form-control"
-									   placeholder="Name" required="true" value="${(customer.name)!}"/>
-							</div>
-							<div class="form-group">
-								<input type="email" id="email" name="email" class="form-control"
-									   placeholder="Email" required="true" value="${(customer.email)!}"/>
-							</div>
-							<div class="form-group">
-								<input type="text" id="phone" name="phone" class="form-control"
-									   placeholder="Phone number" required="true" value="${(customer.phone)!}"/>
-							</div>
-
-							<input type="hidden" name="id" value="${(customer.id)!}"/>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Update Customer</button>
-                            <#if customer??>
-                                <hr/>
-                                <a href="#" class="btn btn-danger btn-block" data-id="${(customer.id)!}"
-                                   data-toggle="modal" data-target="#deleteCheck">
-                                    Delete Customer
-                                </a>
-                            </#if>
-                        </form>
-					</div>
-				</div>
-                    </div></div>
+                </div>
 				<div class="panel panel-default">
 					<div class="panel-heading">Add Job</div>
 					<div class="panel-body">
@@ -84,59 +79,55 @@
 					<div class="panel-heading col-xs-12">
 						Jobs
 					</div>
-					<div class="panel-body">
-						<div class="table-responsive">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Created</th>
-										<th>Status</th>
-										<th>Total</th>
-										<th>Edit</th>
-										<th>Quote</th>
-									</tr>
-								</thead>
-								<tbody>
-									<#list customer.jobs as job>
-										<tr>
-											<td>${(job.name)!}</td>
-											<td>${job.created?string.short}</td>
-											<td>
-												<#switch job.status>
-													<#case 0>
-														Quote
-														<#break>
-													<#case 1>
-														Active
-														<#break>
-													<#case 2>
-														Invoiced
-														<#break>
-													<#case 3>
-														Paid
-														<#break>
-												</#switch>
-											</td>
-											<td>${(job.total?string.currency)!}</td>
-											<td>
-												<a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-md btn-primary">
-													<i class="fa fa-pencil"></i>
-												</a>
-											</td>
-											<td>
-												<form action="/secure/customer/${customer.id}/mail" method="post">
-													<input type="hidden" name="jobId" value="${job.id}"/>
-													<button class="btn btn-default btn-md" type="submit">Send to customer</button>
-													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-												</form>
-											</td>
-										</tr>
-									</#list>
-								</tbody>
-							</table>
-						</div>
-					</div>
+                    <table class="table table-striped table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Edit</th>
+                            <th>Quote</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list customer.jobs as job>
+                        <tr>
+                            <td>${(job.name)!}</td>
+                            <td>${job.created?string.short}</td>
+                            <td>
+                                <#switch job.status>
+                                    <#case 0>
+                                        Quote
+                                        <#break>
+                                    <#case 1>
+                                        Active
+                                        <#break>
+                                    <#case 2>
+                                        Invoiced
+                                        <#break>
+                                    <#case 3>
+                                        Paid
+                                        <#break>
+                                </#switch>
+                            </td>
+                            <td>${(job.total?string.currency)!}</td>
+                            <td>
+                                <a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-md btn-primary">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <form action="/secure/customer/${customer.id}/mail" method="post">
+                                    <input type="hidden" name="jobId" value="${job.id}"/>
+                                    <button class="btn btn-default btn-md" type="submit">Send to customer</button>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                </form>
+                            </td>
+                        </tr>
+                        </#list>
+                        </tbody>
+                    </table>
 				</div>
 			</div>
 		</div>
