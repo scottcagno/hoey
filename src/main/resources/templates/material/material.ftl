@@ -29,12 +29,12 @@
 									   placeholder="Name" required="true" value="${(material.name)!}"/>
 							</div>
 							<div class="form-group">
-								<input type="number" id="cost" name="cost" class="form-control"
-									   placeholder="Cost" required="true" value="${(material.cost)!}"/>
+								<input type="number" step="any" id="cost" name="cost" class="form-control"
+									   placeholder="Cost" required="true" value="${(material.cost?c)!}"/>
 							</div>
 							<div class="form-group">
-								<input type="number" id="price" name="price" class="form-control"
-									   placeholder="Price" required="true" value="${(material.price)!}"/>
+								<input type="number" step="any" id="price" name="price" class="form-control"
+									   placeholder="Price" required="true" value="${(material.price?c)!}"/>
 							</div>
 							
 
@@ -86,8 +86,8 @@
 
 											<td>${(material.cat)!}</td>
 											<td>${(material.name)!}</td>
-											<td>${(material.cost)!}</td>
-											<td>${(material.price)!}</td>
+											<td>${(material.cost?string.currency)!}</td>
+											<td>${(material.price?string.currency)!}</td>
 
 											<td>
 												<a href="/secure/material/${(material.id)!}"
@@ -119,7 +119,7 @@
 						<h4 class="modal-title">Are you sure?</h4>
 					</div>
 					<div class="modal-body">
-						Permantly remove material? This action cannot be undone.
+						Permanently remove material? This action cannot be undone.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
