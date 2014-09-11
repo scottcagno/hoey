@@ -50,10 +50,10 @@
 											<td>${(item.count)!}</td>
 
 											<td>
-												<a href="/secure/item/${(item.id)!}" class="btn btn-xs btn-primary">
+												<a href="/secure/item/${(item.id)!}" class="btn btn-md btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(item.id)!}"
+												<a href="#" class="btn btn-danger btn-md" data-id="${(item.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>

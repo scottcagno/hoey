@@ -15,7 +15,7 @@
 					<div class="pull-left">Materials</div>
 					<div class="col-lg-2 col-md-2">
 					<div class="dropdown">
-						<button class="btn btn-xs btn-default btn-block dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
+						<button class="btn btn-md btn-default btn-block dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
 							Filter By Category
 							<span class="caret"></span>
 						</button>
@@ -30,7 +30,7 @@
 						</ul>
 					</div>
 					</div>
-					<a href="/secure/customer/${customerId}/job/${jobId}" class="btn btn-xs btn-default pull-right">Back to job</a>
+					<a href="/secure/customer/${customerId}/job/${jobId}" class="btn btn-md btn-default pull-right">Back to job</a>
 				</div>
 				<div class="panel-body">
 					<div id="materialTable" class="table-responsive">

@@ -53,7 +53,7 @@
 					<div class="panel-heading col-lg-12 col-md-12">
 						Current Materials
 						<div class="dropdown pull-right">
-							<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
+							<button class="btn btn-default btn-md dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
 								Filter By Category
 								<span class="caret"></span>
 							</button>
@@ -73,7 +73,7 @@
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Catergory</a></th>
+										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Category</a></th>
 										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
 										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
 										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=price">Price</a></th>
@@ -91,10 +91,10 @@
 
 											<td>
 												<a href="/secure/material/${(material.id)!}"
-												   class="btn btn-xs btn-primary">
+												   class="btn btn-md btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(material.id)!}"
+												<a href="#" class="btn btn-danger btn-md pull-right" data-id="${(material.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>

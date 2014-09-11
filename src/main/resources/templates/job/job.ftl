@@ -67,14 +67,14 @@
 										</td>
 										<td class="text-right">${(room.total?string.currency)!}</td>
 										<td colspan="2" class="text-center">
-											<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-xs btn-primary">
+											<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-md btn-primary">
 												<i class="fa fa-pencil"></i>
 											</a>
-											<a href="#" class="btn btn-danger btn-xs" data-id="${(room.id)!}"
+											<a href="#" class="btn btn-danger btn-md" data-id="${(room.id)!}"
 											   data-toggle="modal" data-target="#roomDeleteCheck">
 												<i class="fa fa-trash-o"></i>
 											</a>
-											<a href="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/additem" class="btn btn-success btn-xs">
+											<a href="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/additem" class="btn btn-success btn-md">
 												Add Item
 											</a>
 										</td>
@@ -105,7 +105,7 @@
 											</td>
 											<td class="text-right">${(item.total?string.currency)!}</td>
 											<td class="text-center">
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(item.id?c)!}"
+												<a href="#" class="btn btn-danger btn-md" data-id="${(item.id?c)!}"
 												   data-toggle="modal" data-target="#itemDeleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>

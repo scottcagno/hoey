@@ -45,7 +45,7 @@
 											<td>${(job.name)!}</td>
 											<td>${(job.total?string.currency)!}</td>
 											<td>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(job.id)!}"
+												<a href="#" class="btn btn-danger btn-md" data-id="${(job.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>

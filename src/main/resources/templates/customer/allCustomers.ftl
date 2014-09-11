@@ -85,10 +85,10 @@
 
 											<td>
 												<a href="/secure/customer/${(customer.id)!}"
-												   class="btn btn-xs btn-primary">
+												   class="btn btn-md btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(customer.id)!}"
+												<a href="#" class="btn btn-danger btn-md" data-id="${(customer.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>

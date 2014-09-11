@@ -90,10 +90,10 @@
 											</td>
 											<td>${(job.total?string.currency)!}</td>
 											<td>
-												<a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-xs btn-primary">
+												<a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-md btn-primary">
 													<i class="fa fa-pencil"></i>
 												</a>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(job.id)!}"
+												<a href="#" class="btn btn-danger btn-md" data-id="${(job.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>

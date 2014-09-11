@@ -58,7 +58,7 @@
 											</td>
 											<td class="text-right">${(item.total?string.currency)!}</td>
 											<td>
-												<a href="#" class="btn btn-danger btn-xs" data-id="${(item.id)!}"
+												<a href="#" class="btn btn-danger btn-md" data-id="${(item.id)!}"
 												   data-toggle="modal" data-target="#deleteCheck">
 													<i class="fa fa-trash-o"></i>
 												</a>
