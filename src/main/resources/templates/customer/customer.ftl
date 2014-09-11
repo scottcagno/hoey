@@ -11,8 +11,20 @@
 		<div id="content" class="container">
 			<!-- add/edit -->
 			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">Update Customer</div>
+
+                <div class="panel-group" id="accordion">
+
+				<div id="customer" class="panel panel-default">
+					<div class="panel-heading">
+                        Update Customer
+                        <a data-toggle="collapse" data-target="#collapseCustomer"
+                           href="#collapseCustomer" class="pull-right">
+                            Collapse
+                        </a>
+                    </div>
+
+                    <div id="collapseCustomer" class="panel-collapse collapse in">
+
 					<div class="panel-body">
 						<form role="form" method="post" action="/secure/customer">
 
@@ -46,6 +58,7 @@
                         </form>
 					</div>
 				</div>
+                    </div></div>
 				<div class="panel panel-default">
 					<div class="panel-heading">Add Job</div>
 					<div class="panel-body">
