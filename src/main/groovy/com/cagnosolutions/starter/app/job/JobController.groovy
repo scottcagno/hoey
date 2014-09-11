@@ -1,5 +1,6 @@
 package com.cagnosolutions.starter.app.job
 
+import com.cagnosolutions.starter.app.company.CompanyService
 import com.cagnosolutions.starter.app.customer.Customer
 import com.cagnosolutions.starter.app.customer.CustomerService
 import com.cagnosolutions.starter.app.email.Email
@@ -26,6 +27,9 @@ import javax.servlet.http.HttpSession
 @Controller(value = "jobController")
 @RequestMapping(value = "/secure")
 class JobController {
+
+	@Autowired
+	CompanyService companyService
 
 	@Autowired
 	CustomerService customerService
@@ -67,7 +71,7 @@ class JobController {
 		def job = jobService.findOne id
         if(session.getAttribute("update") != null) {
             session.removeAttribute("update")
-            job.updateTotals()
+            job.updateTotals(companyService.findOne().markup)
             job = jobService.save job
             model.addAttribute "alertSuccess", "Job total has been updated!"
         }
@@ -76,7 +80,7 @@ class JobController {
 	}
 
 	// POST delete job
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/job/{id}", method = RequestMethod.POST)
 	String delete(@PathVariable Long id, RedirectAttributes attr) {
 		jobService.delete id
 		attr.addFlashAttribute "alertSuccess", "Job deleted successfully"

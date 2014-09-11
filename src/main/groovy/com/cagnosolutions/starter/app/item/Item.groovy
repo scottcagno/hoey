@@ -23,7 +23,7 @@ class Item {
 	Double count, total
 
 	Double updateTotal() {
-		this.total = count * material.price as Double
+		this.total = count * material.cost as Double
         this.total
 	}
 }

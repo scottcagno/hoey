@@ -34,7 +34,7 @@ class Job {
         rooms << room
 	}
 
-	def updateTotals() {
-        this.total = rooms*.updateTotals().sum() as Double
+	def updateTotals(Double markup) {
+        this.total = ((rooms.size() <= 0)? 0D : (rooms*.updateTotals(markup).sum() as Double))
     }
 }

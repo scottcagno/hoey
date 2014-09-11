@@ -30,8 +30,8 @@ class Room {
 		items << item
 	}
 
-	Double updateTotals() {
-		this.total = (items.size() <=0)? 0D : (items*.updateTotal().sum() as Double)
+	Double updateTotals(Double markup) {
+		this.total = (items.size() <=0)? 0D : ((items*.updateTotal().sum() as Double) * (1 + (markup / 100)))
 	    this.total
     }
 }
