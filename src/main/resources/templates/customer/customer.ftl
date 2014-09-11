@@ -10,7 +10,7 @@
 
 		<div id="content" class="container">
 			<!-- add/edit -->
-			<div class="col-lg-4 col-md-4">
+			<div class="col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">Update Customer</div>
 					<div class="panel-body">
@@ -39,20 +39,30 @@
 						</form>
 					</div>
 				</div>
-			</div>
-			<div class="col-lg-8 col-md-8">
 				<div class="panel panel-default">
-					<div class="panel-heading col-lg-12 col-md-12">
-						Jobs
-						<form role="form" class="col-lg-5 col-md-5 pull-right" method="post" action="/secure/customer/${customer.id}/addjob">
-							<div class="input-group">
-								<input type="text" name="name" class="form-control input-sm" placeholder="Job Name" required="true"/>
-								<span class="input-group-btn">
-									<button class="btn btn-default btn-sm" type="submit">Save</button>
-								</span>
+					<div class="panel-heading">Add Job</div>
+					<div class="panel-body">
+						<form id="" role="form" method="post" action="/secure/customer/${customer.id}/addjob">
+							<div class="form-group">
+								<input type="text" id="name" name="name" class="form-control"
+									   placeholder="Job Name" required=""true />
+							</div>
+							<div class="form-group">
+								<textarea id="notes" name="notes" class="form-control" rows="5"
+										  style="resize:none;" placeholder="Notes"></textarea>
 							</div>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<button class="btn btn-md btn-primary btn-block" type="submit">Add</button>
 						</form>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-lg-8 col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading col-xs-12">
+						Jobs
 					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
@@ -101,7 +111,7 @@
 											<td>
 												<form action="/secure/customer/${customer.id}/mail" method="post">
 													<input type="hidden" name="jobId" value="${job.id}"/>
-													<button class="btn btn-default btn-sm " type="submit">Send to customer</button>
+													<button class="btn btn-default btn-md" type="submit">Send to customer</button>
 													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 												</form>
 											</td>

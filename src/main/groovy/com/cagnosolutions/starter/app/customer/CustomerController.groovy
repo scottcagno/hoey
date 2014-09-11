@@ -73,6 +73,8 @@ class CustomerController {
 	@RequestMapping(value = "/{id}/addjob", method = RequestMethod.POST)
 	String addJob(Job job, @PathVariable Long id) {
 		Customer customer = customerService.findOne(id)
+		job.created =  new Date()
+		job.status = 0
 		customer.addJob(job)
 		customerService.save(customer)
 		"redirect:/secure/customer/${id}"
@@ -83,13 +85,12 @@ class CustomerController {
 	String delJob(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
 		jobService.delete(jobId)
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted job")
-		"redirect:/secure/customer/{customerId}"
+		"redirect:/secure/customer/${customerId}"
 	}
 
 	// POST mail to customer
 	@RequestMapping(value = "/{customerId}/mail", method = RequestMethod.POST)
 	String mail(@PathVariable Long customerId, @RequestParam Long jobId, RedirectAttributes attr) {
-		// TODO: change emailer
 		def map = [job : jobService.findOne(jobId), customer : customerService.findOne(customerId)]
 		Email email = emailService.CreateEmail("mail/mail.ftl", map)
 		email.setAll("noreply@hoeynoreply.com", "Job Quote", ((map.customer as Customer).email as String))
