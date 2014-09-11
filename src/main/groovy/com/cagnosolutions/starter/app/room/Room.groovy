@@ -20,7 +20,7 @@ class Room {
 	@Id
 	@GeneratedValue
 	Long id
-	String name
+	String name, notes
 	Double total = 0D
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "room_id")

@@ -55,9 +55,7 @@
 							<ul class="pagination">
 								<li ${(customers.firstPage)?string('class="disabled"', '')}><a href="/secure/customer?page=1&sort=${(RequestParameters.sort)!}">First</a></li>
 								<li ${(customers.firstPage)?string('class="disabled"', '')}><a href="/secure/customer?page=${prev}&sort=${(RequestParameters.sort)!}">&laquo;</a></li>
-								<#list lb..ub as n>
-									<li ${(n == customers.number + 1)?string('class="active"', '')}><a href="/secure/customer?page=${n}&sort=${(RequestParameters.sort)!}">${n}</a></li>
-								</#list>
+								<li class="active"><a href="/secure/customer?page=${customers.number + 1}&sort=${(RequestParameters.sort)!}">${customers.number + 1}</a></li>
 								<li ${(customers.lastPage)?string('class="disabled"', '')}><a href="/secure/customer?page=${next}&sort=${(RequestParameters.sort)!}">&raquo;</a></li>
 								<li ${(customers.lastPage)?string('class="disabled"', '')}><a href="/secure/customer?page=${customers.totalPages}&sort=${(RequestParameters.sort)!}">Last</a></li>
 							</ul>

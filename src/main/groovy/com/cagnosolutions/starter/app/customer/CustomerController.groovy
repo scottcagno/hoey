@@ -28,28 +28,15 @@ class CustomerController {
 	@Autowired
 	JobService jobService
 
-	/*@Autowired
-	MailService mailService*/
-
 	@Autowired
 	EmailService emailService
 
 	// GET view all customers
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model, @RequestParam(required = false) Integer page, @RequestParam(required = false) String sort) {
-
 		def customers = customerService.findAll(page? page-1 :0 , 10, sort?:"id")
-		page = (page? page :1)
-		def ub = (((customers.totalPages - page) >= 4)? page + 4 : customers.totalPages)
-		if (page < 6) {
-			ub = ((customers.totalPages > 10)? 10 : ((customers.totalPages > 0)? customers.totalPages : 1))
-		}
-		def lb = (((ub - 9) > 0)? ub-9: 1)
-		model.addAllAttributes([customers: customers, lb: lb, ub : ub])
+		model.addAllAttributes([customers: customers])
 		"customer/allCustomers"
-
-		/*model.addAttribute "customers", customerService.findAll()
-		"customer/allCustomers"*/
 	}
 
 	// POST add/edit customer
@@ -99,7 +86,7 @@ class CustomerController {
 		"redirect:/secure/customer/{customerId}"
 	}
 
-	// GET mail to customer
+	// POST mail to customer
 	@RequestMapping(value = "/{customerId}/mail", method = RequestMethod.POST)
 	String mail(@PathVariable Long customerId, @RequestParam Long jobId, RedirectAttributes attr) {
 		// TODO: change emailer
@@ -107,9 +94,6 @@ class CustomerController {
 		Email email = emailService.CreateEmail("mail/mail.ftl", map)
 		email.setAll("noreply@hoeynoreply.com", "Job Quote", ((map.customer as Customer).email as String))
 		emailService.sendEmailThreaded(email)
-
-
-//		mailService.test("test@noreplyhoey.com", "Job quote", "mail/mail.ftl", map, customer.email)
 		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")
 		"redirect:/secure/customer/${customerId}"
 	}

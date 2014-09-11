@@ -1,5 +1,9 @@
 package com.cagnosolutions.starter.app.job
 
+import com.cagnosolutions.starter.app.customer.Customer
+import com.cagnosolutions.starter.app.customer.CustomerService
+import com.cagnosolutions.starter.app.email.Email
+import com.cagnosolutions.starter.app.email.EmailService
 import com.cagnosolutions.starter.app.room.Room
 import com.cagnosolutions.starter.app.room.RoomService
 import groovy.transform.CompileStatic
@@ -24,27 +28,25 @@ import javax.servlet.http.HttpSession
 class JobController {
 
 	@Autowired
+	CustomerService customerService
+
+	@Autowired
 	JobService jobService
 
 	@Autowired
 	RoomService roomService
+
+	@Autowired
+	EmailService emailService
 
 	// GET view all jobs
 	@RequestMapping(value = "/job", method = RequestMethod.GET)
 	String viewAll(Model model, @RequestParam(required = false) Integer page,
 				   @RequestParam(required = false) String sort) {
 
-		def jobs = jobService.findAll(page? page-1 :0 , 20, sort?:"id")
-		page = (page? page :1)
-		def ub = (((jobs.totalPages - page) >= 4)? page + 4 : jobs.totalPages)
-		if (page < 6) {
-			ub = ((jobs.totalPages > 10)? 10 : ((jobs.totalPages > 0)? jobs.totalPages : 1))
-		}
-		def lb = (((ub - 9) > 0)? ub-9: 1)
-		model.addAllAttributes([jobs: jobs, lb: lb, ub : ub])
+		def jobs = jobService.findAll(page? page-1 :0 , 10, sort?:"id")
+		model.addAllAttributes([jobs: jobs])
 		"job/allJobs"
-	/*	model.addAttribute "jobs", jobService.findAll()
-		"job/allJobs"*/
 	}
 
 	// POST edit job
@@ -92,11 +94,23 @@ class JobController {
 
 	// POST delete room
 	@RequestMapping(value = "/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
-	String delRoom(HttpSession session, @PathVariable Long jobId, @PathVariable Long roomId, RedirectAttributes attr) {
+	String delRoom(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
+				   HttpSession session, RedirectAttributes attr) {
 		roomService.delete(roomId)
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted room")
         if(session.getAttribute("update") == null) session.setAttribute "update", true
-		"redirect:/secure/job/${jobId}"
+		"redirect:/secure/customer/${customerId}/job/${jobId}"
+	}
+
+	// POST mail to customer
+	@RequestMapping(value = "/customer/{customerId}/job/{jobId}/mail", method = RequestMethod.POST)
+	String mail(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
+		def map = [job : jobService.findOne(jobId), customer : customerService.findOne(customerId)]
+		Email email = emailService.CreateEmail("mail/mail.ftl", map)
+		email.setAll("noreply@hoeynoreply.com", "Job Quote", ((map.customer as Customer).email as String))
+		emailService.sendEmailThreaded(email)
+		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")
+		"redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 
 }

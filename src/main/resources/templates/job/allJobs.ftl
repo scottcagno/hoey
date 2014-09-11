@@ -23,9 +23,7 @@
 							<ul class="pagination">
 								<li ${(jobs.firstPage)?string('class="disabled"', '')}><a href="/secure/job?page=1&sort=${(RequestParameters.sort)!}">First</a></li>
 								<li ${(jobs.firstPage)?string('class="disabled"', '')}><a href="/secure/job?page=${prev}&sort=${(RequestParameters.sort)!}">&laquo;</a></li>
-								<#list lb..ub as n>
-									<li ${(n == jobs.number + 1)?string('class="active"', '')}><a href="/secure/job?page=${n}&sort=${(RequestParameters.sort)!}">${n}</a></li>
-								</#list>
+								<li class="active"><a href="/secure/job?page=${jobs.number + 1}&sort=${(RequestParameters.sort)!}">${jobs.number + 1}</a></li>
 								<li ${(jobs.lastPage)?string('class="disabled"', '')}><a href="/secure/job?page=${next}&sort=${(RequestParameters.sort)!}">&raquo;</a></li>
 								<li ${(jobs.lastPage)?string('class="disabled"', '')}><a href="/secure/job?page=${jobs.totalPages}&sort=${(RequestParameters.sort)!}">Last</a></li>
 							</ul>

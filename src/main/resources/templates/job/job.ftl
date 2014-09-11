@@ -20,6 +20,11 @@
 								<input type="text" id="name" name="name" class="form-control"
 									   placeholder="Name" required="true" value="${(job.name)!}"/>
 							</div>
+							<div class="form-group">
+								<textarea id="notes" name="notes" class="form-control" rows="5"
+										  style="resize:none;" placeholder="Notes">${(job.notes)!}</textarea>
+							</div>
+
 							<input type="hidden" name="id" value="${(job.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
@@ -35,6 +40,11 @@
 								<input type="text" id="name" name="name" class="form-control"
 									   placeholder="Name" required="true" value="${(room.name)!}"/>
 							</div>
+							<div class="form-group">
+								<textarea id="notes" name="notes" class="form-control" rows="5"
+										  style="resize:none;" placeholder="Notes">${(room.notes)!}</textarea>
+							</div>
+
 							<input type="hidden" name="id" value="${(room.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
@@ -43,10 +53,14 @@
 				</div>
 			</div>
 			<!-- all rooms -->
-			<div class="col-lg-8 col-md-8">
+			<div class="col-md-8">
 				<div class="panel panel-default">
-					<div class="panel-heading col-lg-12 col-md-8">
-						Job ${job.name}'s Rooms
+					<div class="panel-heading col-xs-12">
+						<span class="hidden-xs">Job ${job.name}'s Rooms</span>
+						<form action="/secure/customer/${customerId}/job/${job.id}/mail" class="col-xs-12 col-sm-4 pull-right" method="post">
+							<button class="btn btn-default btn-md btn-block" type="submit">Email to customer</button>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						</form>
 					</div>
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover">

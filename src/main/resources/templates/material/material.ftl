@@ -50,10 +50,10 @@
 			<!-- view all -->
 			<div class="col-lg-8 col-md-8">
 				<div class="panel panel-default">
-					<div class="panel-heading col-lg-12 col-md-12">
-						Current Materials
-						<div class="dropdown pull-right">
-							<button class="btn btn-default btn-md dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
+					<div class="panel-heading col-xs-12">
+						<span class="hidden-xs">Current Materials</span>
+						<div class="dropdown pull-right col-xs-12 col-sm-4">
+							<button class="btn btn-default btn-block dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
 								Filter By Category
 								<span class="caret"></span>
 							</button>
@@ -135,7 +135,6 @@
 				</div>
 			</div>
 		</div>
-
 		<!-- content -->
 
 		<#include "../stubs/footer.ftl"/>
