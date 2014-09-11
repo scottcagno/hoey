@@ -105,7 +105,7 @@ class JobController {
 	}
 
 	// POST delete room
-	@RequestMapping(value = "/customer/{customerId}/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/{customerId}/job/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
 	String delRoom(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
 				   HttpSession session, RedirectAttributes attr) {
 		roomService.delete(roomId)
