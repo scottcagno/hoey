@@ -31,7 +31,6 @@ class Room {
 	}
 
 	Double updateTotals(Double markup) {
-		println markup
 		this.total = (items.size() <=0)? 0D : ((items*.updateTotal().sum() as Double) * (1 + (markup / 100)))
 	    this.total
     }

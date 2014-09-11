@@ -81,8 +81,9 @@ class JobController {
 
 	// GET view job from all jobs
 	@RequestMapping(value = "/job/{id}", method = RequestMethod.GET)
-	String viewJob(@PathVariable Long JobId) {
-		//TODO: make custom sql statement
+	String viewJob(@PathVariable Long id) {
+		def customerId = jobService.findCustomerIdByJob(id)
+		"redirect:/secure/customer/${customerId}/job/${id}"
 	}
 
 
