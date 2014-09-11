@@ -14,10 +14,10 @@
                 <div class="panel-group" id="accordion">
 				    <div id="customer" class="panel panel-default">
 					    <div class="panel-heading">
-                            Customer Details
+                            ${(customer.name)!}
                             <a data-toggle="collapse" data-target="#toggle"
                                 href="#toggle" class="pull-right">
-                                View
+                                Details
                             </a>
                         </div>
                         <div id="toggle" class="panel-collapse collapse">
@@ -79,55 +79,57 @@
 					<div class="panel-heading col-xs-12">
 						Jobs
 					</div>
-                    <table class="table table-striped table-responsive">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Created</th>
-                            <th>Status</th>
-                            <th>Total</th>
-                            <th>Edit</th>
-                            <th>Quote</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <#list customer.jobs as job>
-                        <tr>
-                            <td>${(job.name)!}</td>
-                            <td>${job.created?string.short}</td>
-                            <td>
-                                <#switch job.status>
-                                    <#case 0>
-                                        Quote
-                                        <#break>
-                                    <#case 1>
-                                        Active
-                                        <#break>
-                                    <#case 2>
-                                        Invoiced
-                                        <#break>
-                                    <#case 3>
-                                        Paid
-                                        <#break>
-                                </#switch>
-                            </td>
-                            <td>${(job.total?string.currency)!}</td>
-                            <td>
-                                <a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-md btn-primary">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <form action="/secure/customer/${customer.id}/mail" method="post">
-                                    <input type="hidden" name="jobId" value="${job.id}"/>
-                                    <button class="btn btn-default btn-md" type="submit">Send to customer</button>
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                </form>
-                            </td>
-                        </tr>
-                        </#list>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Created</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>Edit</th>
+                                <th>Quote</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#list customer.jobs as job>
+                            <tr>
+                                <td>${(job.name)!}</td>
+                                <td>${job.created?string.short}</td>
+                                <td>
+                                    <#switch job.status>
+                                        <#case 0>
+                                            Quote
+                                            <#break>
+                                        <#case 1>
+                                            Active
+                                            <#break>
+                                        <#case 2>
+                                            Invoiced
+                                            <#break>
+                                        <#case 3>
+                                            Paid
+                                            <#break>
+                                    </#switch>
+                                </td>
+                                <td>${(job.total?string.currency)!}</td>
+                                <td>
+                                    <a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-md btn-primary">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <form action="/secure/customer/${customer.id}/mail" method="post">
+                                        <input type="hidden" name="jobId" value="${job.id}"/>
+                                        <button class="btn btn-default btn-md" type="submit">Send to customer</button>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    </form>
+                                </td>
+                            </tr>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
 				</div>
 			</div>
 		</div>

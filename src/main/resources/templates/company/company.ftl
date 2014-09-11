@@ -99,34 +99,32 @@
     <div class="col-lg-12 col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">Outstanding Invoices</div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Customer</th>
-                            <th>Total</th>
-                            <th>Overdue</th>
-                            <th>Options</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <#list invoices as invoice>
-                            <tr>
-                                <td>${(invoice.id)!}</td>
-                                <td>${(invoice.email)!}</td>
-                                <td>${(invoice.total)!}</td>
-                                <td>DUNNO YET</td>
-                                <td>
-                                    <a href="#">Send Notice</a>
-                                    <a href="#">Mark Paid</a>
-                                </td>
-                            </tr>
-                        </#list>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Overdue</th>
+                        <th>Options</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <#list invoices as invoice>
+                    <tr>
+                        <td>${(invoice.id)!}</td>
+                        <td>${(invoice.email)!}</td>
+                        <td>${(invoice.total)!}</td>
+                        <td>DUNNO YET</td>
+                        <td>
+                            <a href="#">Send Notice</a>
+                            <a href="#">Mark Paid</a>
+                        </td>
+                    </tr>
+                    </#list>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -12,30 +12,39 @@
 		<div id="content" class="container">
 			<!-- edit job-->
 			<div class="col-lg-4 col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">Update Job</div>
-					<div class="panel-body">
-						<form role="form" method="post" action="/secure/customer/${customerId}/job">
-							<div class="form-group">
-								<input type="text" id="name" name="name" class="form-control"
-									   placeholder="Name" required="true" value="${(job.name)!}"/>
-							</div>
-							<div class="form-group">
-								<textarea id="notes" name="notes" class="form-control" rows="5"
-										  style="resize:none;" placeholder="Notes">${(job.notes)!}</textarea>
-							</div>
-
-							<input type="hidden" name="id" value="${(job.id)!}"/>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Update Job</button>
-                            <hr/>
-                            <a href="#" class="btn btn-danger btn-block" data-id="${(job.id)!}"
-                               data-toggle="modal" data-target="#deleteCheck">
-                                Delete Job
+                <div class="panel-group" id="accordion">
+				    <div class="panel panel-default">
+				    	<div class="panel-heading">
+                            ${(job.name)!}
+                            <a data-toggle="collapse" data-target="#toggle"
+                               href="#toggle" class="pull-right">
+                                Details
                             </a>
-						</form>
-					</div>
-				</div>
+				    	</div>
+                        <div id="toggle" class="panel-collapse collapse">
+				    	    <div class="panel-body">
+				    	    	<form role="form" method="post" action="/secure/customer/${customerId}/job">
+				    	    		<div class="form-group">
+				    	    			<input type="text" id="name" name="name" class="form-control"
+				    	    				   placeholder="Name" required="true" value="${(job.name)!}"/>
+				    	    		</div>
+				    	    		<div class="form-group">
+				    	    			<textarea id="notes" name="notes" class="form-control" rows="5"
+				    	    					  style="resize:none;" placeholder="Notes">${(job.notes)!}</textarea>
+				    	    		</div>
+				    	    		<input type="hidden" name="id" value="${(job.id)!}"/>
+				    	    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				    	    		<button class="btn btn-md btn-primary btn-block" type="submit">Update Job</button>
+                                    <hr/>
+                                    <a href="#" class="btn btn-danger btn-block" data-id="${(job.id)!}"
+                                       data-toggle="modal" data-target="#deleteCheck">
+                                        Delete Job
+                                    </a>
+				    	    	</form>
+				    	    </div>
+                        </div>
+				    </div>
+                </div>
 				<!-- add/edit room -->
 				<div class="panel panel-default">
 					<div class="panel-heading">Add or Update Room</div>
@@ -68,7 +77,7 @@
 			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading col-xs-12">
-						<span class="hidden-xs">Job ${job.name}'s Rooms</span>
+						<span class="hidden-xs">Rooms</span>
 						<form action="/secure/customer/${customerId}/job/${job.id}/mail" class="col-xs-12 col-sm-4 pull-right" method="post">
 							<button class="btn btn-default btn-md btn-block" type="submit">Email to customer</button>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

@@ -29,19 +29,16 @@
 									   placeholder="Name" required="true" value="${(material.name)!}"/>
 							</div>
 							<div class="form-group">
-								<input type="number" id="cost" name="cost" class="form-control"
-									   placeholder="Cost" required="true" value="${(material.cost)!}"/>
+								<input type="number" step="any" id="cost" name="cost" class="form-control"
+									   placeholder="Cost" required="true" value="${(material.cost?c)!}"/>
 							</div>
-							<div class="form-group">
+							<#--<div class="form-group">
 								<input type="number" id="price" name="price" class="form-control"
 									   placeholder="Price" required="true" value="${(material.price)!}"/>
-							</div>
-							
-
+							</div>-->
 							<input type="hidden" name="id" value="${(material.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
-
+							<button class="btn btn-md btn-primary btn-block" type="submit">Add Material</button>
                             <#if material?? >
                                 <hr/>
                                 <a href="#" class="btn btn-danger btn-block" data-id="${(material.id)!}" data-toggle="modal" data-target="#deleteCheck">
@@ -91,7 +88,7 @@
                             <tr>
                                 <td>${(material.cat)!}</td>
                                 <td>${(material.name)!}</td>
-                                <td>${(material.cost)!}</td>
+                                <td>${(material.cost?string.currency)!}</td>
                                 <td>
                                     <a href="/secure/material/${(material.id)!}" class="btn btn-sm btn-primary">
                                         <i class="fa fa-pencil"></i>

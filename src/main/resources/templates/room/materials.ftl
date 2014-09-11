@@ -32,43 +32,41 @@
 					</div>
 					<a href="/secure/customer/${customerId}/job/${jobId}" class="btn btn-md btn-default pull-right">Back to job</a>
 				</div>
-				<div class="panel-body">
-					<div id="materialTable" class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th><a href="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem?category=${(RequestParameters.category)!}&field=cat">Catergory</a></th>
-									<th><a href="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem?category=${(RequestParameters.category)!}&field=name">Name</a></th>
-									<th><a href="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
-									<th><a href="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem?category=${(RequestParameters.category)!}&field=price">Price</a></th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								<#list materials as material>
-									<tr>
-										<td>${material.cat}</td>
-										<td>${material.name}</td>
-										<td>${material.cost}</td>
-										<td>${material.price}</td>
-										<td colspan="3">
-											<form role="form" method="post" action="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem" class="pull-right">
-												<div class="input-group">
-													<input type="text" class="form-control input-sm" name="count" placeholder="Quantity"/>
+                <div id="materialTable" class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th><a href="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem?category=${(RequestParameters.category)!}&field=cat">Catergory</a></th>
+                            <th><a href="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem?category=${(RequestParameters.category)!}&field=name">Name</a></th>
+                            <th><a href="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
+                        <#--<th><a href="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem?category=${(RequestParameters.category)!}&field=price">Price</a></th>-->
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list materials as material>
+                        <tr>
+                            <td>${material.cat}</td>
+                            <td>${material.name}</td>
+                            <td>${material.cost}</td>
+                        <#--<td>${material.price}</td>-->
+                            <td colspan="3">
+                                <form role="form" method="post" action="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem" class="pull-right">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm" name="count" placeholder="Quantity"/>
     												<span class="input-group-btn">
     													<button type="submit" class="btn btn-primary btn-sm">Add Item</button>
     												</span>
-												</div>
-												<input type="hidden" name="materialId" value="${material.id}"/>
-												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-											</form>
-										</td>
-									</tr>
-								</#list>
-							</tbody>
-						</table>
-					</div>
-				</div>
+                                    </div>
+                                    <input type="hidden" name="materialId" value="${material.id}"/>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                </form>
+                            </td>
+                        </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                </div>
 			</div>
 		</div>
 
