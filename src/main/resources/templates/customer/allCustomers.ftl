@@ -68,8 +68,8 @@
 										<th><a href="/secure/customer?page=${(RequestParameters.page)!}&sort=company">Company</a></th>
 										<th><a href="/secure/customer?page=${(RequestParameters.page)!}&sort=name">Name</a></th>
 										<th><a href="/secure/customer?page=${(RequestParameters.page)!}&sort=email">Email</a></th>
-										<th>Phone</th>
-
+										<th class="text-primary">Phone</th>
+                                        <th class="text-primary">Edit</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -85,10 +85,6 @@
 												<a href="/secure/customer/${(customer.id)!}"
 												   class="btn btn-md btn-primary">
 													<i class="fa fa-pencil"></i>
-												</a>
-												<a href="#" class="btn btn-danger btn-md" data-id="${(customer.id)!}"
-												   data-toggle="modal" data-target="#deleteCheck">
-													<i class="fa fa-trash-o"></i>
 												</a>
 											</td>
 										</tr>

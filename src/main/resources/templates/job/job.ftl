@@ -27,7 +27,12 @@
 
 							<input type="hidden" name="id" value="${(job.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
+							<button class="btn btn-md btn-primary btn-block" type="submit">Update Job</button>
+                            <hr/>
+                            <a href="#" class="btn btn-danger btn-md" data-id="${(job.id)!}"
+                               data-toggle="modal" data-target="#deleteCheck">
+                                Delete Job
+                            </a>
 						</form>
 					</div>
 				</div>
@@ -47,13 +52,13 @@
 
 							<input type="hidden" name="id" value="${(room.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
+							<button class="btn btn-md btn-primary btn-block" type="submit">Update Room</button>
 						</form>
 						<#if room??>
 							<hr/>
 							<a href="#" class="btn btn-danger btn-md btn-block" data-id="${(room.id)!}"
 							   data-toggle="modal" data-target="#roomDeleteCheck">
-								Delete
+								Delete Room
 							</a>
 						</#if>
 					</div>

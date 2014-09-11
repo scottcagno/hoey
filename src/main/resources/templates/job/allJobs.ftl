@@ -28,32 +28,46 @@
 								<li ${(jobs.lastPage)?string('class="disabled"', '')}><a href="/secure/job?page=${jobs.totalPages}&sort=${(RequestParameters.sort)!}">Last</a></li>
 							</ul>
 						</div>
-						<div class="table-responsive">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=name">Name</a></th>
-										<th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=total">Total</a></th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<#list jobs.content as job>
-										<tr>
-											<td>${(job.name)!}</td>
-											<td>${(job.total?string.currency)!}</td>
-											<td>
-												<a href="#" class="btn btn-danger btn-md" data-id="${(job.id)!}"
-												   data-toggle="modal" data-target="#deleteCheck">
-													<i class="fa fa-trash-o"></i>
-												</a>
-											</td>
-										</tr>
-									</#list>
-								</tbody>
-							</table>
-						</div>
-					</div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=name">Name</a></th>
+                            <th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=status">Status</a></th>
+                            <th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=total">Total</a></th>
+                            <th class="text-primary">Edit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list jobs.content as job>
+                        <tr>
+                            <td>${(job.name)!}</td>
+                            <td>
+                                <#switch job.status>
+                                    <#case 0>
+                                        Quote
+                                        <#break>
+                                    <#case 1>
+                                        Active
+                                        <#break>
+                                    <#case 2>
+                                        Invoiced
+                                        <#break>
+                                    <#case 3>
+                                        Paid
+                                        <#break>
+                                </#switch>
+                            </td>
+                            <td>${(job.total?string.currency)!}</td>
+                            <td>
+                                <a href="/secure/job/${(job.id)!}" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </#list>
+                        </tbody>
+                    </table>
 				</div>
 			</div>
 			<!-- view all -->

@@ -29,18 +29,26 @@
 									   placeholder="Name" required="true" value="${(material.name)!}"/>
 							</div>
 							<div class="form-group">
-								<input type="number" step="any" id="cost" name="cost" class="form-control"
-									   placeholder="Cost" required="true" value="${(material.cost?c)!}"/>
+								<input type="number" id="cost" name="cost" class="form-control"
+									   placeholder="Cost" required="true" value="${(material.cost)!}"/>
 							</div>
 							<div class="form-group">
-								<input type="number" step="any" id="price" name="price" class="form-control"
-									   placeholder="Price" required="true" value="${(material.price?c)!}"/>
+								<input type="number" id="price" name="price" class="form-control"
+									   placeholder="Price" required="true" value="${(material.price)!}"/>
 							</div>
 							
 
 							<input type="hidden" name="id" value="${(material.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
+
+                            <#if material?? >
+                                <hr/>
+                                <a href="#" class="btn btn-danger btn-block" data-id="${(material.id)!}" data-toggle="modal" data-target="#deleteCheck">
+                                    Delete
+                                </a>
+                            </#if>
+
 						</form>
 					</div>
 				</div>
@@ -68,43 +76,34 @@
 							</ul>
 						</div>
 					</div>
-					<div class="panel-body">
-						<div class="table-responsive">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Category</a></th>
-										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
-										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
-										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=price">Price</a></th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<#list materials as material>
-										<tr>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Category</a></th>
+                                <th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
+                                <th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
+                                <th class="text-primary">Edit</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#list materials as material>
+                            <tr>
+                                <td>${(material.cat)!}</td>
+                                <td>${(material.name)!}</td>
+                                <td>${(material.cost)!}</td>
+                                <td>
+                                    <a href="/secure/material/${(material.id)!}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
 
-											<td>${(material.cat)!}</td>
-											<td>${(material.name)!}</td>
-											<td>${(material.cost?string.currency)!}</td>
-											<td>${(material.price?string.currency)!}</td>
-
-											<td>
-												<a href="/secure/material/${(material.id)!}"
-												   class="btn btn-md btn-primary">
-													<i class="fa fa-pencil"></i>
-												</a>
-												<a href="#" class="btn btn-danger btn-md pull-right" data-id="${(material.id)!}"
-												   data-toggle="modal" data-target="#deleteCheck">
-													<i class="fa fa-trash-o"></i>
-												</a>
-											</td>
-										</tr>
-									</#list>
-								</tbody>
-							</table>
-						</div>
-					</div>
+                                </td>
+                            </tr>
+                            </a>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
 				</div>
 			</div>
 			<!-- view all -->
@@ -119,7 +118,7 @@
 						<h4 class="modal-title">Are you sure?</h4>
 					</div>
 					<div class="modal-body">
-						Permanently remove material? This action cannot be undone.
+						Permantly remove material? This action cannot be undone.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel

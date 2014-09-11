@@ -35,8 +35,15 @@
 
 							<input type="hidden" name="id" value="${(customer.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
-						</form>
+							<button class="btn btn-md btn-primary btn-block" type="submit">Update Customer</button>
+                            <#if customer??>
+                                <hr/>
+                                <a href="#" class="btn btn-danger btn-block" data-id="${(customer.id)!}"
+                                   data-toggle="modal" data-target="#deleteCheck">
+                                    Delete Customer
+                                </a>
+                            </#if>
+                        </form>
 					</div>
 				</div>
 				<div class="panel panel-default">
@@ -73,8 +80,8 @@
 										<th>Created</th>
 										<th>Status</th>
 										<th>Total</th>
-										<th></th>
-										<th></th>
+										<th>Edit</th>
+										<th>Quote</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -102,10 +109,6 @@
 											<td>
 												<a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-md btn-primary">
 													<i class="fa fa-pencil"></i>
-												</a>
-												<a href="#" class="btn btn-danger btn-md" data-id="${(job.id)!}"
-												   data-toggle="modal" data-target="#deleteCheck">
-													<i class="fa fa-trash-o"></i>
 												</a>
 											</td>
 											<td>
