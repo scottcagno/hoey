@@ -11,7 +11,7 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<!-- add/edit -->
-			<div class="col-lg-4">
+			<div class="col-lg-4 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">Add or Update Item
 						<span class="pull-right"><a href="/secure/item">Add New</a></span>
@@ -30,7 +30,7 @@
 			</div>
 			<!-- add/edit -->
 			<!-- view all -->
-			<div class="col-lg-8">
+			<div class="col-lg-8 col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">Current Items</div>
 					<div class="panel-body">

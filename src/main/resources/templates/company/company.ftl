@@ -11,7 +11,7 @@
 <!-- content -->
 <div id="content" class="container">
     <!-- add/edit owner info -->
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">Owner Details</div>
             <div class="panel-body">
@@ -35,7 +35,7 @@
     <!-- add/edit owner info -->
 
     <!-- add/edit company info -->
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">Company Details</div>
             <div class="panel-body">
@@ -47,13 +47,13 @@
                         <input type="text" id="street" name="street" value="${(company.street)!}" class="form-control" placeholder="Street" required="true" />
                     </div>
                     <div class="form-group row">
-                        <div class="col-lg-5">
+                        <div class="col-lg-5 col-md-5">
                             <input type="text" id="city" name="city" value="${(company.city)!}" class="form-control" placeholder="City" required="true" />
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 col-md-3">
                             <input type="text" id="state" name="state" value="${(company.state)!}" class="form-control" placeholder="St" required="true" />
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-4">
                             <input type="text" id="zip" name="zip" value="${(company.zip)!}" class="form-control" placeholder="Zip" required="true" />
                         </div>
                     </div>
@@ -67,7 +67,7 @@
     <!-- add/edit company info -->
 
     <!-- add/edit company extras -->
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">Company Extras</div>
             <div class="panel-body">
@@ -96,7 +96,7 @@
 
 <div class="container">
     <!-- invoices -->
-    <div class="col-lg-12">
+    <div class="col-lg-12 col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">Outstanding Invoices</div>
             <div class="panel-body">

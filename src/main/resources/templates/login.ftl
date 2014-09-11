@@ -50,7 +50,7 @@
 
     <!-- content -->
     <div class="container">
-        <div class=" col-lg-4 col-lg-offset-4">
+        <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
             <div id="login" class="panel panel-default">
                 <div class="panel-heading">
                     Please Login

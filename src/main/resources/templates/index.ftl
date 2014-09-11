@@ -51,17 +51,17 @@
         <!-- content -->
         <div class="jumbotron">
             <div class="container">
-                <span class="pull-left col-lg-7">
+                <span class="pull-left col-lg-7 col-md-7">
                     <img class="img-responsive logo" src="/static/img/logo.png"/>
                 </span>
-                <span class="pull-right col-lg-4">
+                <span class="pull-right col-lg-4 col-md-4">
                     <p class="lead">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.
                     </p>
                 </span>
                 <br/><br/><br/>
-                <span class="col-lg-12">
+                <span class="col-lg-12 col-md-12">
                     <p class="text-muted">
                         <small>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut

@@ -11,7 +11,7 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<!-- add/edit -->
-			<div class="col-lg-4">
+			<div class="col-lg-4 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">Add Customer</div>
 					<div class="panel-body">
@@ -43,7 +43,7 @@
 			</div>
 			<!-- add/edit -->
 			<!-- view all -->
-			<div class="col-lg-8">
+			<div class="col-lg-8 col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						All Customers

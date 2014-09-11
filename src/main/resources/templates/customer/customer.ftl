@@ -10,7 +10,7 @@
 
 		<div id="content" class="container">
 			<!-- add/edit -->
-			<div class="col-lg-4">
+			<div class="col-lg-4 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">Update Customer</div>
 					<div class="panel-body">
@@ -40,11 +40,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-8">
+			<div class="col-lg-8 col-md-8">
 				<div class="panel panel-default">
-					<div class="panel-heading col-lg-12">
+					<div class="panel-heading col-lg-12 col-md-12">
 						Jobs
-						<form role="form" class="col-lg-5 pull-right" method="post" action="/secure/customer/${customer.id}/addjob">
+						<form role="form" class="col-lg-5 col-md-5 pull-right" method="post" action="/secure/customer/${customer.id}/addjob">
 							<div class="input-group">
 								<input type="text" name="name" class="form-control input-sm" placeholder="Job Name" required="true"/>
 								<span class="input-group-btn">

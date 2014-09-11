@@ -11,7 +11,7 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<!-- add/edit -->
-			<div class="col-sm-4">
+			<div class="col-lg-4 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">Add or Update User <span class="pull-right"><a href="/secure/user">Add New</a></span></div>
 					<div class="panel-body">
@@ -49,7 +49,7 @@
 			</div>
 			<!-- add/edit -->
 			<!-- view all -->
-			<div class="col-sm-8">
+			<div class="col-lg-8 col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">Current Users</div>
 					<div class="panel-body">
