@@ -14,6 +14,7 @@
 				<li><a href="/secure/customer">All Customers</a></li>
 				<li><a href="/secure/job">All Jobs</a></li>
 				<li><a href="/secure/material">Materials</a></li>
+				<li><a href="/secure/company">Settings</a></li>
                 <li><a href="/logout">Logout</a></li>
 			</ul>
 		</div>
