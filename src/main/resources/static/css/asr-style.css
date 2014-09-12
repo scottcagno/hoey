@@ -1,33 +1,6 @@
-body {
-    text-align: center;
-    font-family: 'Open Sans', arial, sans-serif;
-    font-size: 13px;
-}
 
-#main {
-    display: table;
-    height: 100%;
-    width: 100%;
-}
 
-#content {
-    display: table-cell;
-    vertical-align: middle;
-    height: 100%;
-    width: 100%;
-}
-
-#about {
-    padding-bottom: 20px;
-    font-weight: normal;
-}
-
-#example-type {
-    color: gray;
-    font-size: 14px;
-}
-
-#speech-content-elements {
+#asr {
     position: relative;
     margin: auto;
     width: 60%;
@@ -38,7 +11,7 @@ body {
     border-radius: 5px;
 }
 
-#speech-page-content {
+#result {
     width: 100%;
     height: 100%;
     overflow: auto;
@@ -48,17 +21,21 @@ body {
     font-size: 14px;
 }
 
-#speech-page-content:focus {
+#result:focus {
     outline: none;
 }
 
-.speech-content-mic {
+#toggle-asr {
     width: 25px;
     height: 25px;
     cursor:pointer;
     position: absolute;
     right: 4px;
     top: 10px;
+}
+
+.mic-red {
+    color: red;
 }
 
 #authority {

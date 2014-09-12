@@ -1,32 +1,30 @@
 (function($) {
-
     $(document).ready(function() {
-
         try {
             var recognition = new webkitSpeechRecognition();
         } catch(e) {
             var recognition = Object;
         }
-        recognition.continuous = true;
-        recognition.interimResults = true;
 
         var interimResult = '';
-        var textArea = $('#speech-page-content');
-        var textAreaID = 'speech-page-content';
+        var textArea = $('#result');
 
-        $('.fa-microphone').click(function(){
-            startRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        var recognizing = false;
+
+        $('#toggle-asr').click(function(){
+            if(recognizing) {
+                recognition.stop();
+                recognizing = false;
+                $(this).removeClass('mic-red');
+            } else {
+                textArea.focus();
+                recognition.start();
+                recognizing = true;
+                $(this).addClass('mic-red');
+            }
         });
-
-        $('.fa-spinner').click(function(){
-            recognition.stop();
-        });
-
-        var startRecognition = function() {
-            $('.speech-content-mic').removeClass('fa-microphone').addClass('fa-spinner fa-spin');
-            textArea.focus();
-            recognition.start();
-        };
 
         recognition.onresult = function (event) {
             var pos = textArea.getCursorPosition() - interimResult.length;
@@ -35,17 +33,17 @@
             textArea.setCursorPosition(pos);
             for (var i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
-                    insertAtCaret(textAreaID, event.results[i][0].transcript);
+                    insertAtCaret('result', event.results[i][0].transcript);
                 } else {
                     isFinished = false;
-                    insertAtCaret(textAreaID, event.results[i][0].transcript + '\u200B');
+                    insertAtCaret('result', event.results[i][0].transcript + '\u200B');
                     interimResult += event.results[i][0].transcript + '\u200B';
                 }
             }
         };
 
         recognition.onend = function() {
-            $('.speech-content-mic').removeClass('fa-spinner fa-spin').addClass('fa-microphone');
+            $('#result').select();
         };
     });
 })(jQuery);

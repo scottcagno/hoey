@@ -7,9 +7,9 @@
 <script type="text/javascript" src="/static/js/asr-recognizer.js"></script>
 <div id="main">
     <div id="content">
-        <div id="speech-content-elements">
-            <textarea id="speech-page-content" name="pageContent"></textarea>
-            <i class="fa fa-lg fa-microphone speech-mic speech-content-mic"></i>
+        <div id="asr">
+            <textarea id="result"></textarea>
+            <i id="toggle-asr" class="fa fa-2x fa-microphone"></i>
         </div>
     </div>
 </div>
