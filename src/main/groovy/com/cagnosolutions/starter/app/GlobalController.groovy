@@ -25,6 +25,11 @@ class IndexController {
 	String index() {
 		"index"
 	}
+
+    @RequestMapping(value = "/speech", method = RequestMethod.GET)
+    String speech() {
+        "asr-speech"
+    }
 }
 
 @CompileStatic
