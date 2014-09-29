@@ -3,6 +3,10 @@ body {
     background-color: #fff;
 }
 
+.cursive {
+    font-family: 'Permanent Marker', cursive;
+}
+
 .footer {
     margin-top: 25px;
 }
