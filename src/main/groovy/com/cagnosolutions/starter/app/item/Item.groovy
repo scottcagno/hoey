@@ -5,7 +5,7 @@ import com.cagnosolutions.starter.app.material.Material
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
-import javax.persistence.OneToOne
+import javax.persistence.ManyToOne
 
 /**
  * Created by Scott Cagno.
@@ -18,12 +18,12 @@ class Item {
 	@Id
 	@GeneratedValue
 	Long id
-	@OneToOne
+	@ManyToOne
 	Material material
 	Double count, total
 
-	Double updateTotal() {
-		this.total = count * material.cost as Double
+	Double updateTotal(Double markup) {
+		this.total = (material.markup? (count * material.cost * (1 + (markup / 100))) : (count * material.cost)) as Double
         this.total
 	}
 }

@@ -17,4 +17,5 @@ class Material {
 	Long id
 	String cat, name
 	Double cost, price
+	Boolean markup
 }

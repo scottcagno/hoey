@@ -89,7 +89,7 @@ class RoomController {
             return "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}"
 		}
         item.material = materialService.findOne materialId
-        item.updateTotal()
+       /* item.updateTotal()*/
         itemService.save item
         if(session.getAttribute("update") == null) session.setAttribute "update", true
         "redirect:/secure/customer/${customerId}/job/${jobId}"
@@ -101,7 +101,7 @@ class RoomController {
 					HttpSession session, Double count, Long materialId, RedirectAttributes attr) {
         def room = roomService.findOne(roomId)
         def item = new Item([material: materialService.findOne(materialId), count: count])
-        item.updateTotal()
+       /* item.updateTotal()*/
         room.addItem item
         roomService.save room
         attr.addFlashAttribute "alertSuccess", "${item.count} ${item.material.name}(s) have been added to ${room.name}"

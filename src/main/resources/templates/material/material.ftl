@@ -22,30 +22,32 @@
 
 							<div class="form-group">
 								<input type="text" id="cat" name="cat" class="form-control"
-									   placeholder="Category" required="true" value="${(material.cat)!}"/>
+								       placeholder="Category" required="true" value="${(material.cat)!}"/>
 							</div>
 							<div class="form-group">
 								<input type="text" id="name" name="name" class="form-control"
-									   placeholder="Name" required="true" value="${(material.name)!}"/>
+								       placeholder="Name" required="true" value="${(material.name)!}"/>
 							</div>
 							<div class="form-group">
 								<input type="number" step="any" id="cost" name="cost" class="form-control"
-									   placeholder="Cost" required="true" value="${(material.cost?c)!}"/>
+								       placeholder="Cost" required="true" value="${(material.cost?c)!}"/>
 							</div>
-							<#--<div class="form-group">
-								<input type="number" id="price" name="price" class="form-control"
-									   placeholder="Price" required="true" value="${(material.price)!}"/>
-							</div>-->
+							<div class="checkbox">
+								<label>
+									<input name="markup" value="true" type="checkbox"
+									${(material??)?string((material?? && material.markup == true)?string('checked', ''),'checked')}
+									> Add global markup
+								</label>
+							</div>
 							<input type="hidden" name="id" value="${(material.id)!}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<button class="btn btn-md btn-primary btn-block" type="submit">Add Material</button>
-                            <#if material?? >
-                                <hr/>
-                                <a href="#" class="btn btn-danger btn-block" data-id="${(material.id)!}" data-toggle="modal" data-target="#deleteCheck">
-                                    Delete
-                                </a>
-                            </#if>
-
+							<#if material?? >
+								<hr/>
+								<a href="#" class="btn btn-danger btn-block" data-id="${(material.id)!}" data-toggle="modal" data-target="#deleteCheck">
+									Delete
+								</a>
+							</#if>
 						</form>
 					</div>
 				</div>
@@ -73,37 +75,38 @@
 							</ul>
 						</div>
 					</div>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Category</a></th>
-                                <th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
-                                <th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
-                                <th class="text-primary">Edit</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <#list materials as material>
-                            <tr>
-                                <td>${(material.cat)!}</td>
-                                <td>${(material.name)!}</td>
-                                <td>${(material.cost?string.currency)!}</td>
-                                <td>
-                                    <a href="/secure/material/${(material.id)!}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-
-                                </td>
-                            </tr>
-                            </a>
-                            </#list>
-                            </tbody>
-                        </table>
-                    </div>
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Category</a></th>
+									<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
+									<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
+									<th>Global Markup</th>
+									<th class="text-primary">Edit</th>
+								</tr>
+							</thead>
+							<tbody>
+								<#list materials as material>
+									<tr>
+										<td>${(material.cat)!}</td>
+										<td>${(material.name)!}</td>
+										<td>${(material.cost?string.currency)!}</td>
+										<td>${(material.markup)?string('Yes', '')}</td>
+										<td>
+											<a href="/secure/material/${(material.id)!}" class="btn btn-sm btn-primary">
+												<i class="fa fa-pencil"></i>
+											</a>
+										</td>
+									</tr>
+									</a>
+								</#list>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
-			<!-- view all -->
+		<!-- view all -->
 		</div>
 
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
@@ -147,7 +150,7 @@
 					form.html(form.html().replace('{id}',id));
 				});
 			});
-		
+
 		</script>
 
 	</body>

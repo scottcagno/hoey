@@ -44,6 +44,9 @@ class MaterialController {
 	// POST add/edit material
 	@RequestMapping(method = RequestMethod.POST)
 	String addOrEdit(Material material, RedirectAttributes attr) {
+		if (material.markup == null) {
+			material.markup = false
+		}
 		materialService.save(material)
 		attr.addFlashAttribute("alertSuccess", "Material Updated successfully")
 		"redirect:/secure/material"
