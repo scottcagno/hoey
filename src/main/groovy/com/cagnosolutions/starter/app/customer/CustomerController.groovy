@@ -75,6 +75,8 @@ class CustomerController {
 		Customer customer = customerService.findOne(id)
 		job.created =  new Date()
 		job.status = 0
+		job.laborHours = 0D
+		job.laborTotal = 0D
 		customer.addJob(job)
 		customerService.save(customer)
 		"redirect:/secure/customer/${id}"

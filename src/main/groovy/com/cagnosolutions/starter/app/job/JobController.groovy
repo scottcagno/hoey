@@ -55,12 +55,13 @@ class JobController {
 
 	// POST edit job
 	@RequestMapping(value = "/customer/{customerId}/job", method = RequestMethod.POST)
-	String edit(@PathVariable Long customerId, Job job) {
+	String edit(@PathVariable Long customerId, Job job, HttpSession session) {
 		job.rooms = new ArrayList<Room>()
-		if (job.id !=null) {
+		if (job.id != null) {
 			Job existingJob = jobService.findOne(job.id)
 			jobService.mergeProperties(job, existingJob)
 			jobService.save existingJob
+			if(session.getAttribute("update") == null) session.setAttribute "update", true
 		}
 		"redirect:/secure/customer/${customerId}/job/${job.id}"
 	}
@@ -71,7 +72,7 @@ class JobController {
 		def job = jobService.findOne id
         if(session.getAttribute("update") != null) {
             session.removeAttribute("update")
-            job.updateTotals(companyService.findOne().markup)
+            job.updateTotals(companyService.findOne().markup, companyService.findOne().laborRate)
             job = jobService.save job
             model.addAttribute "alertSuccess", "Job total has been updated!"
         }
@@ -85,7 +86,6 @@ class JobController {
 		def customerId = jobService.findCustomerIdByJob(id)
 		"redirect:/secure/customer/${customerId}/job/${id}"
 	}
-
 
 	// POST delete job
 	@RequestMapping(value = "/job/{id}", method = RequestMethod.POST)

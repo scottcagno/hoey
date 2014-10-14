@@ -10,63 +10,65 @@
 
 		<!-- content -->
 		<div id="content" class="container">
-			<!-- add/edit -->
-			<div class="col-lg-4 col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Item
-						<span class="pull-right"><a href="/secure/item">Add New</a></span>
-					</div>
-					<div class="panel-body">
-						<form role="form" method="post" action="/secure/item">
+			<div class="row">
+				<!-- add/edit -->
+				<div class="col-lg-4 col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">Add or Update Item
+							<span class="pull-right"><a href="/secure/item">Add New</a></span>
+						</div>
+						<div class="panel-body">
+							<form role="form" method="post" action="/secure/item">
 
-							bs.input
+								bs.input
 
-							<input type="hidden" name="id" value="${(item.id)!}"/>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
-						</form>
-					</div>
-				</div>
-			</div>
-			<!-- add/edit -->
-			<!-- view all -->
-			<div class="col-lg-8 col-md-8">
-				<div class="panel panel-default">
-					<div class="panel-heading">Current Items</div>
-					<div class="panel-body">
-						<div class="table-responsive">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>Material</th>
-										<th>Count</th>
-									</tr>
-								</thead>
-								<tbody>
-									<#list items as item>
-										<tr>
-
-											<td>${(item.mid.desc)!}</td>
-											<td>${(item.count)!}</td>
-
-											<td>
-												<a href="/secure/item/${(item.id)!}" class="btn btn-md btn-primary">
-													<i class="fa fa-pencil"></i>
-												</a>
-												<a href="#" class="btn btn-danger btn-md" data-id="${(item.id)!}"
-												   data-toggle="modal" data-target="#deleteCheck">
-													<i class="fa fa-trash-o"></i>
-												</a>
-											</td>
-										</tr>
-									</#list>
-								</tbody>
-							</table>
+								<input type="hidden" name="id" value="${(item.id)!}"/>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
+							</form>
 						</div>
 					</div>
 				</div>
+				<!-- add/edit -->
+				<!-- view all -->
+				<div class="col-lg-8 col-md-8">
+					<div class="panel panel-default">
+						<div class="panel-heading">Current Items</div>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>Material</th>
+											<th>Count</th>
+										</tr>
+									</thead>
+									<tbody>
+										<#list items as item>
+											<tr>
+
+												<td>${(item.mid.desc)!}</td>
+												<td>${(item.count)!}</td>
+
+												<td>
+													<a href="/secure/item/${(item.id)!}" class="btn btn-md btn-primary">
+														<i class="fa fa-pencil"></i>
+													</a>
+													<a href="#" class="btn btn-danger btn-md" data-id="${(item.id)!}"
+													   data-toggle="modal" data-target="#deleteCheck">
+														<i class="fa fa-trash-o"></i>
+													</a>
+												</td>
+											</tr>
+										</#list>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- view all -->
 			</div>
-			<!-- view all -->
 		</div>
 
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">

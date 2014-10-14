@@ -22,6 +22,8 @@ class Job {
 	Long id
 
     String name, notes
+	Double laborHours
+	Double laborTotal
 	Double total
     Integer status // status codes: 0 - quote, 1 - active, 2 - invoiced, 3 - paid
     Date created, invoiced
@@ -34,7 +36,8 @@ class Job {
         rooms << room
 	}
 
-	def updateTotals(Double markup) {
-        this.total = ((rooms.size() <= 0)? 0D : (rooms*.updateTotals(markup).sum() as Double))
+	def updateTotals(Double markup, Double laborRate) {
+		this.laborTotal = (laborHours == null) ? 0D : laborRate * laborHours as Double
+        this.total = ((rooms.size() <= 0)? 0D : (laborTotal + (rooms*.updateTotals(markup).sum() as Double)))
     }
 }

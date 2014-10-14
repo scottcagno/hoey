@@ -17,6 +17,7 @@ class Company {
     String owner, email, phone
     Double markup
 	Integer terms
+	Double laborRate
 
     String toString(){
         "${company}\n${street} ${city}, ${state} ${zip}\n${phone}\n${email}"

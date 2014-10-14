@@ -10,154 +10,180 @@
 
 		<!-- content -->
 		<div id="content" class="container">
-			<!-- edit job-->
-			<div class="col-lg-4 col-md-4">
-                <div class="panel-group" id="accordion">
-				    <div class="panel panel-default">
-				    	<div class="panel-heading">
-                            ${(job.name)!}
-                            <a data-toggle="collapse" data-target="#toggle"
-                               href="#toggle" class="pull-right">
-                                Details
-                            </a>
-				    	</div>
-                        <div id="toggle" class="panel-collapse collapse">
-				    	    <div class="panel-body">
-				    	    	<form role="form" method="post" action="/secure/customer/${customerId}/job">
-				    	    		<div class="form-group">
-				    	    			<input type="text" id="name" name="name" class="form-control"
-				    	    				   placeholder="Name" required="true" value="${(job.name)!}"/>
-				    	    		</div>
-				    	    		<div class="form-group">
-				    	    			<textarea id="notes" name="notes" class="form-control" rows="5"
-				    	    					  style="resize:none;" placeholder="Notes">${(job.notes)!}</textarea>
-				    	    		</div>
-				    	    		<input type="hidden" name="id" value="${(job.id)!}"/>
-				    	    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-				    	    		<button class="btn btn-md btn-primary btn-block" type="submit">Update Job</button>
-                                    <hr/>
-                                    <a href="#" class="btn btn-danger btn-block" data-id="${(job.id)!}"
-                                       data-toggle="modal" data-target="#jobDeleteCheck">
-                                        Delete Job
-                                    </a>
-				    	    	</form>
-				    	    </div>
-                        </div>
-				    </div>
-                </div>
-				<!-- add/edit room -->
-				<div class="panel panel-default">
-					<div class="panel-heading">Add or Update Room</div>
-					<div class="panel-body">
-						<form role="form" method="post" action="/secure/customer/${customerId}/job/${job.id}/room">
-							<div class="form-group">
-								<input type="text" id="name" name="name" class="form-control"
-									   placeholder="Name" required="true" value="${(room.name)!}"/>
-							</div>
-							<div class="form-group">
-								<textarea id="notes" name="notes" class="form-control" rows="5"
-										  style="resize:none;" placeholder="Notes">${(room.notes)!}</textarea>
-							</div>
+			<div class="row">
+				<!-- edit job-->
+				<div class="col-lg-4 col-md-4">
+                    <div class="panel-group" id="accordion">
+					    <div class="panel panel-default">
+					    	<div class="panel-heading">
+                                ${(job.name)!}
+                                <a data-toggle="collapse" data-target="#toggle"
+                                   href="#toggle" class="pull-right">
+                                    Details
+                                </a>
+					    	</div>
+                            <div id="toggle" class="panel-collapse collapse">
+					    	    <div class="panel-body">
+					    	    	<form role="form" method="post" action="/secure/customer/${customerId}/job">
+					    	    		<div class="form-group">
+					    	    			<input type="text" id="name" name="name" class="form-control"
+					    	    				   placeholder="Name" required="true" value="${(job.name)!}"/>
+					    	    		</div>
+					    	    		<div class="form-group">
+					    	    			<textarea id="notes" name="notes" class="form-control" rows="5"
+					    	    					  style="resize:none;" placeholder="Notes">${(job.notes)!}</textarea>
+					    	    		</div>
+					    	    		<input type="hidden" name="id" value="${(job.id)!}"/>
+					    	    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					    	    		<button class="btn btn-md btn-primary btn-block" type="submit">Update Job</button>
+                                        <hr/>
+                                        <a href="#" class="btn btn-danger btn-block" data-id="${(job.id)!}"
+                                           data-toggle="modal" data-target="#jobDeleteCheck">
+                                            Delete Job
+                                        </a>
+					    	    	</form>
+					    	    </div>
+                            </div>
+					    </div>
+                    </div>
+					<!-- add/edit room -->
+					<div class="panel panel-default">
+						<div class="panel-heading">Add or Update Room</div>
+						<div class="panel-body">
+							<form role="form" method="post" action="/secure/customer/${customerId}/job/${job.id}/room">
+								<div class="form-group">
+									<input type="text" id="name" name="name" class="form-control"
+										   placeholder="Name" required="true" value="${(room.name)!}"/>
+								</div>
+								<div class="form-group">
+									<textarea id="notes" name="notes" class="form-control" rows="5"
+											  style="resize:none;" placeholder="Notes">${(room.notes)!}</textarea>
+								</div>
 
-							<input type="hidden" name="id" value="${(room.id)!}"/>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Update Room</button>
-						</form>
-						<#if room??>
-							<hr/>
-							<a href="#" class="btn btn-danger btn-block" data-id="${(room.id)!}"
-							   data-toggle="modal" data-target="#roomDeleteCheck">
-								Delete Room
-							</a>
-						</#if>
+								<input type="hidden" name="id" value="${(room.id)!}"/>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<button class="btn btn-md btn-primary btn-block" type="submit">Update Room</button>
+							</form>
+							<#if room??>
+								<hr/>
+								<a href="#" class="btn btn-danger btn-block" data-id="${(room.id)!}"
+								   data-toggle="modal" data-target="#roomDeleteCheck">
+									Delete Room
+								</a>
+							</#if>
+						</div>
 					</div>
 				</div>
-			</div>
-			<!-- all rooms -->
-			<div class="col-md-8">
-				<div class="panel panel-default">
-					<div class="panel-heading col-xs-12">
-						<span class="hidden-xs">Rooms</span>
-						<form action="/secure/customer/${customerId}/job/${job.id}/mail" class="col-xs-12 col-sm-4 pull-right" method="post">
-							<button class="btn btn-default btn-md btn-block" type="submit">Email to customer</button>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						</form>
-					</div>
-					<div class="table-responsive">
-						<table class="table table-bordered table-hover">
-							<thead>
-								<tr>
-									<th colspan="4">Room Name</th>
-									<th class="text-right">Room Total</th>
-									<th class="text-center" colspan="2">Room Options</th>
-								</tr>
-							</thead>
-							<tbody>
-								<!-- rooms table -->
-								<#list job.rooms as room>
+				<!-- all rooms -->
+				<div class="col-md-8">
+					<div class="panel panel-default">
+						<div class="panel-heading col-xs-12">
+							<span class="hidden-xs">Rooms</span>
+							<form action="/secure/customer/${customerId}/job/${job.id}/mail" class="col-xs-12 col-sm-4 pull-right" method="post">
+								<button class="btn btn-default btn-md btn-block" type="submit">Email to customer</button>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							</form>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover">
+								<thead>
 									<tr>
-										<td colspan="4">
-											<a href="#" data-toggle="collapse" id="${room.id}" data-target=".room_${room.id}"><i class="fa fa-plus"></i></a>
-											${(room.name)!}
-										</td>
-										<td class="text-right">${(room.total?string.currency)!}</td>
-										<td colspan="2" class="text-center">
-											<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-md btn-primary">
-												<i class="fa fa-pencil"></i>
-											</a>
-											<a href="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/additem" class="btn btn-success btn-md">
-												Add Item
-											</a>
-										</td>
+										<th colspan="4">Room Name</th>
+										<th class="text-right">Room Total</th>
+										<th class="text-center" colspan="2">Room Options</th>
 									</tr>
-									<tr class="collapse room_${room.id}"><td colspan="7"></td></tr>
-									<tr class="collapse room_${room.id}">
-										<th></th>
-										<th>Item Name</th>
-										<th>Category</th>
-										<th>Count</th>
-										<th class="text-right">Item Total</th>
-										<th class="text-center">Delete Item</th>
-										<th></th>
-									</tr>
-									<!-- rooms' items rows -->
-									<#list room.items as item>
-										<tr class="collapse room_${room.id}">
-											<td></td>
-											<td>${item.material.name}</td>
-											<td>${item.material.cat}</td>
-											<td id="${item.id?c}" class="text-center col-lg-1 col-md-1 count">
-												<form role="form" id="count_${item.id?c}" action="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/edititem" method="post">
-													<input class="input-sm form-control" id="${item.id?c}" name="count" value="${item.count?c}" disabled="disabled">
-													<input name="id" type="hidden" value="${item.id?c}">
-                                                    <input type="hidden" name="materialId" value="${item.material.id?c}">
-													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-												</form>
+								</thead>
+								<tbody>
+									<!-- rooms table -->
+									<#list job.rooms as room>
+										<tr>
+											<td colspan="4">
+												<a href="#" data-toggle="collapse" id="${room.id}" data-target=".room_${room.id}"><i class="fa fa-plus"></i></a>
+												${(room.name)!}
 											</td>
-											<td class="text-right">${(item.total?string.currency)!}</td>
-											<td class="text-center">
-												<a href="#" class="btn btn-danger btn-md" data-id="${(item.id?c)!}"
-												   data-toggle="modal" data-target="#itemDeleteCheck">
-													<i class="fa fa-trash-o"></i>
+											<td class="text-right">${(room.total?string.currency)!}</td>
+											<td colspan="2" class="text-center">
+												<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-md btn-primary">
+													<i class="fa fa-pencil"></i>
+												</a>
+												<a href="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/additem" class="btn btn-success btn-md">
+													Add Item
 												</a>
 											</td>
+										</tr>
+										<tr class="collapse room_${room.id}"><td colspan="7"></td></tr>
+										<tr class="collapse room_${room.id}">
+											<th></th>
+											<th>Item Name</th>
+											<th>Category</th>
+											<th>Count</th>
+											<th class="text-right">Item Total</th>
+											<th class="text-center">Delete Item</th>
+											<th></th>
+										</tr>
+										<!-- rooms' items rows -->
+										<#list room.items as item>
+											<tr class="collapse room_${room.id}">
+												<td></td>
+												<td>${item.material.name}</td>
+												<td>${item.material.cat}</td>
+												<td id="${item.id?c}" class="text-center col-lg-1 col-md-1 count">
+													<form role="form" id="count_${item.id?c}" action="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/edititem" method="post">
+														<input class="input-sm form-control" id="${item.id?c}" name="count" value="${item.count?c}" disabled="disabled">
+														<input name="id" type="hidden" value="${item.id?c}">
+	                                                    <input type="hidden" name="materialId" value="${item.material.id?c}">
+														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+													</form>
+												</td>
+												<td class="text-right">${(item.total?string.currency)!}</td>
+												<td class="text-center">
+													<a href="#" class="btn btn-danger btn-md" data-id="${(item.id?c)!}"
+													   data-toggle="modal" data-target="#itemDeleteCheck">
+														<i class="fa fa-trash-o"></i>
+													</a>
+												</td>
+												<td></td>
+											</tr>
+										</#list>
+										<tr class="collapse room_${room.id}">
+											<td></td>
+											<td colspan="4" class="text-right">
+												Room Total
+												<small>* Includes global markup</small>
+												: ${(room.total?string.currency)!}
+											</td>
+											<td></td>
 											<td></td>
 										</tr>
+										<tr class="collapse room_${room.id}"><td colspan="7"></td></tr>
 									</#list>
-									<tr class="collapse room_${room.id}">
-										<td></td>
-										<td colspan="4" class="text-right">Room Total <small>* Includes global markup</small>: ${(room.total?string.currency)!}</td>
-										<td></td>
+									<tr>
+										<td colspan="5" id="laborHours">
+											<form id="laborForm" class="form-horizontal pull-right" role="form" method="post" action="/secure/customer/${customerId}/job">
+												<div class="form-group">
+													<label class="col-xs-4">Labor Hours:</label>
+													<div class="col-xs-4">
+														<input type="number" id="laborHours" name="laborHours" class="form-control"
+														       placeholder="Labor Hours" value="${(job.laborHours)!}" disabled="true"/>
+													</div>
+												<label class="col-xs-4">Labor Total: ${(job.laborTotal?string.currency)!}</label>
+												</div>
+												<input type="hidden" name="id" value="${job.id}"/>
+												<input type="hidden" name="${_csrf.parameterName}"
+												       value="${_csrf.token}"/>
+											</form>
+										</td>
 										<td></td>
 									</tr>
-									<tr class="collapse room_${room.id}"><td colspan="7"></td></tr>
-								</#list>
-								<tr>
-									<td colspan="5" class="text-right">Job Total: ${(job.total?string.currency)!}</td>
-									<td></td>
-								</tr>
-							</tbody>
-						</table>
+									<tr>
+										<td colspan="5" class="text-right">
+											<label>Job Total: ${(job.total?string.currency)!}</label>
+										</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -287,6 +313,21 @@
 					this.onblur = function() {this.setAttribute('disabled', true)}
 					this.onchange = function() {$('form[id="count_' + this.id + '"]').submit()}
 				});
+
+
+				// enable quantity field on td click
+				$('td[id="laborHours"]').click(function() {
+					$('input[id="laborHours"]').removeAttr('disabled');
+					$('input[id="laborHours"]').focus();
+				});
+
+
+				// register submit, disable, and focus actions on count fields
+				$('input[name="laborHours"]').focus(function() {
+					this.onblur = function() {this.setAttribute('disabled', true)}
+					this.onchange = function() {$('form[id="laborForm"]').submit()}
+				});
+
 			});
 		</script>
 

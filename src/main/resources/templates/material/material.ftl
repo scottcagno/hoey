@@ -10,45 +10,47 @@
 
 		<!-- content -->
 		<div id="content" class="container">
-			<!-- add/edit -->
-			<div class="col-lg-4 col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						Add/Edit Material
-						<span class="pull-right"><a href="/secure/material">Clear</a></span>
-					</div>
-					<div class="panel-body">
-						<form role="form" method="post" action="/secure/material">
+			<div class="row">
+				<!-- add/edit -->
+				<div class="col-lg-4 col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Add/Edit Material
+							<span class="pull-right"><a href="/secure/material">Clear</a></span>
+						</div>
+						<div class="panel-body">
+							<form role="form" method="post" action="/secure/material">
 
-							<div class="form-group">
-								<input type="text" id="cat" name="cat" class="form-control"
-								       placeholder="Category" required="true" value="${(material.cat)!}"/>
-							</div>
-							<div class="form-group">
-								<input type="text" id="name" name="name" class="form-control"
-								       placeholder="Name" required="true" value="${(material.name)!}"/>
-							</div>
-							<div class="form-group">
-								<input type="number" step="any" id="cost" name="cost" class="form-control"
-								       placeholder="Cost" required="true" value="${(material.cost?c)!}"/>
-							</div>
-							<div class="checkbox">
-								<label>
-									<input name="markup" value="true" type="checkbox"
-									${(material??)?string((material?? && material.markup == true)?string('checked', ''),'checked')}
-									> Add global markup
-								</label>
-							</div>
-							<input type="hidden" name="id" value="${(material.id)!}"/>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							<button class="btn btn-md btn-primary btn-block" type="submit">Add Material</button>
-							<#if material?? >
-								<hr/>
-								<a href="#" class="btn btn-danger btn-block" data-id="${(material.id)!}" data-toggle="modal" data-target="#deleteCheck">
-									Delete
-								</a>
-							</#if>
-						</form>
+								<div class="form-group">
+									<input type="text" id="cat" name="cat" class="form-control"
+									       placeholder="Category" required="true" value="${(material.cat)!}"/>
+								</div>
+								<div class="form-group">
+									<input type="text" id="name" name="name" class="form-control"
+									       placeholder="Name" required="true" value="${(material.name)!}"/>
+								</div>
+								<div class="form-group">
+									<input type="number" step="any" id="cost" name="cost" class="form-control"
+									       placeholder="Cost" required="true" value="${(material.cost?c)!}"/>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input name="markup" value="true" type="checkbox"
+										${(material??)?string((material?? && material.markup == true)?string('checked', ''),'checked')}
+										> Add global markup
+									</label>
+								</div>
+								<input type="hidden" name="id" value="${(material.id)!}"/>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<button class="btn btn-md btn-primary btn-block" type="submit">Add Material</button>
+								<#if material?? >
+									<hr/>
+									<a href="#" class="btn btn-danger btn-block" data-id="${(material.id)!}" data-toggle="modal" data-target="#deleteCheck">
+										Delete
+									</a>
+								</#if>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
