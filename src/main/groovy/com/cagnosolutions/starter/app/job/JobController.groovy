@@ -56,7 +56,7 @@ class JobController {
 	// POST edit job
 	@RequestMapping(value = "/customer/{customerId}/job", method = RequestMethod.POST)
 	String edit(@PathVariable Long customerId, Job job, HttpSession session) {
-		job.rooms = new ArrayList<Room>()
+		//job.rooms = new ArrayList<Room>()
 		if (job.id != null) {
 			Job existingJob = jobService.findOne(job.id)
 			jobService.mergeProperties(job, existingJob)

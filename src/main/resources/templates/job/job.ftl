@@ -158,26 +158,28 @@
 										<tr class="collapse room_${room.id}"><td colspan="7"></td></tr>
 									</#list>
 									<tr>
-										<td colspan="5" id="laborHours">
-											<form id="laborForm" class="form-horizontal pull-right" role="form" method="post" action="/secure/customer/${customerId}/job">
-												<div class="form-group">
-													<label class="col-xs-4">Labor Hours:</label>
+										<td colspan="4" id="laborHours">
+											<form id="laborForm" class="form-horizontal" role="form" method="post" action="/secure/customer/${customerId}/job">
+													<label class="col-xs-offset-4 col-xs-4 control-label">Labor Hours:</label>
 													<div class="col-xs-4">
-														<input type="number" id="laborHours" name="laborHours" class="form-control"
+														<input type="number" id="laborHours" name="laborHours" class="form-control input-sm"
 														       placeholder="Labor Hours" value="${(job.laborHours)!}" disabled="true"/>
 													</div>
-												<label class="col-xs-4">Labor Total: ${(job.laborTotal?string.currency)!}</label>
-												</div>
 												<input type="hidden" name="id" value="${job.id}"/>
 												<input type="hidden" name="${_csrf.parameterName}"
 												       value="${_csrf.token}"/>
 											</form>
 										</td>
+										<td class="text-right">
+											<label>Labor Total: </label>
+											${(job.laborTotal?string.currency)!}
+										</td>
 										<td></td>
 									</tr>
 									<tr>
 										<td colspan="5" class="text-right">
-											<label>Job Total: ${(job.total?string.currency)!}</label>
+											<label>Job Total: </label>
+											${(job.total?string.currency)!}
 										</td>
 										<td></td>
 									</tr>
