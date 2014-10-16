@@ -33,12 +33,21 @@
 									<input type="number" step="any" id="cost" name="cost" class="form-control"
 									       placeholder="Cost" required="true" value="${(material.cost?c)!}"/>
 								</div>
-								<div class="checkbox">
-									<label>
-										<input name="markup" value="true" type="checkbox"
-										${(material??)?string((material?? && material.markup == true)?string('checked', ''),'checked')}
-										> Add global markup
-									</label>
+								<div class="checkbox row">
+									<div class="col-xs-6">
+										<label>
+											<input name="markup" value="true" type="checkbox"
+											${(material??)?string((material?? && material.markup == true)?string('checked', ''),'checked')}
+											> Add global markup
+										</label>
+									</div>
+									<div class="col-xs-6">
+										<label>
+											<input name="taxed" value="true" type="checkbox"
+											${(material??)?string((material?? && material.taxed == true)?string('checked', ''),'checked')}
+											> Taxed
+										</label>
+									</div>
 								</div>
 								<input type="hidden" name="id" value="${(material.id)!}"/>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -53,58 +62,60 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<!-- add/edit -->
+				<!-- add/edit -->
 
-			<!-- view all -->
-			<div class="col-lg-8 col-md-8">
-				<div class="panel panel-default">
-					<div class="panel-heading col-xs-12">
-						<span class="hidden-xs">Current Materials</span>
-						<div class="dropdown pull-right col-xs-12 col-sm-4">
-							<button class="btn btn-default btn-block dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
-								Filter By Category
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu" aria-labelledby="categoryFilter">
-								<#list categories as category>
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="/secure/material?category=${category}">${category}</a>
-									</li>
-								</#list>
-								<li role="presentation" class="divider"></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="/secure/material">All Items</a></li>
-							</ul>
+				<!-- view all -->
+				<div class="col-lg-8 col-md-8">
+					<div class="panel panel-default">
+						<div class="panel-heading col-xs-12">
+							<span class="hidden-xs">Current Materials</span>
+							<div class="dropdown pull-right col-xs-12 col-sm-4">
+								<button class="btn btn-default btn-block dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
+									Filter By Category
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="categoryFilter">
+									<#list categories as category>
+										<li role="presentation">
+											<a role="menuitem" tabindex="-1" href="/secure/material?category=${category}">${category}</a>
+										</li>
+									</#list>
+									<li role="presentation" class="divider"></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="/secure/material">All Items</a></li>
+								</ul>
+							</div>
 						</div>
-					</div>
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Category</a></th>
-									<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
-									<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
-									<th>Global Markup</th>
-									<th class="text-primary">Edit</th>
-								</tr>
-							</thead>
-							<tbody>
-								<#list materials as material>
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
 									<tr>
-										<td>${(material.cat)!}</td>
-										<td>${(material.name)!}</td>
-										<td>${(material.cost?string.currency)!}</td>
-										<td>${(material.markup)?string('Yes', '')}</td>
-										<td>
-											<a href="/secure/material/${(material.id)!}" class="btn btn-sm btn-primary">
-												<i class="fa fa-pencil"></i>
-											</a>
-										</td>
+										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Category</a></th>
+										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
+										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
+										<th>Global Markup</th>
+										<th>Taxed</th>
+										<th class="text-primary">Edit</th>
 									</tr>
-									</a>
-								</#list>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<#list materials as material>
+										<tr>
+											<td>${(material.cat)!}</td>
+											<td>${(material.name)!}</td>
+											<td>${(material.cost?string.currency)!}</td>
+											<td>${(material.markup)?string('Yes', 'No')}</td>
+											<td>${(material.taxed)?string('Yes', 'No')}</td>
+											<td>
+												<a href="/secure/material/${(material.id)!}" class="btn btn-sm btn-primary">
+													<i class="fa fa-pencil"></i>
+												</a>
+											</td>
+										</tr>
+										</a>
+									</#list>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>

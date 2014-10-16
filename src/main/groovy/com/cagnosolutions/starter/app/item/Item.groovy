@@ -23,7 +23,8 @@ class Item {
 	Double count, total
 
 	Double updateTotal(Double markup) {
-		this.total = (material.markup? (count * material.cost * (1 + (markup / 100))) : (count * material.cost)) as Double
+		this.total = (material.markup? (count * material.cost * (1 + (markup / 100))) : (count * material.cost))
+		this.total = (material.taxed? (total + (count * material.cost * (6D / 100D))) : total)
         this.total
 	}
 }

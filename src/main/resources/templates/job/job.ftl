@@ -62,7 +62,7 @@
 
 								<input type="hidden" name="id" value="${(room.id)!}"/>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button class="btn btn-md btn-primary btn-block" type="submit">Update Room</button>
+								<button class="btn btn-md btn-primary btn-block" type="submit">Save Room</button>
 							</form>
 							<#if room??>
 								<hr/>
@@ -89,7 +89,7 @@
 								<thead>
 									<tr>
 										<th colspan="4">Room Name</th>
-										<th class="text-right">Room Total</th>
+										<th class="text-right">Total</th>
 										<th class="text-center" colspan="2">Room Options</th>
 									</tr>
 								</thead>
@@ -101,7 +101,10 @@
 												<a href="#" data-toggle="collapse" id="${room.id}" data-target=".room_${room.id}"><i class="fa fa-plus"></i></a>
 												${(room.name)!}
 											</td>
-											<td class="text-right">${(room.total?string.currency)!}</td>
+											<td class="text-right">
+												<label>Room Total: </label>
+												${(room.total?string.currency)!}
+											</td>
 											<td colspan="2" class="text-center">
 												<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-md btn-primary">
 													<i class="fa fa-pencil"></i>
@@ -148,9 +151,8 @@
 										<tr class="collapse room_${room.id}">
 											<td></td>
 											<td colspan="4" class="text-right">
-												Room Total
-												<small>* Includes global markup</small>
-												: ${(room.total?string.currency)!}
+												<label>Room Total: </label>
+												${(room.total?string.currency)!}
 											</td>
 											<td></td>
 											<td></td>
@@ -160,7 +162,7 @@
 									<tr>
 										<td colspan="4" id="laborHours">
 											<form id="laborForm" class="form-horizontal" role="form" method="post" action="/secure/customer/${customerId}/job">
-													<label class="col-xs-offset-4 col-xs-4 control-label">Labor Hours:</label>
+													<label class="col-xs-offset-3 col-xs-5 control-label">Labor Hours:</label>
 													<div class="col-xs-4">
 														<input type="number" id="laborHours" name="laborHours" class="form-control input-sm"
 														       placeholder="Labor Hours" value="${(job.laborHours)!}" disabled="true"/>
@@ -174,14 +176,14 @@
 											<label>Labor Total: </label>
 											${(job.laborTotal?string.currency)!}
 										</td>
-										<td></td>
+										<td colspan="2"></td>
 									</tr>
 									<tr>
 										<td colspan="5" class="text-right">
 											<label>Job Total: </label>
 											${(job.total?string.currency)!}
 										</td>
-										<td></td>
+										<td colspan="2"></td>
 									</tr>
 								</tbody>
 							</table>
