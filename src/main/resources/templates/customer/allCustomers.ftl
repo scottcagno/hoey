@@ -20,7 +20,7 @@
 
 								<div class="form-group">
 									<input type="text" id="company" name="company" class="form-control"
-										   placeholder="Company" required="true" value="${(customer.company)!}"/>
+										   placeholder="Company" value="${(customer.company)!}"/>
 								</div>
 								<div class="form-group">
 									<input type="text" id="name" name="name" class="form-control"

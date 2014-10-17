@@ -56,7 +56,7 @@ class JobController {
 	// POST edit job
 	@RequestMapping(value = "/customer/{customerId}/job", method = RequestMethod.POST)
 	String edit(@PathVariable Long customerId, Job job, HttpSession session) {
-		//job.rooms = new ArrayList<Room>()
+		job.name = job.name == "" ? null : job.name
 		if (job.id != null) {
 			Job existingJob = jobService.findOne(job.id)
 			jobService.mergeProperties(job, existingJob)
@@ -96,12 +96,12 @@ class JobController {
 	}
 
 	// POST add room
-	@RequestMapping(value = "/customer/{customerId}/job/{id}/addroom", method = RequestMethod.POST)
-	String addRoom(@PathVariable Long id, @PathVariable Long customerId, Room room) {
-		Job job = jobService.findOne(id)
+	@RequestMapping(value = "/customer/{customerId}/job/{jobId}/addroom", method = RequestMethod.POST)
+	String addRoom(@PathVariable Long jobId, @PathVariable Long customerId, Room room) {
+		Job job = jobService.findOne(jobId)
 		job.addRoom(room)
 		jobService.save(job)
-		"redirect:/secure/customer/${customerId}/job/${id}"
+		"redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 
 	// POST delete room

@@ -27,7 +27,7 @@
 					    	    	<form role="form" method="post" action="/secure/customer/${customerId}/job">
 					    	    		<div class="form-group">
 					    	    			<input type="text" id="name" name="name" class="form-control"
-					    	    				   placeholder="Name" required="true" value="${(job.name)!}"/>
+					    	    				   placeholder="Name" value="${(job.name)!}"/>
 					    	    		</div>
 					    	    		<div class="form-group">
 					    	    			<textarea id="notes" name="notes" class="form-control" rows="5"
@@ -78,7 +78,8 @@
 				<div class="col-md-8">
 					<div class="panel panel-default">
 						<div class="panel-heading col-xs-12">
-							<span class="hidden-xs">Rooms</span>
+							Rooms
+							<a href="/secure/customer/${customerId}" class="btn btn-default">Back to customer</a>
 							<form action="/secure/customer/${customerId}/job/${job.id}/mail" class="col-xs-12 col-sm-4 pull-right" method="post">
 								<button class="btn btn-default btn-md btn-block" type="submit">Email to customer</button>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -97,8 +98,10 @@
 									<!-- rooms table -->
 									<#list job.rooms as room>
 										<tr>
-											<td colspan="4">
-												<a href="#" data-toggle="collapse" id="${room.id}" data-target=".room_${room.id}"><i class="fa fa-plus"></i></a>
+											<td>
+												<a href="#" data-toggle="collapse" data-target="tr#room_${room.id}" class="btn btn-default"><i id="room_${room.id}" class="fa fa-chevron-right"></i></a>
+											</td>
+											<td colspan="3">
 												${(room.name)!}
 											</td>
 											<td class="text-right">
@@ -114,8 +117,8 @@
 												</a>
 											</td>
 										</tr>
-										<tr class="collapse room_${room.id}"><td colspan="7"></td></tr>
-										<tr class="collapse room_${room.id}">
+										<tr id="room_${room.id}" class="collapse room_${room.id}"><td colspan="7"></td></tr>
+										<tr id="room_${room.id}" class="collapse room_${room.id} header">
 											<th></th>
 											<th>Item Name</th>
 											<th>Category</th>
@@ -126,7 +129,7 @@
 										</tr>
 										<!-- rooms' items rows -->
 										<#list room.items as item>
-											<tr class="collapse room_${room.id}">
+											<tr id="room_${room.id}" class="collapse">
 												<td></td>
 												<td>${item.material.name}</td>
 												<td>${item.material.cat}</td>
@@ -299,6 +302,13 @@
 					form.html(form.html().replace('{id}',id));
 				});
 
+				$('tr.header').on('show.bs.collapse', function() {
+					$('i[id="' + this.id + '"]').addClass('fa-rotate-90');
+				});
+
+				$('tr.header').on('hidden.bs.collapse', function() {
+					$('i[id="' + this.id + '"]').removeClass('fa-rotate-90');
+				});
 
 				/*
 				*

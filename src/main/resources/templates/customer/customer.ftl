@@ -26,7 +26,7 @@
 									<form role="form" method="post" action="/secure/customer">
 										<div class="form-group">
 											<input type="text" id="company" name="company" class="form-control"
-											       placeholder="Company" required="true" value="${(customer.company)!}"/>
+											       placeholder="Company" value="${(customer.company)!}"/>
 										</div>
 										<div class="form-group">
 											<input type="text" id="name" name="name" class="form-control"
@@ -61,7 +61,7 @@
 							<form id="" role="form" method="post" action="/secure/customer/${customer.id}/addjob">
 								<div class="form-group">
 									<input type="text" id="name" name="name" class="form-control"
-									       placeholder="Job Name" required=""true />
+									       placeholder="Job Name" />
 								</div>
 								<div class="form-group">
 									<textarea id="notes" name="notes" class="form-control" rows="5"

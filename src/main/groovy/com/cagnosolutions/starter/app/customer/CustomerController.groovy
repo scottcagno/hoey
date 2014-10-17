@@ -41,15 +41,19 @@ class CustomerController {
 
 	// POST add/edit customer
 	@RequestMapping(method = RequestMethod.POST)
-	String addOrEdit(Customer customer) {
-		customer.jobs =  new ArrayList<Job>()
+	String addOrEdit(Customer customer, RedirectAttributes attr) {
+		customer.company = customer.company == "" ? "N/A" : customer.company
 		if (customer.id != null) {
 			Customer existingCustomer = customerService.findOne(customer.id)
 			customer.jobs = existingCustomer.jobs
 			customerService.save(customer)
+			attr.addFlashAttribute("alertSuccess", "Successfully updated customer")
 			return "redirect:/secure/customer/${customer.id}"
+		} else {
+			customer.jobs = new ArrayList<Job>()
 		}
 		customerService.save(customer)
+		attr.addFlashAttribute("alertSuccess", "Successfully added customer")
 		"redirect:/secure/customer"
 	}
 
@@ -70,16 +74,20 @@ class CustomerController {
 	}
 
 	// POST add job
-	@RequestMapping(value = "/{id}/addjob", method = RequestMethod.POST)
-	String addJob(Job job, @PathVariable Long id) {
-		Customer customer = customerService.findOne(id)
+	@RequestMapping(value = "/{customerId}/addjob", method = RequestMethod.POST)
+	String addJob(Job job, @PathVariable Long customerId) {
+		Customer customer = customerService.findOne customerId
 		job.created =  new Date()
 		job.status = 0
 		job.laborHours = 0D
 		job.laborTotal = 0D
+		job.total =  0D
 		customer.addJob(job)
-		customerService.save(customer)
-		"redirect:/secure/customer/${id}"
+		if (job.name == "" || job.name == null) {
+			job.name = "${customer.name}'s Job # ${customer.jobs.indexOf(job) + 1}"
+		}
+		customerService.save customer
+		"redirect:/secure/customer/${customerId}"
 	}
 
 	// POST delete job
