@@ -1,7 +1,11 @@
 spring:
-  profiles:
-    active: production
-
+  datasource:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/hoey?createDatabaseIfNotExist=true
+      username: root
+      password: root
+    jpa:
+      generateDdl: true
   freemarker:
     exposeSessionAttributes: true
 
@@ -29,29 +33,3 @@ mail:
     port: 587
     user: scottiecagno@gmail.com
     pass: AyRsB5cI5H4bcrbheDKfzQ
-
----
-spring:
-  profiles: development
-
-  datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:./h2data;MODE=MySQL
-    username: sa
-    password: sa
-
-  jpa:
-    generateDdl: true
-
----
-spring:
-  profiles: production
-
-  datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hoey?createDatabaseIfNotExist=true
-    username: root
-    password: root
-
-  jpa:
-    generateDdl: true
