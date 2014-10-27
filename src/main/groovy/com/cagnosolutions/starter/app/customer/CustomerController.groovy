@@ -108,7 +108,7 @@ class CustomerController {
 	String mail(@PathVariable Long customerId, @RequestParam Long jobId, RedirectAttributes attr) {
 		def map = [job : jobService.findOne(jobId), customer : customerService.findOne(customerId), company: companyService.findOne()]
 		Email email = emailService.CreateEmail("mail/mail.ftl", map)
-		email.setAll("noreply@hoeynoreply.com", "Job Quote", ((map.customer as Customer).email as String))
+		email.setAll("noreply@hoeynoreply.com", "Job Proposal", ((map.customer as Customer).email as String))
 		emailService.sendEmailThreaded(email)
 		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")
 		"redirect:/secure/customer/${customerId}"

@@ -51,7 +51,8 @@
         <!-- content -->
         <div class="container">
             <span class="pull-left col-lg-8 col-md-8">
-                <img class="img-responsive img-thumbnail" src="/static/img/logo.jpg"/>
+                <img class="img-responsive img-thumbnail"
+                     src="https://scontent-a-lga.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/1461470_1436510523228374_567958296_n.jpg?oh=04d8975c19fe36252623eb214b49c8c0&oe=54EC34E5"/>
             </span>
             <span class="pull-right col-lg-4 col-md-4">
                 <h2 class="cursive">
