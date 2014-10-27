@@ -1,14 +1,12 @@
 package com.cagnosolutions.starter.app
 
-import groovy.transform.CompileStatic
+import com.cagnosolutions.starter.app.customer.CustomerService
 import com.cagnosolutions.starter.app.user.UserService
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpSession
 import java.security.Principal
 
@@ -16,6 +14,22 @@ import java.security.Principal
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
  */
+
+@CompileStatic
+@Controller(value = "emailController")
+class EmailController {
+
+    @Autowired
+    CustomerService customerService
+
+    @RequestMapping(value = "/email/{id}", method = RequestMethod.GET)
+    String mail(Model model, @PathVariable Long id) {
+        def cust = customerService.findOne id
+        model.addAllAttributes([customer: cust, job: cust.jobs.first()])
+        "mail/mail"
+    }
+
+}
 
 @CompileStatic
 @Controller(value = "indexController")
@@ -30,6 +44,7 @@ class IndexController {
     String speech() {
         "asr-speech"
     }
+
 }
 
 @CompileStatic

@@ -1,13 +1,16 @@
 spring:
-  datasource:
-      driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/hoey?createDatabaseIfNotExist=true
-      username: root
-      password: root
-    jpa:
-      generateDdl: true
+
   freemarker:
     exposeSessionAttributes: true
+
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hoey?createDatabaseIfNotExist=true
+    username: root
+    password: root
+
+  jpa:
+    generateDdl: true
 
 server:
   port: 8080
