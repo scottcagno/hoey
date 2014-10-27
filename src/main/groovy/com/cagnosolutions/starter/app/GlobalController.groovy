@@ -1,5 +1,6 @@
 package com.cagnosolutions.starter.app
 
+import com.cagnosolutions.starter.app.company.CompanyService
 import com.cagnosolutions.starter.app.customer.CustomerService
 import com.cagnosolutions.starter.app.user.UserService
 import groovy.transform.CompileStatic
@@ -22,10 +23,13 @@ class EmailController {
     @Autowired
     CustomerService customerService
 
+    @Autowired
+    CompanyService companyService
+
     @RequestMapping(value = "/email/{id}", method = RequestMethod.GET)
     String mail(Model model, @PathVariable Long id) {
         def cust = customerService.findOne id
-        model.addAllAttributes([customer: cust, job: cust.jobs.first()])
+        model.addAllAttributes([customer: cust, job: cust.jobs.first(), company: companyService.findOne()])
         "mail/mail"
     }
 

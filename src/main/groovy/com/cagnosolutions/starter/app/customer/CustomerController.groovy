@@ -1,4 +1,6 @@
 package com.cagnosolutions.starter.app.customer
+
+import com.cagnosolutions.starter.app.company.CompanyService
 import com.cagnosolutions.starter.app.email.Email
 import com.cagnosolutions.starter.app.email.EmailService
 import com.cagnosolutions.starter.app.job.Job
@@ -30,6 +32,9 @@ class CustomerController {
 
 	@Autowired
 	EmailService emailService
+
+    @Autowired
+    CompanyService companyService
 
 	// GET view all customers
 	@RequestMapping(method = RequestMethod.GET)
@@ -101,7 +106,7 @@ class CustomerController {
 	// POST mail to customer
 	@RequestMapping(value = "/{customerId}/mail", method = RequestMethod.POST)
 	String mail(@PathVariable Long customerId, @RequestParam Long jobId, RedirectAttributes attr) {
-		def map = [job : jobService.findOne(jobId), customer : customerService.findOne(customerId)]
+		def map = [job : jobService.findOne(jobId), customer : customerService.findOne(customerId), company: companyService.findOne()]
 		Email email = emailService.CreateEmail("mail/mail.ftl", map)
 		email.setAll("noreply@hoeynoreply.com", "Job Quote", ((map.customer as Customer).email as String))
 		emailService.sendEmailThreaded(email)
