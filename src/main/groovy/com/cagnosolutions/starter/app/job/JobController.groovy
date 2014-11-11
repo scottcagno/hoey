@@ -18,10 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 import javax.servlet.http.HttpSession
-/**
- * Created by Scott Cagno.
- * Copyright Cagno Solutions. All rights reserved.
- */
 
 @CompileStatic
 @Controller(value = "jobController")
@@ -50,7 +46,7 @@ class JobController {
 
 		def jobs = jobService.findAll(page? page-1 :0 , 10, sort?:"id")
 		model.addAllAttributes([jobs: jobs])
-		"job/allJobs"
+		"job/all-jobs"
 	}
 
 	// POST edit job
@@ -121,7 +117,7 @@ class JobController {
 		def map = [job : job, customer : customerService.findOne(customerId), company: companyService.findOne()]
 		Email email = emailService.CreateEmail("mail/mail.ftl", map)
 		email.setAll("noreply@hoeynoreply.com", "Job Quote", ((map.customer as Customer).email as String))
-		emailService.sendEmailThreaded(email)
+		emailService.sendEmail(email)
 		job.status = 1
 		jobService.save job
 		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")

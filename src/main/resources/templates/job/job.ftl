@@ -78,37 +78,37 @@
 				<div class="col-md-8">
 					<div class="panel panel-default">
 						<div class="panel-heading col-xs-12">
-							Rooms
 							<form action="/secure/customer/${customerId}/job/${job.id}/mail" class="col-xs-12 col-sm-6 pull-right" method="post">
 								<div class="btn-group">
-									<a href="/secure/customer/${customerId}" class="btn btn-default">Back to customer</a>
-									<button class="btn btn-default" type="submit">Email to customer</button>
+									<a href="/secure/customer/${customerId}" class="btn btn-default"><i class="fa fa-reply"></i> Customer</a>
+									<button class="btn btn-default" type="submit">Email Quote</button>
 								</div>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							</form>
 						</div>
-						<div class="table-responsive">
-							<table class="table table-bordered table-hover">
-								<thead>
-									<tr>
-										<th colspan="4">Room Name</th>
-										<th class="text-right">Total</th>
-										<th class="text-center" colspan="2">Room Options</th>
-									</tr>
-								</thead>
-								<tbody>
-									<!-- rooms table -->
+						<div class="hidden-xs hidden-sm">
+							<div class="table-responsive">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th colspan="4">Room Name</th>
+											<th class="text-right">Total</th>
+											<th class="text-center" colspan="2">Room Options</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- rooms table -->
 									<#list job.rooms as room>
 										<tr>
 											<td>
 												<a href="#" data-toggle="collapse" data-target="tr#room_${room.id}" class="btn btn-default"><i id="room_${room.id}" class="fa fa-chevron-right"></i></a>
 											</td>
 											<td colspan="3">
-												${(room.name)!}
+											${(room.name)!}
 											</td>
 											<td class="text-right">
 												<label>Room Total: </label>
-												${(room.total?string.currency)!}
+											${(room.total?string.currency)!}
 											</td>
 											<td colspan="2" class="text-center">
 												<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-md btn-primary">
@@ -139,7 +139,7 @@
 													<form role="form" id="count_${item.id?c}" action="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/edititem" method="post">
 														<input class="input-sm form-control" id="${item.id?c}" name="count" value="${item.count?c}" disabled="disabled">
 														<input name="id" type="hidden" value="${item.id?c}">
-	                                                    <input type="hidden" name="materialId" value="${item.material.id?c}">
+														<input type="hidden" name="materialId" value="${item.material.id?c}">
 														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 													</form>
 												</td>
@@ -164,34 +164,52 @@
 										</tr>
 										<tr class="collapse room_${room.id}"><td colspan="7"></td></tr>
 									</#list>
-									<tr>
-										<td colspan="4" id="laborHours">
-											<form id="laborForm" class="form-horizontal" role="form" method="post" action="/secure/customer/${customerId}/job">
+										<tr>
+											<td colspan="4" id="laborHours">
+												<form id="laborForm" class="form-horizontal" role="form" method="post" action="/secure/customer/${customerId}/job">
 													<label class="col-xs-offset-3 col-xs-5 control-label">Labor Hours:</label>
 													<div class="col-xs-4">
 														<input type="number" id="laborHours" name="laborHours" class="form-control input-sm"
-														       placeholder="Labor Hours" value="${(job.laborHours)!}" disabled="true"/>
+															   placeholder="Labor Hours" value="${(job.laborHours)!}" disabled="true"/>
 													</div>
-												<input type="hidden" name="id" value="${job.id}"/>
-												<input type="hidden" name="${_csrf.parameterName}"
-												       value="${_csrf.token}"/>
-											</form>
-										</td>
-										<td class="text-right">
-											<label>Labor Total: </label>
+													<input type="hidden" name="id" value="${job.id}"/>
+													<input type="hidden" name="${_csrf.parameterName}"
+														   value="${_csrf.token}"/>
+												</form>
+											</td>
+											<td class="text-right">
+												<label>Labor Total: </label>
 											${(job.laborTotal?string.currency)!}
-										</td>
-										<td colspan="2"></td>
-									</tr>
-									<tr>
-										<td colspan="5" class="text-right">
-											<label>Job Total: </label>
+											</td>
+											<td colspan="2"></td>
+										</tr>
+										<tr>
+											<td colspan="5" class="text-right">
+												<label>Job Total: </label>
 											${(job.total?string.currency)!}
-										</td>
-										<td colspan="2"></td>
-									</tr>
-								</tbody>
-							</table>
+											</td>
+											<td colspan="2"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="visible-xs-block visible-sm-block">
+							<div class="panel-body">
+								<br/>
+								<div class="list-group">
+									<#list job.rooms as room>
+										<span class="list-group-item">
+											<strong>${room.name!}</strong> <br/>
+											Contains ${room.items?size} items <br/>
+											Room Total: ${(room.total?string.currency)!} <br/>
+											<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-md btn-primary">
+												<i class="fa fa-pencil"></i>
+											</a>
+										</span>
+									</#list>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

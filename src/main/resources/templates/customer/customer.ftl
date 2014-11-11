@@ -73,68 +73,99 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="col-lg-8 col-md-8">
 					<div class="panel panel-default">
 						<div class="panel-heading col-xs-12">
 							Jobs
 						</div>
-						<div class="table-responsive">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Created</th>
-										<th>Status</th>
-										<th>Total</th>
-										<th>Edit</th>
-										<th>Quote</th>
-									</tr>
-								</thead>
-								<tbody>
-									<#list customer.jobs as job>
+						<div class="hidden-xs hidden-sm">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
 										<tr>
-											<td>${(job.name)!}</td>
-											<td>${job.created?string.short}</td>
-											<td>
+											<th>Name</th>
+											<th>Created</th>
+											<th>Status</th>
+											<th>Total</th>
+											<th>Edit</th>
+											<th>Quote</th>
+										</tr>
+									</thead>
+									<tbody>
+										<#list customer.jobs as job>
+											<tr>
+												<td>${(job.name)!}</td>
+												<td>${job.created?string.short}</td>
+												<td>
+													<#switch job.status>
+														<#case 0>
+															Quote
+															<#break>
+														<#case 1>
+															Sent
+															<#break>
+														<#case 2>
+															Invoiced
+															<#break>
+														<#case 3>
+															Paid
+															<#break>
+													</#switch>
+												</td>
+												<td>${(job.total?string.currency)!}</td>
+												<td>
+													<a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-md btn-primary">
+														<i class="fa fa-pencil"></i>
+													</a>
+												</td>
+												<td>
+													<form action="/secure/customer/${customer.id}/mail" method="post">
+														<input type="hidden" name="jobId" value="${job.id}"/>
+														<button class="btn btn-default btn-md" type="submit">Send to customer</button>
+														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+													</form>
+												</td>
+											</tr>
+										</#list>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="visible-xs-block visible-sm-block">
+							<div class="panel-body">
+								<br/>
+								<div class="list-group panel-group">
+									<#list customer.jobs as job>
+										<a href="/secure/customer/${customer.id!}/job/${job.id!}" class="list-group-item">
+											<strong>${job.name!}</strong> <br/>
+											${job.created?string.short} <br/>
 												<#switch job.status>
 													<#case 0>
-														Quote
+														Status: Quote
 														<#break>
 													<#case 1>
-														Sent
+														Status: Sent
 														<#break>
 													<#case 2>
-														Invoiced
+														Status: Invoiced
 														<#break>
 													<#case 3>
-														Paid
+														Status: Paid
 														<#break>
 												</#switch>
-											</td>
-											<td>${(job.total?string.currency)!}</td>
-											<td>
-												<a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-md btn-primary">
-													<i class="fa fa-pencil"></i>
-												</a>
-											</td>
-											<td>
-												<form action="/secure/customer/${customer.id}/mail" method="post">
-													<input type="hidden" name="jobId" value="${job.id}"/>
-													<button class="btn btn-default btn-md" type="submit">Send to customer</button>
-													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-												</form>
-											</td>
-										</tr>
+												<br/>
+											${(job.total?string.currency)!}
+										</a>
 									</#list>
-								</tbody>
-							</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<!-- delete modal -->
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -155,23 +186,15 @@
 								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Customer</button>
 							</form>
 						</span>
-
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- delete modal -->
+
 		<#include "../stubs/footer.ftl"/>
 		<#include "../stubs/scripts.ftl"/>
-		<script>
-			$(document).ready(function() {
-					// toggle safe delete modal popup
-					$('a[data-toggle="modal"]').click(function(){
-						var id = $(this).data('id');
-						var form = $('.modal #delete');
-						form.html(form.html().replace('{id}',id));
-					});
-				});
-			</script>
+		<script src="/static/js/delete-modal.js"></script>
 
 	</body>
 </html>

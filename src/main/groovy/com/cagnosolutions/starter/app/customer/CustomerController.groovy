@@ -41,7 +41,7 @@ class CustomerController {
 	String viewAll(Model model, @RequestParam(required = false) Integer page, @RequestParam(required = false) String sort) {
 		def customers = customerService.findAll(page? page-1 :0 , 10, sort?:"id")
 		model.addAllAttributes([customers: customers])
-		"customer/allCustomers"
+		"customer/all-customers"
 	}
 
 	// POST add/edit customer
@@ -110,7 +110,7 @@ class CustomerController {
 		def map = [job : job, customer : customerService.findOne(customerId), company: companyService.findOne()]
 		Email email = emailService.CreateEmail("mail/mail.ftl", map)
 		email.setAll("noreply@hoeynoreply.com", "Job Proposal", ((map.customer as Customer).email as String))
-		emailService.sendEmailThreaded(email)
+		emailService.sendEmail(email)
 		job.status = 1
 		jobService.save job
 		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")

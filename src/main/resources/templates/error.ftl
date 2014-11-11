@@ -35,7 +35,7 @@
 
             <#include "stubs/scripts.ftl"/>
 
-            <#include "stubs/footer.ftl"/>
         </div>
+    <#include "stubs/footer.ftl"/>
 	</body>
 </html>

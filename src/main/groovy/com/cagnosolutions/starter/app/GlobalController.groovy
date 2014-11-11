@@ -1,58 +1,24 @@
 package com.cagnosolutions.starter.app
-import com.cagnosolutions.starter.app.company.CompanyService
-import com.cagnosolutions.starter.app.customer.CustomerService
-import com.cagnosolutions.starter.app.user.UserService
 import groovy.transform.CompileStatic
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.PropertySource
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-
-import javax.servlet.http.HttpSession
-import java.security.Principal
-/**
- * Created by Scott Cagno.
- * Copyright Cagno Solutions. All rights reserved.
- */
 
 @CompileStatic
-@Controller(value = "emailController")
-class EmailController {
-
-    @Autowired
-    CustomerService customerService
-
-    @Autowired
-    CompanyService companyService
-
-    @RequestMapping(value = "/email/{id}", method = RequestMethod.GET)
-    String mail(Model model, @PathVariable Long id) {
-        def cust = customerService.findOne id
-        model.addAllAttributes([customer: cust, job: cust.jobs.first(), company: companyService.findOne()])
-        "mail/mail"
-    }
-
-}
-
-@CompileStatic
-@PropertySource("classpath:application.yml")
 @Controller(value = "indexController")
 class IndexController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	String index() {
+	String root() {
 		"index"
 	}
 
-    @RequestMapping(value = "/speech", method = RequestMethod.GET)
-    String speech() {
-        "asr-speech"
-    }
+	@RequestMapping(value = ["/home", "/index"], method = RequestMethod.GET)
+	String index() {
+		"redirect:/"
+	}
 
 }
 
@@ -60,23 +26,9 @@ class IndexController {
 @Controller(value = "authController")
 class Authentication {
 
-	@Autowired
-	UserService userService
-
 	@RequestMapping(value = "/login")
 	String login() {
 		"login"
-	}
-
-	@RequestMapping(value = "/secure/login", method = RequestMethod.GET)
-	String secureLogin(@RequestParam String forward, HttpSession session, Principal principal) {
-		if(principal.name != "admin") {
-			def user = userService.findOne principal.name
-			user.lastSeen = System.currentTimeMillis()
-			userService.save user
-		}
-		session.setAttribute "authenticated", principal.name
-		"redirect:/secure/$forward"
 	}
 }
 

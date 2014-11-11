@@ -31,11 +31,7 @@ class EmailService {
 		email
 	}
 
-	Email CreateEmail(String body) {
-		new Email([body : body])
-	}
-
-	def sendEmailThreaded(Email email) {
+	def sendEmail(Email email) {
 		Thread.start {
 			MimeMessage mimeEmail = mailSender.createMimeMessage()
 			MimeMessageHelper helper = new MimeMessageHelper(mimeEmail, true)
@@ -48,14 +44,4 @@ class EmailService {
 		}
 	}
 
-	def sendEmail(Email email) {
-			MimeMessage mimeEmail = mailSender.createMimeMessage()
-			MimeMessageHelper helper = new MimeMessageHelper(mimeEmail, true)
-			helper.setTo(email.to)
-			helper.setFrom(email.from)
-			helper.setReplyTo(email.from)
-			helper.setSubject(email.subject)
-			helper.setText(email.body, true)
-			mailSender.send(mimeEmail)
-	}
 }

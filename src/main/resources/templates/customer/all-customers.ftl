@@ -61,27 +61,25 @@
 									<li ${(customers.lastPage)?string('class="disabled"', '')}><a href="/secure/customer?page=${customers.totalPages}&sort=${(RequestParameters.sort)!}">Last</a></li>
 								</ul>
 							</div>
-							<div class="table-responsive">
-								<table class="table table-striped">
-									<thead>
-										<tr>
-
-											<th><a href="/secure/customer?page=${(RequestParameters.page)!}&sort=company">Company</a></th>
-											<th><a href="/secure/customer?page=${(RequestParameters.page)!}&sort=name">Name</a></th>
-											<th><a href="/secure/customer?page=${(RequestParameters.page)!}&sort=email">Email</a></th>
-											<th class="text-primary">Phone</th>
-	                                        <th class="text-primary">Edit</th>
-										</tr>
-									</thead>
-									<tbody>
+							<div class="hidden-xs hidden-sm">
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th><a href="/secure/customer?page=${(RequestParameters.page)!}&sort=company">Company</a></th>
+												<th><a href="/secure/customer?page=${(RequestParameters.page)!}&sort=name">Name</a></th>
+												<th><a href="/secure/customer?page=${(RequestParameters.page)!}&sort=email">Email</a></th>
+												<th class="text-primary">Phone</th>
+												<th class="text-primary">Edit</th>
+											</tr>
+										</thead>
+										<tbody>
 										<#list customers.content as customer>
 											<tr>
-
 												<td>${(customer.company)!}</td>
 												<td>${(customer.name)!}</td>
 												<td>${(customer.email)!}</td>
 												<td>${(customer.phone)!}</td>
-
 												<td>
 													<a href="/secure/customer/${(customer.id)!}"
 													   class="btn btn-md btn-primary">
@@ -90,8 +88,21 @@
 												</td>
 											</tr>
 										</#list>
-									</tbody>
-								</table>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="visible-xs-block visible-sm-block">
+								<div class="list-group">
+									<#list customers.content as customer>
+										<a href="/secure/customer/${(customer.id)!}" class="list-group-item">
+											<strong>${customer.company!}</strong> <br/>
+											${customer.name!} <br/>
+											${customer.email!} <br/>
+											${customer.phone!} <br/>
+										</a>
+									</#list>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -100,6 +111,7 @@
 			</div>
 		</div>
 
+		<!-- delete customer modal -->
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -124,25 +136,12 @@
 					</div>
 				</div>
 			</div>
+			<!-- delete customer modal -->
 
 			<!-- content -->
-
 			<#include "../stubs/footer.ftl"/>
-
 			<#include "../stubs/scripts.ftl"/>
-
-			<script>
-				$(document).ready(function() {
-
-					// toggle safe delete modal popup
-					$('a[data-toggle="modal"]').click(function(){
-						var id = $(this).data('id');
-						var form = $('.modal #delete');
-						form.html(form.html().replace('{id}',id));
-					});
-				});
-
-			</script>
+			<script src="/static/js/delete-modal.js"></script>
 		</div>
 	</body>
 </html>
