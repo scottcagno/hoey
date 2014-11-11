@@ -2,22 +2,40 @@
 <html lang="en">
 	<head id="head">
 		<title>Error Page</title>
-        <#include "stubs/header.ftl">
+        <#include "stubs/header.ftl"/>
 	</head>
 	<body id="body">
 
-        <#include "stubs/navbar.ftl">
+        <div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Hoey Enterprises</a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
         <!-- content -->
         <div id="content" class="container">
             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
-            <legend>${(error)!} <span class="text-danger">${(message)!}</span></legend>
-            <pre>${(exception)!'An unknown error has occoured. That really sucks.'}</pre>
+            <h2>${(error)!} <span class="text-danger">${(message)!}</span></h2>
             </div>
+
+            <!-- content -->
+
+            <#include "stubs/scripts.ftl"/>
+
+            <#include "stubs/footer.ftl"/>
         </div>
-        <!-- content -->
-
-        <#include "stubs/footer.ftl">
-
 	</body>
 </html>

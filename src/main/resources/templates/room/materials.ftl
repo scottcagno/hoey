@@ -9,11 +9,18 @@
 		<#include "../stubs/navbar.ftl"/>
 
 		<!-- content -->
+		<div class="container">
+			<h3>Materials
+				<small class="pull-right">
+					<a href="/secure/customer/${customerId}/job/${jobId}" class="">Back to job</a>
+				</small>
+			</h3>
+		</div>
 		<div id="content" class="container">
 			<div class="row">
 				<div id="materialTablePanel" class="panel panel-default">
 					<div class="panel-heading col-xs-12">
-						<div class="pull-left">Materials</div>
+						<div class="pull-left"></div>
 						<div class="col-lg-2 col-md-2">
 							<div class="dropdown">
 								<button class="btn btn-md btn-default btn-block dropdown-toggle" type="button" id="categoryFilter" data-toggle="dropdown">
@@ -31,7 +38,6 @@
 								</ul>
 							</div>
 						</div>
-						<a href="/secure/customer/${customerId}/job/${jobId}" class="btn btn-md btn-default pull-right">Back to job</a>
 					</div>
 					<div id="materialTable" class="table-responsive">
 						<table class="table table-striped">
@@ -49,7 +55,7 @@
 										<td>${material.cat}</td>
 										<td>${material.name}</td>
 										<td>${material.cost}</td>
-										<td colspan="3">
+										<td colspan="5">
 											<form role="form" method="post" action="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem" class="pull-right">
 												<div class="input-group">
 													<input type="text" class="form-control input-sm" name="count" placeholder="Quantity"/>
@@ -68,11 +74,10 @@
 					</div>
 				</div>
 			</div>
+
+			<#include "../stubs/footer.ftl"/>
+
+			<#include "../stubs/scripts.ftl"/>
 		</div>
-
-		<#include "../stubs/footer.ftl"/>
-
-		<#include "../stubs/scripts.ftl"/>
-
 	</body>
 </html>

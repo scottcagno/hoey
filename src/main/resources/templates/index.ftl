@@ -2,7 +2,7 @@
 <html lang="en">
 	<head id="head">
 		<title>Hoey Enterprises</title>
-        <#include "stubs/header.ftl">
+        <#include "stubs/header.ftl"/>
 	</head>
 	<body id="body">
 
@@ -34,12 +34,12 @@
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 ${alert}
                 </div>
-            <#elseif alertError??>
+            <#elseif alertError??/>
                 <div class="alert alert-danger alert-dismissable text-center">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 ${alertError}
                 </div>
-            <#elseif alertSuccess??>
+            <#elseif alertSuccess??/>
                 <div class="alert alert-success alert-dismissable text-center">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 ${alertSuccess}
@@ -50,61 +50,62 @@
 
         <!-- content -->
         <div class="container">
-            <span class="pull-left col-lg-8 col-md-8">
-                <img class="img-responsive img-thumbnail"
-                     src="https://scontent-a-lga.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/1461470_1436510523228374_567958296_n.jpg?oh=04d8975c19fe36252623eb214b49c8c0&oe=54EC34E5"/>
-            </span>
-            <span class="pull-right col-lg-4 col-md-4">
-                <h2 class="cursive">
-                    Shock & Awe Electric <br/>
-                    <small>Quality Service with Integrity</small>
-                </h2>
-                <p class="lead">
-                    Residential and Commercial Electrical Contracting. Serving Lancaster County and surrounding
-                    areas with Quality Service at a fair price.
-                </p>
-            </span>
+            <div class="row">
+                <span class="pull-left col-lg-8 col-md-8">
+                    <img class="img-responsive img-thumbnail"
+                         src="https://scontent-a-lga.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/1461470_1436510523228374_567958296_n.jpg?oh=04d8975c19fe36252623eb214b49c8c0&oe=54EC34E5"/>
+                </span>
+                <span class="pull-right col-lg-4 col-md-4">
+                    <h2 class="cursive">
+                        Shock & Awe Electric <br/>
+                        <small>Quality Service with Integrity</small>
+                    </h2>
+                    <p class="lead">
+                        Residential and Commercial Electrical Contracting. Serving Lancaster County and surrounding
+                        areas with Quality Service at a fair price.
+                    </p>
+                </span>
+            </div>
+            <br/><br/>
+
+            <div class="row">
+                <span class="col-lg-4">
+                    <blockquote>
+                        <p class="lead">Our Mission</p>
+                        <footer>
+                            Serving within the electrical industry with quality and integrity. Giving the client
+                            excellence in job performance and results, at a fair price. Going the extra mile to ensure
+                            that the customer's needs and desires have been met.
+                        </footer>
+                    </blockquote>
+                </span>
+                <span class="col-lg-4">
+                    <blockquote>
+                        <p class="lead">Testimonials</p>
+                        <footer>
+                            Great work and super nice guy. Did a wonderful job wiring the new shed and installing a new
+                            chandelier in the house. Reasonable, too. &nbsp; ~Thanks, Steve!
+                        </footer>
+                    </blockquote>
+                </span>
+                <span class="col-lg-4">
+                    <blockquote>
+                        <p class="lead">Contact</p>
+                        <footer>
+                            Hoey Enterprises, LLC <br/>
+                            Steve Hoey Owner/Electrician <br/>
+                            1515 Eden Road Lancaster, PA 17601 <br/>
+                            (717) 799-8041 <br/>
+                            <a href="mailto:hoeyenterprises@yahoo.com">hoeyenterprises@yahoo.com</a>
+                        </footer>
+                    </blockquote>
+                </span>
+            </div>
+            <!-- content -->
+
+            <#include "stubs/footer.ftl"/>
+
+            <#include "stubs/scripts.ftl"/>
         </div>
-        <br/><br/>
-
-        <div class="container">
-            <span class="col-lg-4">
-                <blockquote>
-                    <p class="lead">Our Mission</p>
-                    <footer>
-                        Serving within the electrical industry with quality and integrity. Giving the client
-                        excellence in job performance and results, at a fair price. Going the extra mile to ensure
-                        that the customer's needs and desires have been met.
-                    </footer>
-                </blockquote>
-            </span>
-            <span class="col-lg-4">
-                <blockquote>
-                    <p class="lead">Testimonials</p>
-                    <footer>
-                        Great work and super nice guy. Did a wonderful job wiring the new shed and installing a new
-                        chandelier in the house. Reasonable, too. &nbsp; ~Thanks, Steve!
-                    </footer>
-                </blockquote>
-            </span>
-            <span class="col-lg-4">
-                <blockquote>
-                    <p class="lead">Contact</p>
-                    <footer>
-                        Hoey Enterprises, LLC <br/>
-                        Steve Hoey Owner/Electrician <br/>
-                        1515 Eden Road Lancaster, PA 17601 <br/>
-                        (717) 799-8041 <br/>
-                        <a href="mailto:hoeyenterprises@yahoo.com">hoeyenterprises@yahoo.com</a>
-                    </footer>
-                </blockquote>
-            </span>
-        </div>
-        <!-- content -->
-
-        <#include "stubs/footer.ftl">
-
-        <#include "stubs/scripts.ftl">
-
 	</body>
 </html>

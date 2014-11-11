@@ -1,16 +1,20 @@
 package com.cagnosolutions.starter.app
-
 import com.cagnosolutions.starter.app.company.CompanyService
 import com.cagnosolutions.starter.app.customer.CustomerService
 import com.cagnosolutions.starter.app.user.UserService
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.PropertySource
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
+
 import javax.servlet.http.HttpSession
 import java.security.Principal
-
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -36,6 +40,7 @@ class EmailController {
 }
 
 @CompileStatic
+@PropertySource("classpath:application.yml")
 @Controller(value = "indexController")
 class IndexController {
 

@@ -2,7 +2,7 @@
 <html lang="en">
 	<head id="head">
 		<title>Login Page</title>
-        <#include "stubs/header.ftl">
+        <#include "stubs/header.ftl"/>
 	</head>
 	<body id="body">
 
@@ -29,55 +29,58 @@
 
     <!-- errors -->
     <div class="container">
-    <#if alert??>
-        <div class="alert alert-info alert-dismissable text-center">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        ${alert}
-        </div>
-    <#elseif alertError??>
-        <div class="alert alert-danger alert-dismissable text-center">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        ${alertError}
-        </div>
-    <#elseif alertSuccess??>
-        <div class="alert alert-success alert-dismissable text-center">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        ${alertSuccess}
-        </div>
-    </#if>
+        <#if alert??>
+            <div class="alert alert-info alert-dismissable text-center">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            ${alert}
+            </div>
+        <#elseif alertError??/>
+            <div class="alert alert-danger alert-dismissable text-center">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            ${alertError}
+            </div>
+        <#elseif alertSuccess??/>
+            <div class="alert alert-success alert-dismissable text-center">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            ${alertSuccess}
+            </div>
+        </#if>
     </div>
     <!-- errors -->
 
     <!-- content -->
     <div class="container">
-        <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-            <div id="login" class="panel panel-default">
-                <div class="panel-heading">
-                    Please Login
-                </div>
-                <div class="panel-body">
-                    <form role="form" method="post" action="/login">
-                        <div class="form-group">
-                        <span class="text-danger">
-                        ${(RequestParameters.error??)?string('There has been an error logging you in.<br/><br/>','')}
-                        </span>
-                            <input type="text" name="username" class="form-control" placeholder="Username" autofocus="true" required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password" required="true"/>
-                        </div>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button class="btn btn-md btn-block btn-primary" type="submit">Login</button>
-                    </form>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                <div id="login" class="panel panel-default">
+                    <div class="panel-heading">
+                        Please Login
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" method="post" action="/login">
+                            <div class="form-group">
+                            <span class="text-danger">
+                            ${(RequestParameters.error??)?string('There has been an error logging you in.<br/><br/>','')}
+                            ${(RequestParameters.expired??)?string('Your session has expired. Please login<br/><br/>','')}
+                            </span>
+                                <input type="text" name="username" class="form-control" placeholder="Email" autofocus="true" required="true"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" class="form-control" placeholder="Password" required="true"/>
+                            </div>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <button class="btn btn-md btn-block btn-primary" type="submit">Login</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- content-->
+        <!-- content-->
 
-    <#include "stubs/footer.ftl">
+        <#include "stubs/footer.ftl"/>
 
-    <#include "stubs/scripts.ftl">
+        <#include "stubs/scripts.ftl"/>
 
+        </div>
 	</body>
 </html>

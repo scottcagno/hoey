@@ -58,13 +58,14 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 	void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN")
 		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(new BCryptPasswordEncoder())
-				.usersByUsernameQuery("SELECT username, password, active FROM user WHERE username=?")
-				.authoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?")
+				.usersByUsernameQuery("SELECT username, password, active FROM company WHERE username=?")
+				.authoritiesByUsernameQuery("SELECT username, role FROM company WHERE username=?")
 	}
 
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/secure/**").hasAnyRole("ADMIN", "USER")
+		http.authorizeRequests().antMatchers("/secure/**").hasAnyRole("ADMIN")
 		http.formLogin().loginPage("/login")
+		//http.sessionManagement().maximumSessions(1).expiredUrl("/login?expired").maxSessionsPreventsLogin(false)
 		http.logout().logoutSuccessUrl("/").logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
 	}
 }

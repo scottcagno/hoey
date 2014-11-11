@@ -3,6 +3,7 @@ package com.cagnosolutions.starter.app.company
 import com.cagnosolutions.starter.app.job.JobService
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
@@ -38,6 +39,9 @@ class CompanyController {
 			companyService.save company
 		} else {
 			mergeProperties(company, current)
+            if (current.password[0] != '$') {
+                current.password = new BCryptPasswordEncoder().encode(current.password)
+            }
 			companyService.save current
 		}
         attr.addFlashAttribute("alertSuccess", "Information has successfully been updated!")
@@ -47,7 +51,7 @@ class CompanyController {
     // helper method
     def mergeProperties(source, target) {
         source.properties.each { key, value ->
-            if (target.hasProperty(key as String) && !(key in ['class', 'metaClass']) && value != null)
+            if (target.hasProperty(key as String) && !(key in ['class', 'metaClass']) && value != null && value != ""   )
                 target[key as String] = value
         }
     }

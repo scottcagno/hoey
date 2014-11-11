@@ -117,10 +117,13 @@ class JobController {
 	// POST mail to customer
 	@RequestMapping(value = "/customer/{customerId}/job/{jobId}/mail", method = RequestMethod.POST)
 	String mail(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
-		def map = [job : jobService.findOne(jobId), customer : customerService.findOne(customerId), company: companyService.findOne()]
+		def job = jobService.findOne(jobId)
+		def map = [job : job, customer : customerService.findOne(customerId), company: companyService.findOne()]
 		Email email = emailService.CreateEmail("mail/mail.ftl", map)
 		email.setAll("noreply@hoeynoreply.com", "Job Quote", ((map.customer as Customer).email as String))
 		emailService.sendEmailThreaded(email)
+		job.status = 1
+		jobService.save job
 		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")
 		"redirect:/secure/customer/${customerId}/job/${jobId}"
 	}

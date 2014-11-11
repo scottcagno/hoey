@@ -79,9 +79,11 @@
 					<div class="panel panel-default">
 						<div class="panel-heading col-xs-12">
 							Rooms
-							<a href="/secure/customer/${customerId}" class="btn btn-default">Back to customer</a>
-							<form action="/secure/customer/${customerId}/job/${job.id}/mail" class="col-xs-12 col-sm-4 pull-right" method="post">
-								<button class="btn btn-default btn-md btn-block" type="submit">Email to customer</button>
+							<form action="/secure/customer/${customerId}/job/${job.id}/mail" class="col-xs-12 col-sm-6 pull-right" method="post">
+								<div class="btn-group">
+									<a href="/secure/customer/${customerId}" class="btn btn-default">Back to customer</a>
+									<button class="btn btn-default" type="submit">Email to customer</button>
+								</div>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							</form>
 						</div>
@@ -272,78 +274,77 @@
 			</div>
 		</div>
 
-		<!-- content -->
+			<!-- content -->
 
-		<#include "../stubs/footer.ftl"/>
+			<#include "../stubs/footer.ftl"/>
 
-		<#include "../stubs/scripts.ftl"/>
+			<#include "../stubs/scripts.ftl"/>
 
-		<script>
-			$(document).ready(function() {
+			<script>
+				$(document).ready(function() {
 
-				// toggle safe delete modal popup
-				$('a[data-toggle="modal"]').click(function(){
-					var id = $(this).data('id');
-					var form = $('.modal #jobDelete');
-					form.html(form.html().replace('{id}',id));
+					// toggle safe delete modal popup
+					$('a[data-toggle="modal"]').click(function(){
+						var id = $(this).data('id');
+						var form = $('.modal #jobDelete');
+						form.html(form.html().replace('{id}',id));
+					});
+
+					// toggle safe delete modal popup
+					$('a[data-toggle="modal"]').click(function(){
+						var id = $(this).data('id');
+						var form = $('.modal #roomDelete');
+						form.html(form.html().replace('{id}',id));
+					});
+
+					// toggle safe delete modal popup
+					$('a[data-toggle="modal"]').click(function(){
+						var id = $(this).data('id');
+						var form = $('.modal #itemDelete');
+						form.html(form.html().replace('{id}',id));
+					});
+
+					$('tr.header').on('show.bs.collapse', function() {
+						$('i[id="' + this.id + '"]').addClass('fa-rotate-90');
+					});
+
+					$('tr.header').on('hidden.bs.collapse', function() {
+						$('i[id="' + this.id + '"]').removeClass('fa-rotate-90');
+					});
+
+					/*
+					*
+					* change item count
+					*
+					*/
+
+					// enable quantity field on td click
+					$('td.count').click(function() {
+						$('input[id="'+this.id+'"]').removeAttr('disabled');
+						$('input[id="'+this.id+'"]').focus();
+					});
+
+					// register submit, disable, and focus actions on count fields
+					$('input[name="count"]').focus(function() {
+						this.onblur = function() {this.setAttribute('disabled', true)}
+						this.onchange = function() {$('form[id="count_' + this.id + '"]').submit()}
+					});
+
+
+					// enable quantity field on td click
+					$('td[id="laborHours"]').click(function() {
+						$('input[id="laborHours"]').removeAttr('disabled');
+						$('input[id="laborHours"]').focus();
+					});
+
+
+					// register submit, disable, and focus actions on count fields
+					$('input[name="laborHours"]').focus(function() {
+						this.onblur = function() {this.setAttribute('disabled', true)}
+						this.onchange = function() {$('form[id="laborForm"]').submit()}
+					});
+
 				});
-
-				// toggle safe delete modal popup
-				$('a[data-toggle="modal"]').click(function(){
-					var id = $(this).data('id');
-					var form = $('.modal #roomDelete');
-					form.html(form.html().replace('{id}',id));
-				});
-
-				// toggle safe delete modal popup
-				$('a[data-toggle="modal"]').click(function(){
-					var id = $(this).data('id');
-					var form = $('.modal #itemDelete');
-					form.html(form.html().replace('{id}',id));
-				});
-
-				$('tr.header').on('show.bs.collapse', function() {
-					$('i[id="' + this.id + '"]').addClass('fa-rotate-90');
-				});
-
-				$('tr.header').on('hidden.bs.collapse', function() {
-					$('i[id="' + this.id + '"]').removeClass('fa-rotate-90');
-				});
-
-				/*
-				*
-				* change item count
-				*
-				*/
-
-				// enable quantity field on td click
-				$('td.count').click(function() {
-					$('input[id="'+this.id+'"]').removeAttr('disabled');
-					$('input[id="'+this.id+'"]').focus();
-				});
-
-				// register submit, disable, and focus actions on count fields
-				$('input[name="count"]').focus(function() {
-					this.onblur = function() {this.setAttribute('disabled', true)}
-					this.onchange = function() {$('form[id="count_' + this.id + '"]').submit()}
-				});
-
-
-				// enable quantity field on td click
-				$('td[id="laborHours"]').click(function() {
-					$('input[id="laborHours"]').removeAttr('disabled');
-					$('input[id="laborHours"]').focus();
-				});
-
-
-				// register submit, disable, and focus actions on count fields
-				$('input[name="laborHours"]').focus(function() {
-					this.onblur = function() {this.setAttribute('disabled', true)}
-					this.onchange = function() {$('form[id="laborForm"]').submit()}
-				});
-
-			});
-		</script>
-
+			</script>
 	</body>
 </html>

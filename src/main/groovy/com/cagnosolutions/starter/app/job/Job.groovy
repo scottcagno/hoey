@@ -25,7 +25,7 @@ class Job {
 	Double laborHours
 	Double laborTotal
 	Double total
-    Integer status // status codes: 0 - quote, 1 - active, 2 - invoiced, 3 - paid
+    Integer status // status codes: 0 - quote, 1 - email sent
     Date created, invoiced
 
 	@OneToMany(cascade = CascadeType.ALL)

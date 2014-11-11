@@ -146,25 +146,24 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- content -->
+			<!-- content -->
 
-		<#include "../stubs/footer.ftl"/>
+			<#include "../stubs/footer.ftl"/>
 
-		<#include "../stubs/scripts.ftl"/>
+			<#include "../stubs/scripts.ftl"/>
 
-		<script>
-			$(document).ready(function() {
+			<script>
+				$(document).ready(function() {
 
-				// toggle safe delete modal popup
-				$('a[data-toggle="modal"]').click(function(){
-					var id = $(this).data('id');
-					var form = $('.modal #delete');
-					form.html(form.html().replace('{id}',id));
+					// toggle safe delete modal popup
+					$('a[data-toggle="modal"]').click(function(){
+						var id = $(this).data('id');
+						var form = $('.modal #delete');
+						form.html(form.html().replace('{id}',id));
+					});
 				});
-			});
 
-		</script>
-
+			</script>
+		</div>
 	</body>
 </html>
