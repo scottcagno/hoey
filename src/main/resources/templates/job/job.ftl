@@ -202,9 +202,10 @@
 										<span class="list-group-item">
 											<strong>${room.name!}</strong> <br/>
 											Contains ${room.items?size} items <br/>
-											Room Total: ${(room.total?string.currency)!} <br/>
-											<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}" class="btn btn-md btn-primary">
-												<i class="fa fa-pencil"></i>
+											${room.name!} Total: ${(room.total?string.currency)!} <br/><br/>
+											<a href="/secure/customer/${customerId}/job/${job.id}/room/${(room.id)!}"
+											   class="btn btn-sm btn-primary btn-block">
+												<i class="fa fa-plus"></i>&nbsp; Add Notes For Room
 											</a>
 										</span>
 									</#list>

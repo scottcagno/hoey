@@ -30,45 +30,71 @@
 								</ul>
 							</div>
                         </div>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=name">Name</a></th>
-                                <th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=status">Status</a></th>
-                                <th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=total">Total</a></th>
-                                <th class="text-primary">Edit</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <#list jobs.content as job>
-                            <tr>
-                                <td>${(job.name)!}</td>
-                                <td>
-                                    <#switch job.status>
-                                        <#case 0>
-                                            Quote
-                                            <#break>
-                                        <#case 1>
-                                            Sent
-                                            <#break>
-                                        <#case 2>
-                                            Invoiced
-                                            <#break>
-                                        <#case 3>
-                                            Paid
-                                            <#break>
-                                    </#switch>
-                                </td>
-                                <td>${(job.total?string.currency)!}</td>
-                                <td>
-                                    <a href="/secure/job/${(job.id)!}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            </#list>
-                            </tbody>
-                        </table>
+						<div class="hidden-xs hidden-sm">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=name">Name</a></th>
+										<th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=status">Status</a></th>
+										<th><a href="/secure/job?page=${(RequestParameters.page)!}&sort=total">Total</a></th>
+										<th class="text-primary">Edit</th>
+									</tr>
+								</thead>
+								<tbody>
+								<#list jobs.content as job>
+									<tr>
+										<td>${(job.name)!}</td>
+										<td>
+											<#switch job.status>
+												<#case 0>
+													Quote
+													<#break>
+												<#case 1>
+													Sent
+													<#break>
+												<#case 2>
+													Invoiced
+													<#break>
+												<#case 3>
+													Paid
+													<#break>
+											</#switch>
+										</td>
+										<td>${(job.total?string.currency)!}</td>
+										<td>
+											<a href="/secure/job/${(job.id)!}" class="btn btn-sm btn-primary">
+												<i class="fa fa-pencil"></i>
+											</a>
+										</td>
+									</tr>
+								</#list>
+								</tbody>
+							</table>
+						</div>
+						<div class="visible-xs-block visible-sm-block">
+							<div class="list-group">
+								<#list jobs.content as job>
+									<a href="/secure/job/${(job.id)!}" class="list-group-item">
+										<strong>${job.name!}</strong> <br/>
+										<#switch job.status>
+											<#case 0>
+												Status: Quote
+												<#break>
+											<#case 1>
+												Status: Sent
+												<#break>
+											<#case 2>
+												Status: Invoiced
+												<#break>
+											<#case 3>
+												Status: Paid
+												<#break>
+										</#switch> <br/>
+										Total: ${(job.total?string.currency)!} <br/>
+									</a>
+								</#list>
+							</div>
+						</div>
 					</div>
 				</div>
 				<!-- view all -->
