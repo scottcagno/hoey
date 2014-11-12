@@ -85,36 +85,52 @@
 								</ul>
 							</div>
 						</div>
-						<div class="table-responsive">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Category</a></th>
-										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
-										<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
-										<th>Global Markup</th>
-										<th>Taxed</th>
-										<th class="text-primary">Edit</th>
-									</tr>
-								</thead>
-								<tbody>
-									<#list materials as material>
+						<div class="hidden-xs hidden-sm">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
 										<tr>
-											<td>${(material.cat)!}</td>
-											<td>${(material.name)!}</td>
-											<td>${(material.cost?string.currency)!}</td>
-											<td>${(material.markup)?string('Yes', 'No')}</td>
-											<td>${(material.taxed)?string('Yes', 'No')}</td>
-											<td>
-												<a href="/secure/material/${(material.id)!}" class="btn btn-sm btn-primary">
-													<i class="fa fa-pencil"></i>
-												</a>
-											</td>
+											<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cat">Category</a></th>
+											<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=name">Name</a></th>
+											<th><a href="/secure/material?category=${(RequestParameters.category)!}&field=cost">Cost</a></th>
+											<th>Global Markup</th>
+											<th>Taxed</th>
+											<th class="text-primary">Edit</th>
 										</tr>
+									</thead>
+									<tbody>
+										<#list materials as material>
+											<tr>
+												<td>${(material.cat)!}</td>
+												<td>${(material.name)!}</td>
+												<td>${(material.cost?string.currency)!}</td>
+												<td>${(material.markup)?string('Yes', 'No')}</td>
+												<td>${(material.taxed)?string('Yes', 'No')}</td>
+												<td>
+													<a href="/secure/material/${(material.id)!}" class="btn btn-sm btn-primary">
+														<i class="fa fa-pencil"></i>
+													</a>
+												</td>
+											</tr>
+											</a>
+										</#list>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="visible-xs-block visible-sm-block">
+							<div class="panel-body">
+								<br/>
+								<div class="list-group">
+									<#list materials as material>
+										<a href="/secure/material/${(material.id)!}" class="list-group-item">
+											<strong>${(material.cat)!} : ${(material.name)!}</strong> <br/>
+											Cost: ${(material.cost?string.currency)!} <br/>
+											Markup/Taxed: ${(material.markup)?string('Yes', 'No')} / ${(material.taxed)?string('Yes', 'No')} <br/>
 										</a>
 									</#list>
-								</tbody>
-							</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
