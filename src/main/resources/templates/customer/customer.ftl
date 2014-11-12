@@ -5,9 +5,7 @@
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
-
 		<#include "../stubs/navbar.ftl"/>
-
 		<div id="content" class="container">
 			<div class="row">
 				<!-- add/edit -->
@@ -164,7 +162,6 @@
 				</div>
 			</div>
 		</div>
-
 		<!-- delete modal -->
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
@@ -191,10 +188,8 @@
 			</div>
 		</div>
 		<!-- delete modal -->
-
 		<#include "../stubs/footer.ftl"/>
 		<#include "../stubs/scripts.ftl"/>
 		<script src="/static/js/delete-modal.js"></script>
-
 	</body>
 </html>

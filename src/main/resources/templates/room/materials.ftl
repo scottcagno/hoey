@@ -5,9 +5,7 @@
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
-
 		<#include "../stubs/navbar.ftl"/>
-
 		<!-- content -->
 		<div class="container">
 			<h3>Materials
@@ -74,9 +72,7 @@
 					</div>
 				</div>
 			</div>
-
 			<#include "../stubs/footer.ftl"/>
-
 			<#include "../stubs/scripts.ftl"/>
 		</div>
 	</body>

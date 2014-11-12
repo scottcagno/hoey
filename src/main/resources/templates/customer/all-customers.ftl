@@ -5,9 +5,7 @@
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
-
 		<#include "../stubs/navbar.ftl"/>
-
 		<!-- content -->
 		<div id="content" class="container">
 			<div class="row">
@@ -17,7 +15,6 @@
 						<div class="panel-heading">Add Customer</div>
 						<div class="panel-body">
 							<form role="form" method="post" action="/secure/customer">
-
 								<div class="form-group">
 									<input type="text" id="company" name="company" class="form-control"
 										   placeholder="Company" value="${(customer.company)!}"/>
@@ -137,7 +134,6 @@
 				</div>
 			</div>
 			<!-- delete customer modal -->
-
 			<!-- content -->
 			<#include "../stubs/footer.ftl"/>
 			<#include "../stubs/scripts.ftl"/>

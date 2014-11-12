@@ -5,9 +5,7 @@
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
-
 		<#include "../stubs/navbar.ftl"/>
-
 		<!-- content -->
 		<div id="content" class="container">
 			<!-- add/edit owner info -->
@@ -35,7 +33,6 @@
 									<label>Password</label>
 									<input type="password" id="password" name="password" class="form-control" placeholder="Password"/>
 								</div>
-
 								<input type="hidden" name="id" value="1"/>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button class="btn btn-md btn-primary btn-block" type="submit">Update Owner</button>
@@ -44,7 +41,6 @@
 					</div>
 				</div>
 				<!-- add/edit owner info -->
-
 				<!-- add/edit company info -->
 				<div class="col-lg-4 col-md-4">
 					<div class="panel panel-default">
@@ -81,7 +77,6 @@
 					</div>
 				</div>
 				<!-- add/edit company info -->
-
 				<!-- add/edit company extras -->
 				<div class="col-lg-4 col-md-4">
 					<div class="panel panel-default">
@@ -118,45 +113,9 @@
 				</div>
 			</div>
 			<!-- add/edit company extras -->
-
-			<!--
-			<div class="panel panel-default">
-				<div class="panel-heading">Outstanding Invoices</div>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Customer</th>
-								<th>Total</th>
-								<th>Overdue</th>
-								<th>Options</th>
-							</tr>
-						</thead>
-						<tbody>
-							<#list invoices as invoice>
-								<tr>
-									<td>${(invoice.id)!}</td>
-									<td>${(invoice.email)!}</td>
-									<td>${(invoice.total)!}</td>
-									<td>DUNNO YET</td>
-									<td>
-										<a href="#">Send Notice</a>
-										<a href="#">Mark Paid</a>
-									</td>
-								</tr>
-							</#list>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			-->
 		<!-- content -->
-
 			<#include "../stubs/footer.ftl"/>
-
 			<#include "../stubs/scripts.ftl"/>
 		</div>
-
 	</body>
 </html>

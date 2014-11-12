@@ -5,9 +5,7 @@
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
-
 		<#include "../stubs/navbar.ftl"/>
-
 		<!-- content -->
 		<div id="content" class="container">
 			<div class="row">
@@ -19,9 +17,6 @@
 						</div>
 						<div class="panel-body">
 							<form role="form" method="post" action="/secure/item">
-
-								bs.input
-
 								<input type="hidden" name="id" value="${(item.id)!}"/>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
@@ -46,10 +41,8 @@
 									<tbody>
 										<#list items as item>
 											<tr>
-
 												<td>${(item.mid.desc)!}</td>
 												<td>${(item.count)!}</td>
-
 												<td>
 													<a href="/secure/item/${(item.id)!}" class="btn btn-md btn-primary">
 														<i class="fa fa-pencil"></i>
@@ -71,6 +64,7 @@
 			</div>
 		</div>
 
+		<!-- delete modal confirmation -->
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -94,25 +88,11 @@
 					</div>
 				</div>
 			</div>
-
+			<!-- delete modal confirmation -->
 			<!-- content -->
-
 			<#include "../stubs/footer.ftl"/>
-
 			<#include "../stubs/scripts.ftl"/>
-
-			<script>
-				$(document).ready(function() {
-
-					// toggle safe delete modal popup
-					$('a[data-toggle="modal"]').click(function(){
-						var id = $(this).data('id');
-						var form = $('.modal #delete');
-						form.html(form.html().replace('{id}',id));
-					});
-				});
-
-			</script>
+			<script src="/static/js/delete-modal.js"></script>
 		</div>
 	</body>
 </html>
