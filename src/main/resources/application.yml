@@ -8,6 +8,17 @@ spring:
     url: jdbc:mysql://localhost:3306/hoey?createDatabaseIfNotExist=true
     username: root
     password: root
+    maxActive: 150
+    maxIdle: 10
+    minIdle: 5
+    initialSize: 5
+    minEvictableIdleTimeMillis: 1800000
+    timeBetweenEvictionRunsMillis: 1800000
+    maxWait: 10000
+    validationQuery: SELECT 1
+    testOnBorrow: true
+    testOnReturn: true
+    testWhileIdle: true
 
   jpa:
     generateDdl: true
