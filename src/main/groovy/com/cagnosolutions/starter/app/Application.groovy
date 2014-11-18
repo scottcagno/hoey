@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
@@ -61,7 +62,12 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/secure/**").hasAnyRole("ADMIN")
 		http.formLogin().loginPage("/login")
-		//http.sessionManagement().maximumSessions(1).expiredUrl("/login?expired").maxSessionsPreventsLogin(false)
+		http.sessionManagement()
+				.maximumSessions(1)
+				.expiredUrl("/login?expired")
+				.maxSessionsPreventsLogin(false)
+				.and()
+				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 		http.logout().logoutSuccessUrl("/").logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
 	}
 }

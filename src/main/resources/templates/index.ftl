@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="head">
-		<title>Hoey Enterprises</title>
+		<title>Shock & Awe</title>
         <#include "stubs/header.ftl"/>
 	</head>
-	<body id="body">
+	<body>
 
         <!-- navbar -->		
-        <div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+        <div id="navbar" class="navbar navbar-default navbar-static-top">
         	<div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -16,57 +16,116 @@
         				<span class="icon-bar"></span>
         				<span class="icon-bar"></span>
         			</button>
-        			<a class="navbar-brand" href="#">Shock & Awe Electric</a>
+        			<a class="navbar-brand" href="/">Welcome</a>
         		</div>
         		<div class="collapse navbar-collapse navbar-ex1-collapse">
         			<ul class="nav navbar-nav navbar-right">
-        				<li><a href="/secure/customer">Login</a></li>
+        				<li><a href="/secure/customer">Secure Login</a></li>
         			</ul>
         		</div>
         	</div>
         </div>
         <!-- navbar -->
 
-        <!-- errors -->
-        <div class="container">
-            <#if alert??>
-                <div class="alert alert-info alert-dismissable text-center">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                ${alert}
-                </div>
-            <#elseif alertError??/>
-                <div class="alert alert-danger alert-dismissable text-center">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                ${alertError}
-                </div>
-            <#elseif alertSuccess??/>
-                <div class="alert alert-success alert-dismissable text-center">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                ${alertSuccess}
-                </div>
-            </#if>
-        </div>
-        <!-- errors -->
-
         <!-- content -->
         <div class="container">
-            <div class="row">
-                <span class="pull-left col-lg-8 col-md-8">
-                    <img class="img-responsive img-thumbnail"
-                         src="https://scontent-a-lga.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/1461470_1436510523228374_567958296_n.jpg?oh=04d8975c19fe36252623eb214b49c8c0&oe=54EC34E5"/>
-                </span>
-                <span class="pull-right col-lg-4 col-md-4">
-                    <h2 class="cursive">
-                        Shock & Awe Electric <br/>
-                        <small>Quality Service with Integrity</small>
-                    </h2>
-                    <p class="lead">
-                        Residential and Commercial Electrical Contracting. Serving Lancaster County and surrounding
-                        areas with Quality Service at a fair price.
+			<section class="row">
+				<div class="jumbotron">
+					<p>
+						<img src="/static/img/logo.jpg" class="col-md-3 img-responsive"/>
+					</p>
+					<h1 class="cursive">
+                        Shock & Awe Electric
+                    </h1>
+					<p class="cursive text-muted">
+                        Quality service with integrity
                     </p>
-                </span>
-            </div>
-            <br/><br/>
+					<p>
+                        <a class="btn btn-primary" href="mailto:hoeyenterprises@yahoo.com?subject=Job Inquiry">
+                            Click to contact Shock & Awe Electric
+                        </a>
+                    </p>
+				</div>
+
+				<#--<p>
+					Residential and Commercial Electrical Contracting. Serving Lancaster County
+					and surrounding areas with Quality Service at a fair price.
+				</p>
+-->
+				<#--<div class="col-lg-4 col-md-4">
+					<img src="/static/img/logo.jpg"  class="img-responsive" alt="Shock & Awe Electric"/>
+				</div>-->
+				<#--<div class="jumbotron">
+					<h1 class="cursive">
+						Shock & Awe Electric <br/>
+						<small>
+							Quality service with integrity
+						</small>
+					</h1>
+					<br/>
+					<p class="lead text-muted">
+						Residential and Commercial Electrical Contracting. Serving Lancaster County and
+						surrounding areas with Quality Service at a fair price.
+					</p>
+				</div>-->
+			</section>
+
+			<section class="row">
+				<div class="col-lg-4 col-md-4">
+					<h3>
+						About Us <br/>
+						<small>
+							Shock & Awe Electric provides both Residential and Commercial Electrical Contracting.
+                            Serving Lancaster County and surrounding areas with Quality Service at a fair price.
+						</small>
+					</h3>
+				</div>
+				<div class="col-lg-4 col-md-4">
+					<h3>
+						Our Mission <br/>
+						<small>
+							Serving within the electrical industry with quality and integrity. Giving the
+							client excellence in job performance and results, at a fair price. Going the
+							extra mile to ensure that the customer's needs and desires have been met.
+						</small>
+					</h3>
+				</div>
+                <div class="col-lg-4 col-md-4">
+					<h3>
+						Contact Us <br/>
+						<small>
+							Steve Hoey Owner/Electrician <br/>
+							1515 Eden Road Lancaster, PA 17601 <br/>
+							(717) 799-8041 <br/>
+							<a href="mailto:hoeyenterprises@yahoo.com?subject=Job Inquiry">
+								hoeyenterprises@yahoo.com
+							</a>
+						</small>
+					</h3>
+				</div>
+			</section>
+
+        </div>
+
+<#--
+
+
+
+
+
+                <h3>
+                    Our Mission <br/>
+					<small>
+						Serving within the electrical industry with quality and integrity. Giving the
+						client excellence in job performance and results, at a fair price. Going the
+						extra mile to ensure that the customer's needs and desires have been met.
+					</small>
+                </h3>
+
+             </div>
+
+
+
 
             <div class="row">
                 <span class="col-lg-4">
@@ -100,7 +159,7 @@
                         </footer>
                     </blockquote>
                 </span>
-            </div>
+            </section>-->
             <!-- content -->
 
             <#include "stubs/footer.ftl"/>
