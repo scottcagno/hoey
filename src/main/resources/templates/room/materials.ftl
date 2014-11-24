@@ -56,10 +56,10 @@
 										<td colspan="5">
 											<form role="form" method="post" action="/secure/customer/${customerId}/job/${jobId}/room/${room.id}/additem" class="pull-right">
 												<div class="input-group">
-													<input type="text" class="form-control input-sm" name="count" placeholder="Quantity"/>
-    		    										<span class="input-group-btn">
-    		    											<button type="submit" class="btn btn-primary btn-sm">Add Item</button>
-    		    										</span>
+													<input type="text" class="form-control input-sm" name="count" placeholder="Quantity" required="true"/>
+    		    									<span class="input-group-btn">
+    		    										<button type="submit" class="btn btn-primary btn-sm">Add Item</button>
+    		    									</span>
 												</div>
 												<input type="hidden" name="materialId" value="${material.id}"/>
 												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
