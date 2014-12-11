@@ -1,4 +1,5 @@
-package com.cagnosolutions.starter.app.room
+package com.cagnosolutions.starter.app.customer
+
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
@@ -14,26 +15,26 @@ import org.springframework.stereotype.Service
  */
 
 @CompileStatic
-@Service(value = "roomService")
-class RoomService {
+@Service(value = "customerService")
+class CustomerService {
 
 	@Autowired
-	RoomRepository repo
+	CustomerRepository repo
 
-	List<Room> findAll() {
+	List<Customer> findAll() {
 		repo.findAll()
 	}
 
-	Page<Room> findAll(int page, int size, String... fields) {
+	Page<Customer> findAll(int page, int size, String... fields) {
 		repo.findAll(new PageRequest(page, size, Sort.Direction.ASC, fields))
 	}
 
-	Room findOne(Long id) {
+	Customer findOne(Long id) {
 		repo.findOne id
 	}
 
-	Room save(Room room) {
-		repo.save room
+	Customer save(Customer customer) {
+		repo.save customer
 	}
 
 	def delete(Long id) {
@@ -42,8 +43,3 @@ class RoomService {
 
 }
 
-@CompileStatic
-@Repository
-interface RoomRepository extends JpaRepository<Room, Long> {
-
-}

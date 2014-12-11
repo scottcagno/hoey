@@ -107,6 +107,7 @@
 				<!-- view all -->
 			</div>
 		</div>
+		<!-- content -->
 
 		<!-- delete customer modal -->
 		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
@@ -134,10 +135,9 @@
 				</div>
 			</div>
 			<!-- delete customer modal -->
-			<!-- content -->
-			<#include "../stubs/footer.ftl"/>
-			<#include "../stubs/scripts.ftl"/>
-			<script src="/static/js/delete-modal.js"></script>
 		</div>
+		<#include "../stubs/footer.ftl"/>
+		<#include "../stubs/scripts.ftl"/>
+		<script src="/static/js/delete-modal.js"></script>
 	</body>
 </html>

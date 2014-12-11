@@ -10,13 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
-/**
- * Created by Scott Cagno.
- * Copyright Cagno Solutions. All rights reserved.
- */
-
 @CompileStatic
-@Controller(value = "companyController")
+@Controller
 @RequestMapping(value = "/secure/company")
 class CompanyController {
 

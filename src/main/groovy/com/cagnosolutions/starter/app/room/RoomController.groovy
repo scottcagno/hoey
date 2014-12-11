@@ -14,12 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 import javax.servlet.http.HttpSession
-/**
- * Created by Scott Cagno.
- * Copyright Cagno Solutions. All rights reserved.
- */
 
-@Controller(value = "roomController")
+@Controller
 @RequestMapping(value = "/secure/customer/{customerId}/job/{jobId}/room")
 class RoomController {
 

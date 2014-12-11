@@ -10,12 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
-/**
- * Created by Scott Cagno.
- * Copyright Cagno Solutions. All rights reserved.
- */
-
-@Controller(value = "materialController")
+@Controller
 @RequestMapping(value = "/secure/material")
 class MaterialController {
 

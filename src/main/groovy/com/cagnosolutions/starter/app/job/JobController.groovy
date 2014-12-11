@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import javax.servlet.http.HttpSession
 
 @CompileStatic
-@Controller(value = "jobController")
+@Controller
 @RequestMapping(value = "/secure")
 class JobController {
 

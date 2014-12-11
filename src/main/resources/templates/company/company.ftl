@@ -86,10 +86,16 @@
 								<!--<div class="form-group">-->
 								<!--<img src="${(company??)?string((company.logo)!, '/static/img/logo.png')}" class="img-responsive">-->
 								<!--</div>-->
-								<div class="form-group">
+								<#--<div class="form-group">
 									<label>Company Logo URL</label>
 									<input type="url" id="logo" name="logo" value="${(company.logo)!}" class="form-control" placeholder="Logo URL"/>
-								</div>
+								</div>-->
+								<div class="form-group">
+                            	    <label>
+										*Globals for markup, labor rate and terms
+									</label>
+                            	</div>
+								<hr/>
 								<div class="form-group row">
 									<div class="col-xs-6">
 										<label>Markup %</label>

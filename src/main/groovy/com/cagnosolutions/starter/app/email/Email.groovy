@@ -1,8 +1,5 @@
 package com.cagnosolutions.starter.app.email
 
-/**
- * Created by greg on 9/8/14.
- */
 class Email {
 
 	String[] to

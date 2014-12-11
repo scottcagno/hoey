@@ -10,12 +10,9 @@ import org.springframework.stereotype.Service
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils
 
 import javax.mail.internet.MimeMessage
-/**
- * Created by greg on 9/8/14.
- */
 
 @CompileStatic
-@Service(value = "emailService")
+@Service
 class EmailService {
 
 	@Autowired

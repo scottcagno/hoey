@@ -26,7 +26,7 @@ spring:
 server:
   port: 8080
   address: 0.0.0.0
-  session-timeout: 1200
+  session-timeout: 1800 # 30 minutes
 
 security:
   user:

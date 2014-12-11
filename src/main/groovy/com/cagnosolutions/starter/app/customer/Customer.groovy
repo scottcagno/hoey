@@ -2,10 +2,6 @@ package com.cagnosolutions.starter.app.customer
 import com.cagnosolutions.starter.app.job.Job
 
 import javax.persistence.*
-/**
- * Created by Scott Cagno.
- * Copyright Cagno Solutions. All rights reserved.
- */
 
 @Entity
 class Customer {
