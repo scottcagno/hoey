@@ -1,44 +1,31 @@
 package com.cagnosolutions.starter.app.email
-
-import freemarker.template.Configuration
-import freemarker.template.Template
+import com.sun.jersey.api.client.Client
+import com.sun.jersey.api.client.ClientResponse
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter
+import com.sun.jersey.core.util.MultivaluedMapImpl
 import groovy.transform.CompileStatic
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.mail.javamail.JavaMailSender
-import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils
 
-import javax.mail.internet.MimeMessage
+import javax.ws.rs.core.MediaType
 
 @CompileStatic
 @Service
 class EmailService {
 
-	@Autowired
-	JavaMailSender mailSender
+	static String AUTH_KEY = "key-173701b40541299bd3b7d40c3ac6fd43"
+	static String BASE_URI = "https://api.mailgun.net/v2/sandbox73d66ccb60f948708fcaf2e2d1b3cd4c.mailgun.org"
 
-	@Autowired
-	Configuration freeMarkerConfiguration
-
-	Email CreateEmail(String template, Map data) {
-		Email email = new Email()
-		Template temp = freeMarkerConfiguration.getTemplate(template)
-		email.body = FreeMarkerTemplateUtils.processTemplateIntoString(temp, data)
-		email
-	}
-
-	def sendEmail(Email email) {
-		Thread.start {
-			MimeMessage mimeEmail = mailSender.createMimeMessage()
-			MimeMessageHelper helper = new MimeMessageHelper(mimeEmail, true)
-			helper.setTo(email.to)
-			helper.setFrom(email.from)
-			helper.setReplyTo(email.from)
-			helper.setSubject(email.subject)
-			helper.setText(email.body, true)
-			mailSender.send(mimeEmail)
-		}
+	ClientResponse send(String from, String to, String subject, String text) {
+		def client = Client.create()
+		def resource = client.resource BASE_URI + "/messages"
+		def data = new MultivaluedMapImpl()
+		client.addFilter new HTTPBasicAuthFilter("api", AUTH_KEY)
+		data.add "from", from
+		data.add "to", to
+		data.add "subject", subject
+		data.add "text", text
+		data.add "html", "<html><h1>HTML VERSION</h1><p>${text}</p></html>"
+		resource.type(MediaType.APPLICATION_FORM_URLENCODED).post(data)
 	}
 
 }

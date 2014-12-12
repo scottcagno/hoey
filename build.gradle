@@ -30,7 +30,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.codehaus.groovy:groovy")
     compile("mysql:mysql-connector-java")
-	compile("javax.mail:mail:1.4.7")
+	//compile("javax.mail:mail:1.4.7")
+
+    // emailer dependencies
+    compile "com.sun.jersey:jersey-core:1.18.3"
+    compile "com.sun.jersey:jersey-client:1.18.3"
+    compile "com.sun.jersey.contribs:jersey-multipart:1.18.3"
 }
 
 task wrapper(type: Wrapper) {
