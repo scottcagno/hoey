@@ -35,4 +35,14 @@ class Job {
 		this.laborTotal = (laborHours == null) ? 0D : laborRate * laborHours as Double
         this.total = ((rooms.size() <= 0)? 0D : (laborTotal + (rooms*.updateTotals(markup).sum() as Double)))
     }
+
+	String textProposal() {
+		def job = ["Job Proposal"]
+		rooms.each { room ->
+			job << "Room and Total: ${room.name}, ${sprintf "\$%.2f", room.total}"
+		}
+		job << "Overall Job Total: ${sprintf "\$%.2f", total}"
+		job << "This is a no reply address, please send all replies to hoeyenterprises@yahoo.com"
+		job.join(' -- ')
+	}
 }

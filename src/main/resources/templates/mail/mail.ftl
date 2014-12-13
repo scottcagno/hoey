@@ -63,6 +63,12 @@
                             </tr>
                         </tbody>
                     </table>
+					<p style="text-align:center;font-weight:900;">
+						This is a no reply address, please send all replies to
+						<a href="mailto:hoeyenterprises@yahoo.com?subject=Re:Job Proposal ${job.name}">
+							hoeyenterprises@yahoo.com
+						</a>
+					</p>
                     <p style="font-weight:100;font-size:11px;text-align:center;">
                         <em>
                             **All taxes and labor rates have been added where applicible and have been included

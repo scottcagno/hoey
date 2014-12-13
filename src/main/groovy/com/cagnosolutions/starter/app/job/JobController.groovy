@@ -3,7 +3,6 @@ package com.cagnosolutions.starter.app.job
 import com.cagnosolutions.starter.app.company.CompanyService
 import com.cagnosolutions.starter.app.customer.Customer
 import com.cagnosolutions.starter.app.customer.CustomerService
-import com.cagnosolutions.starter.app.email.Email
 import com.cagnosolutions.starter.app.email.EmailService
 import com.cagnosolutions.starter.app.room.Room
 import com.cagnosolutions.starter.app.room.RoomService
@@ -115,9 +114,8 @@ class JobController {
 	String mail(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
 		def job = jobService.findOne(jobId)
 		def map = [job : job, customer : customerService.findOne(customerId), company: companyService.findOne()]
-		Email email = emailService.CreateEmail("mail/mail.ftl", map)
-		email.setAll("noreply@hoeynoreply.com", "Job Quote", ((map.customer as Customer).email as String))
-		emailService.sendEmail(email)
+		emailService.send("Shock & Awe Electric <noreply@shockaweelectric.com>", (map.customer as Customer).email as String,
+				"Job Proposal", job.textProposal(), "mail/mail.ftl", map)
 		job.status = 1
 		jobService.save job
 		attr.addFlashAttribute("alertSuccess", "Successfully emailed customer")
