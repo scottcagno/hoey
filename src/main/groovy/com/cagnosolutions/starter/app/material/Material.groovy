@@ -11,6 +11,6 @@ class Material {
 	@GeneratedValue
 	Long id
 	String cat, name
-	Double cost, price
+	Double cost
 	Boolean markup, taxed
 }

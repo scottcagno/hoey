@@ -15,7 +15,6 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 import javax.servlet.http.HttpSession
@@ -23,7 +22,7 @@ import javax.validation.Valid
 
 @CompileStatic
 @Controller
-@RequestMapping(value = "/secure")
+@RequestMapping(value = "/secure/customer/{customerId}/job")
 class JobController {
 
 	@Autowired
@@ -47,21 +46,26 @@ class JobController {
 	@Autowired
 	ValidationWrapper validationWrapper
 
-	// GET view all jobs
-	@RequestMapping(value = "/job", method = RequestMethod.GET)
-	String viewAll(Model model, @RequestParam(required = false) Integer page,
-				   @RequestParam(required = false) String sort, RedirectAttributes attr) {
+	// GET view job
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	String view(HttpSession session, @PathVariable Long id, @PathVariable Long customerId, Model model, RedirectAttributes attr) {
 		if (!companySession.isComplete) {
 			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
 			return "redirect:/secure/company"
 		}
-		def jobs = jobService.findAll(page? page-1 :0 , 10, sort?:"id")
-		model.addAllAttributes([jobs: jobs])
-		"job/all-jobs"
+		def job = jobService.findOne id
+		if(session.getAttribute("update") != null) {
+			session.removeAttribute("update")
+			job.updateTotals(companyService.findOne().markup, companyService.findOne().laborRate)
+			job = jobService.save job
+			model.addAttribute "alertSuccess", "Job total has been updated!"
+		}
+		model.addAllAttributes([job: job, jobs: jobService.findAll(), customeID : customerId])
+		"job/job"
 	}
 
 	// POST edit job
-	@RequestMapping(value = "/customer/{customerId}/job", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	String edit(@PathVariable Long customerId, @Valid JobValidator jobValidator, BindingResult bindingResult,
 				HttpSession session, RedirectAttributes attr) {
 		if (bindingResult.hasErrors()) {
@@ -70,48 +74,16 @@ class JobController {
 			attr.addFlashAttribute("job", jobValidator)
 			return "redirect:/secure/customer/${customerId}/job/${jobValidator.id}"
 		}
-		def job = jobService.generateFromValidator jobValidator
-		job.name = job.name == "" ? null : job.name
-		if (job.id != null) {
-			Job existingJob = jobService.findOne(job.id)
-			jobService.mergeProperties(job, existingJob)
-			jobService.save existingJob
-			if(session.getAttribute("update") == null) session.setAttribute "update", true
-		}
+		def newJob = jobService.generateFromValidator jobValidator
+		def job = jobService.findOne newJob.id
+		jobService.mergeProperties(newJob, job)
+		jobService.save job
+		if(session.getAttribute("update") == null) session.setAttribute "update", true
 		"redirect:/secure/customer/${customerId}/job/${job.id}"
 	}
 
-	// GET view job
-	@RequestMapping(value = "/customer/{customerId}/job/{id}", method = RequestMethod.GET)
-	String view(HttpSession session, @PathVariable Long id, @PathVariable Long customerId, Model model, RedirectAttributes attr) {
-		if (!companySession.isComplete) {
-			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
-			return "redirect:/secure/company"
-		}
-		def job = jobService.findOne id
-        if(session.getAttribute("update") != null) {
-            session.removeAttribute("update")
-            job.updateTotals(companyService.findOne().markup, companyService.findOne().laborRate)
-            job = jobService.save job
-            model.addAttribute "alertSuccess", "Job total has been updated!"
-        }
-		model.addAllAttributes([job: job, jobs: jobService.findAll(), customeID : customerId])
-		"job/job"
-	}
-
-	// GET view job from all jobs
-	@RequestMapping(value = "/job/{id}", method = RequestMethod.GET)
-	String viewJob(@PathVariable Long id, RedirectAttributes attr) {
-		if (!companySession.isComplete) {
-			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
-			return "redirect:/secure/company"
-		}
-		def customerId = jobService.findCustomerIdByJob(id)
-		"redirect:/secure/customer/${customerId}/job/${id}"
-	}
-
 	// POST delete job
-	@RequestMapping(value = "/job/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	String delete(@PathVariable Long id, RedirectAttributes attr) {
 		jobService.delete id
 		attr.addFlashAttribute "alertSuccess", "Job deleted successfully"
@@ -119,19 +91,19 @@ class JobController {
 	}
 
 	// POST delete room
-	@RequestMapping(value = "/customer/{customerId}/job/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
 	String delRoom(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
 				   HttpSession session, RedirectAttributes attr) {
-		roomService.delete(roomId)
+		roomService.delete roomId
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted room")
         if(session.getAttribute("update") == null) session.setAttribute "update", true
 		"redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 
 	// POST mail to customer
-	@RequestMapping(value = "/customer/{customerId}/job/{jobId}/mail", method = RequestMethod.POST)
+	@RequestMapping(value = "/{jobId}/mail", method = RequestMethod.POST)
 	String mail(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
-		def job = jobService.findOne(jobId)
+		def job = jobService.findOne jobId
 		def map = [job : job, customer : customerService.findOne(customerId), company: companyService.findOne()]
 		emailService.send("Shock & Awe Electric <noreply@shockaweelectric.com>", (map.customer as Customer).email as String,
 				"Job Proposal", job.textProposal(), "mail/mail.ftl", map)

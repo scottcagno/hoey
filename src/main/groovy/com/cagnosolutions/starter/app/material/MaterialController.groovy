@@ -46,12 +46,33 @@ class MaterialController {
 		if(category == null || category == "") {
 			materials = materialService.findAll()
 		} else {
-			materials = materialService.findAllByCategory(category)
+			materials = materialService.findAllByCategory category
 		}
 		if (field == null) { field = "id"}
 		def sorted = materials.sort { it.getAt(field) }
 
 		model.addAllAttributes ([materials : sorted, categories : materialService.getUniqueItemsByCategory()])
+		"material/material"
+	}
+
+	// GET view material
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	String view(@PathVariable Long id, Model model,  @RequestParam(required =false) String category,
+				@RequestParam(required = false) String field, RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
+		def material = materialService.findOne id
+		def materials = []
+		if(category == null) {
+			materials = materialService.findAll()
+		} else {
+			materials = materialService.findAllByCategory category
+		}
+		if (field == null) { field = "id"}
+		def sorted = materials.sort { it.getAt(field) }
+		model.addAllAttributes ([material: material, materials : sorted, categories : materialService.getUniqueItemsByCategory()])
 		"material/material"
 	}
 
@@ -68,30 +89,9 @@ class MaterialController {
 		def material = materialService.generateFromValidator materialValidator
 		material.markup = material.markup == null ? false : material.markup
 		material.taxed = material.taxed == null ? false : material.taxed
-		materialService.save(material)
+		materialService.save material
 		attr.addFlashAttribute("alertSuccess", "Material Updated successfully")
 		"redirect:/secure/material"
-	}
-
-	// GET view material
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(@PathVariable Long id, Model model,  @RequestParam(required =false) String category,
-				@RequestParam(required = false) String field, RedirectAttributes attr) {
-		if (!companySession.isComplete) {
-			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
-			return "redirect:/secure/company"
-		}
-		def material = materialService.findOne id
-		def materials = []
-		if(category == null) {
-			materials = materialService.findAll()
-		} else {
-			materials = materialService.findAllByCategory(category)
-		}
-		if (field == null) { field = "id"}
-		def sorted = materials.sort { it.getAt(field) }
-		model.addAllAttributes ([material: material, materials : sorted, categories : materialService.getUniqueItemsByCategory()])
-		"material/material"
 	}
 
 	// POST delete material

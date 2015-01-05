@@ -64,20 +64,20 @@ class RoomController {
 				BindingResult bindingResult, RedirectAttributes attr) {
 		if (bindingResult.hasErrors()) {
 			attr.addFlashAttribute("alertError", "There is an error in the form")
-			attr.addFlashAttribute "roomErrors", validationWrapper.bindErrors(bindingResult)
+			attr.addFlashAttribute("roomErrors", validationWrapper.bindErrors(bindingResult))
 			attr.addFlashAttribute("room", roomValidator)
 			return (roomValidator.id == null) ? "redirect:/secure/customer/${customerId}/job/${jobId}" :
 					"redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomValidator.id}"
 		}
-		def room = roomService.generateFromValidator roomValidator
-		if (room.id != null) {
-			def existingRoom = roomService.findOne room.id
-			roomService.mergeProperties(existingRoom, room)
+		def newRoom = roomService.generateFromValidator roomValidator
+		if (newRoom.id != null) {
+			def room = roomService.findOne newRoom.id
+			roomService.mergeProperties(newRoom, room)
 			roomService.save room
 		} else {
-			room.items = new ArrayList<Item>()
+			newRoom.items = new ArrayList<Item>()
 			Job job = jobService.findOne jobId
-			job.addRoom room
+			job.addRoom newRoom
 			jobService.save job
 		}
 		"redirect:/secure/customer/${customerId}/job/${jobId}"
@@ -96,7 +96,7 @@ class RoomController {
 		if(category == null || category == "") {
 			materials = materialService.findAll()
 		} else {
-			materials = materialService.findAllByCategory(category)
+			materials = materialService.findAllByCategory category
 		}
 		if (field == null) { field = "id"}
 		def sorted = materials.sort { it.getAt(field) }
@@ -115,7 +115,7 @@ class RoomController {
 			attr.addFlashAttribute("alertError", "Item count cannot be empty")
 			return "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}/additem"
 		}
-		def room = roomService.findOne(roomId)
+		def room = roomService.findOne roomId
 		def item = new Item([material: materialService.findOne(materialId), count: count])
 		room.addItem item
 		roomService.save room
@@ -127,12 +127,13 @@ class RoomController {
 	// POST update item
 	@RequestMapping(value = "/{roomId}/edititem", method = RequestMethod.POST)
 	String editItem(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
-					HttpSession session, Long materialId, Item item, RedirectAttributes attr) {
-		if (item.id == null || item.count == null || item.count == 0 || item.count == "") {
+					HttpSession session, Long materialId, Item newItem, RedirectAttributes attr) {
+		if (newItem.id == null || newItem.count == null || newItem.count == 0 || newItem.count == "") {
             attr.addFlashAttribute "alertError", "Item count cannot be empty"
             return "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}"
 		}
-        item.material = materialService.findOne materialId
+		def item = itemService.findOne newItem.id
+		itemService.mergeProperties(newItem, item)
         itemService.save item
         if(session.getAttribute("update") == null) session.setAttribute "update", true
         "redirect:/secure/customer/${customerId}/job/${jobId}"
@@ -142,7 +143,7 @@ class RoomController {
 	@RequestMapping(value = "/delitem/{itemId}", method = RequestMethod.POST)
 	String delItem(@PathVariable Long jobId, @PathVariable Long itemId, @PathVariable Long customerId,
 					HttpSession session, RedirectAttributes attr) {
-		itemService.delete(itemId)
+		itemService.delete itemId
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted item")
         if(session.getAttribute("update") == null) session.setAttribute "update", true
         "redirect:/secure/customer/${customerId}/job/${jobId}"

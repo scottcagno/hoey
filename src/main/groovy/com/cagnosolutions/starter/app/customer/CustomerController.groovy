@@ -65,18 +65,17 @@ class CustomerController {
 			attr.addFlashAttribute("customer", customerValidator)
 			return (customerValidator.id == null) ? "redirect:/secure/customer" : "redirect:/secure/customer/${customerValidator.id}"
 		}
-		def customer = customerService.generateFromValidator customerValidator
-		customer.company = customer.company == "" ? "N/A" : customer.company
-		if (customer.id != null) {
-			Customer existingCustomer = customerService.findOne(customer.id)
-			customer.jobs = existingCustomer.jobs
-			customerService.save(customer)
+		def newCustomer = customerService.generateFromValidator customerValidator
+		newCustomer.company = newCustomer.company == "" ? "N/A" : newCustomer.company
+		if (newCustomer.id != null) {
+			Customer customer = customerService.findOne newCustomer.id
+			customerService.mergeProperties(newCustomer, customer)
+			customerService.save customer
 			attr.addFlashAttribute("alertSuccess", "Successfully updated customer")
 			return "redirect:/secure/customer/${customer.id}"
-		} else {
-			customer.jobs = new ArrayList<Job>()
 		}
-		customerService.save(customer)
+		newCustomer.jobs = new ArrayList<Job>()
+		customerService.save newCustomer
 		attr.addFlashAttribute("alertSuccess", "Successfully added customer")
 		"redirect:/secure/customer"
 	}
@@ -88,8 +87,7 @@ class CustomerController {
 			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
 			return "redirect:/secure/company"
 		}
-		def customer = customerService.findOne id
-		model.addAllAttributes([customer: customer])
+		model.addAllAttributes([customer: customerService.findOne(id)])
 		"customer/customer"
 	}
 
@@ -110,14 +108,14 @@ class CustomerController {
 			attr.addFlashAttribute("job", jobValidator)
 			return "redirect:/secure/customer/${customerId}"
 		}
-		Customer customer = customerService.findOne customerId
+		def customer = customerService.findOne customerId
 		def job = jobService.generateFromValidator jobValidator
 		job.created =  new Date()
 		job.status = 0
 		job.laborHours = 0D
 		job.laborTotal = 0D
 		job.total =  0D
-		customer.addJob(job)
+		customer.addJob job
 		customerService.save customer
 		"redirect:/secure/customer/${customerId}"
 	}
@@ -125,7 +123,7 @@ class CustomerController {
 	// POST delete job
 	@RequestMapping(value = "/{customerId}/deljob/{jobId}", method = RequestMethod.POST)
 	String delJob(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
-		jobService.delete(jobId)
+		jobService.delete jobId
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted job")
 		"redirect:/secure/customer/${customerId}"
 	}
@@ -133,7 +131,7 @@ class CustomerController {
 	// POST mail to customer
 	@RequestMapping(value = "/{customerId}/mail", method = RequestMethod.POST)
 	String mail(@PathVariable Long customerId, @RequestParam Long jobId, RedirectAttributes attr) {
-		def job = jobService.findOne(jobId)
+		def job = jobService.findOne jobId
 		def map = [job : job, customer : customerService.findOne(customerId), company: companyService.findOne()]
 		emailService.send("Shock & Awe Electric <noreply@shockaweelectric.com>", (map.customer as Customer).email as String,
 				"Job Proposal", job.textProposal(), "mail/mail.ftl", map)

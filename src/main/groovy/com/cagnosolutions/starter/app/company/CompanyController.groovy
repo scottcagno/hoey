@@ -31,29 +31,23 @@ class CompanyController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    String edit(Company company, RedirectAttributes attr) {
-        def current = companyService.findOne()
-		if (current == null) {
-			companyService.save company
+    String edit(Company newCompany, RedirectAttributes attr) {
+        def company = companyService.findOne()
+		if (company == null) {
+			companyService.save newCompany
 		} else {
-			mergeProperties(company, current)
-            if (current.password[0] != '$') {
-                current.password = new BCryptPasswordEncoder().encode(current.password)
+			companyService.mergeProperties(newCompany, company)
+            if (company.password[0] != '$') {
+                company.password = new BCryptPasswordEncoder().encode(company.password)
             }
-			companyService.save current
+			companyService.save company
 		}
         companySession.isComplete = companyService.isComplete()
         attr.addFlashAttribute("alertSuccess", "Information has successfully been updated!")
         "redirect:/secure/company"
     }
 
-    // helper method
-    def mergeProperties(source, target) {
-        source.properties.each { key, value ->
-            if (target.hasProperty(key as String) && !(key in ['class', 'metaClass']) && value != null && value != ""   )
-                target[key as String] = value
-        }
-    }
+
 
 }
 
