@@ -1,6 +1,7 @@
 package com.cagnosolutions.starter.app.job
 
 import com.cagnosolutions.starter.app.company.CompanyService
+import com.cagnosolutions.starter.app.company.CompanySession
 import com.cagnosolutions.starter.app.customer.Customer
 import com.cagnosolutions.starter.app.customer.CustomerService
 import com.cagnosolutions.starter.app.email.EmailService
@@ -38,11 +39,17 @@ class JobController {
 	@Autowired
 	EmailService emailService
 
+	@Autowired
+	CompanySession companySession
+
 	// GET view all jobs
 	@RequestMapping(value = "/job", method = RequestMethod.GET)
 	String viewAll(Model model, @RequestParam(required = false) Integer page,
-				   @RequestParam(required = false) String sort) {
-
+				   @RequestParam(required = false) String sort, RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
 		def jobs = jobService.findAll(page? page-1 :0 , 10, sort?:"id")
 		model.addAllAttributes([jobs: jobs])
 		"job/all-jobs"
@@ -63,7 +70,11 @@ class JobController {
 
 	// GET view job
 	@RequestMapping(value = "/customer/{customerId}/job/{id}", method = RequestMethod.GET)
-	String view(HttpSession session, @PathVariable Long id, @PathVariable Long customerId, Model model) {
+	String view(HttpSession session, @PathVariable Long id, @PathVariable Long customerId, Model model, RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
 		def job = jobService.findOne id
         if(session.getAttribute("update") != null) {
             session.removeAttribute("update")
@@ -77,7 +88,11 @@ class JobController {
 
 	// GET view job from all jobs
 	@RequestMapping(value = "/job/{id}", method = RequestMethod.GET)
-	String viewJob(@PathVariable Long id) {
+	String viewJob(@PathVariable Long id, RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
 		def customerId = jobService.findCustomerIdByJob(id)
 		"redirect:/secure/customer/${customerId}/job/${id}"
 	}

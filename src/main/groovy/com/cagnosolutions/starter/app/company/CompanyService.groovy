@@ -18,5 +18,10 @@ class CompanyService  {
         repo.save company
     }
 
+    Boolean isComplete() {
+        def company = repo.findOne 1L
+        return (company.markup != null && company.markup != "" && company.laborRate != null && company.laborRate != "")
+    }
+
 }
 

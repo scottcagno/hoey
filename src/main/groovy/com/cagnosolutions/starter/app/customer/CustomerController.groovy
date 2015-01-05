@@ -1,5 +1,6 @@
 package com.cagnosolutions.starter.app.customer
 import com.cagnosolutions.starter.app.company.CompanyService
+import com.cagnosolutions.starter.app.company.CompanySession
 import com.cagnosolutions.starter.app.email.EmailService
 import com.cagnosolutions.starter.app.job.Job
 import com.cagnosolutions.starter.app.job.JobService
@@ -30,9 +31,17 @@ class CustomerController {
     @Autowired
     CompanyService companyService
 
+	@Autowired
+	CompanySession companySession
+
 	// GET view all customers
 	@RequestMapping(method = RequestMethod.GET)
-	String viewAll(Model model, @RequestParam(required = false) Integer page, @RequestParam(required = false) String sort) {
+	String viewAll(Model model, @RequestParam(required = false) Integer page,
+				   @RequestParam(required = false) String sort, RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
 		def customers = customerService.findAll(page? page-1 :0 , 10, sort?:"id")
 		model.addAllAttributes([customers: customers])
 		"customer/all-customers"
@@ -58,7 +67,11 @@ class CustomerController {
 
 	// GET view customer
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(@PathVariable Long id, Model model) {
+	String view(@PathVariable Long id, Model model, RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
 		def customer = customerService.findOne id
 		model.addAllAttributes([customer: customer])
 		"customer/customer"

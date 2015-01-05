@@ -33,7 +33,12 @@ class RoomController {
 
 	// GET view room
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(@PathVariable Long id, @PathVariable Long jobId, @PathVariable Long customerId, Model model) {
+	String view(@PathVariable Long id, @PathVariable Long jobId, @PathVariable Long customerId, Model model,
+				RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
 		def room = roomService.findOne id
 		model.addAllAttributes([room: room, job : jobService.findOne(jobId), customerId : customerId])
 		"job/job"
@@ -60,7 +65,11 @@ class RoomController {
 	@RequestMapping(value = "/{id}/additem", method = RequestMethod.GET)
 	String items(@PathVariable Long id, @PathVariable Long jobId, @PathVariable Long customerId,
 				 Model model, @RequestParam(required =false) String category,
-				 @RequestParam(required = false) String field) {
+				 @RequestParam(required = false) String field, RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
 		def materials = []
 		if(category == null || category == "") {
 			materials = materialService.findAll()

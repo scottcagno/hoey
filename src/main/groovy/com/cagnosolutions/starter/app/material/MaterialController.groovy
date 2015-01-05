@@ -1,5 +1,6 @@
 package com.cagnosolutions.starter.app.material
 
+import com.cagnosolutions.starter.app.company.CompanySession
 import com.cagnosolutions.starter.app.item.ItemService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -20,9 +21,17 @@ class MaterialController {
 	@Autowired
 	ItemService itemService
 
+	@Autowired
+	CompanySession companySession
+
 	// GET view all materials
 	@RequestMapping(method = RequestMethod.GET)
-	String viewAll(Model model, @RequestParam(required =false) String category, @RequestParam(required = false) String field) {
+	String viewAll(Model model, @RequestParam(required =false) String category,
+				   @RequestParam(required = false) String field, RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
 		def materials = []
 		if(category == null || category == "") {
 			materials = materialService.findAll()
@@ -48,7 +57,12 @@ class MaterialController {
 
 	// GET view material
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(@PathVariable Long id, Model model,  @RequestParam(required =false) String category, @RequestParam(required = false) String field) {
+	String view(@PathVariable Long id, Model model,  @RequestParam(required =false) String category,
+				@RequestParam(required = false) String field, RedirectAttributes attr) {
+		if (!companySession.isComplete) {
+			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
+			return "redirect:/secure/company"
+		}
 		def material = materialService.findOne id
 		def materials = []
 		if(category == null) {

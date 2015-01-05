@@ -1,11 +1,12 @@
 package com.cagnosolutions.starter.app
-
 import groovy.transform.CompileStatic
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.web.DefaultRedirectStrategy
 import org.springframework.security.web.RedirectStrategy
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache
+import org.springframework.security.web.savedrequest.RequestCache
+import org.springframework.security.web.savedrequest.SavedRequest
 
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -16,27 +17,20 @@ class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler
 
 	RedirectStrategy redirectStrategy = new DefaultRedirectStrategy()
 
+	RequestCache requestCache = new HttpSessionRequestCache()
+
 	void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 								 	Authentication authentication) throws IOException, ServletException {
 
-		def successUrl = "/login/success"
+		SavedRequest savedRequest = requestCache.getRequest(request, response)
 
-		authentication.authorities.each { authority ->
-			switch ((authority as GrantedAuthority).authority) {
-				case "ROLE_USER":
-					successUrl += "?role=user"
-					break
-				case "ROLE_ADMIN":
-					successUrl = "/admin"
-					break
-				case "ROLE_PRINT":
-					successUrl = "/print"
-			}
-		}
+		def successUrl = "/login/success"
 
 		if (response.committed)
 			return
 
-		redirectStrategy.sendRedirect request, response, successUrl
+		def redirect = (savedRequest == null) ? "/secure/user" : savedRequest.redirectUrl
+
+		redirectStrategy.sendRedirect request, response, "${successUrl}?redirect=${redirect}"
 	}
 }
