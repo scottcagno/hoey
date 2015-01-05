@@ -30,7 +30,7 @@ class EmailController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	String showEmail(Model model) {
-		model.addAllAttributes([company:companyService.findOne(),customer:customerService.findOne(11L),job:jobService.findOne(43L)])
+		model.addAllAttributes([company:companyService.findOne(),customer:customerService.findOne(11L),job:jobService.findOne(51L)])
 		"mail/mail"
 	}
 
