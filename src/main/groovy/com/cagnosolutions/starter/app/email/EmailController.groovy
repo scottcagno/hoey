@@ -16,7 +16,7 @@ class EmailController {
 	EmailService emailService
 
 	@RequestMapping(method = RequestMethod.GET)
-	String email() {
+	String showEmail() {
 		"email/email"
 	}
 
