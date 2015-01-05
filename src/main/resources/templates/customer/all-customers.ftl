@@ -48,14 +48,14 @@
 						</div>
 						<div class="panel-body">
 							<div id="pagenator" class="text-center">
-								<#assign prev = ((customers.firstPage) ? string('1', customers.number))/>
-								<#assign next = ((customers.lastPage) ? string (customers.number +1, customers.number + 2)) />
+								<#assign prev = (((customers.number + 1) == 1) ? string('1', customers.number))/>
+								<#assign next = (((customers.number +1) == customers.totalPages) ? string (customers.number +1, customers.number + 2)) />
 								<ul class="pagination">
-									<li ${(customers.firstPage)?string('class="disabled"', '')}><a href="/secure/customer?page=1&sort=${(RequestParameters.sort)!}">First</a></li>
-									<li ${(customers.firstPage)?string('class="disabled"', '')}><a href="/secure/customer?page=${prev}&sort=${(RequestParameters.sort)!}">&laquo;</a></li>
+									<li class="${((customers.number + 1) == 1)?string('disabled', '')}"><a href="/secure/customer?page=1&sort=${(RequestParameters.sort)!}">First</a></li>
+									<li class="${((customers.number + 1) == 1)?string('disabled', '')}"><a href="/secure/customer?page=${prev}&sort=${(RequestParameters.sort)!}">&laquo;</a></li>
 									<li class="active"><a href="/secure/customer?page=${customers.number + 1}&sort=${(RequestParameters.sort)!}">${customers.number + 1}</a></li>
-									<li ${(customers.lastPage)?string('class="disabled"', '')}><a href="/secure/customer?page=${next}&sort=${(RequestParameters.sort)!}">&raquo;</a></li>
-									<li ${(customers.lastPage)?string('class="disabled"', '')}><a href="/secure/customer?page=${customers.totalPages}&sort=${(RequestParameters.sort)!}">Last</a></li>
+									<li class="${((customers.number + 1) == customers.totalPages || customers.totalPages == 0)?string('disabled', '')}"><a href="/secure/customer?page=${next}&sort=${(RequestParameters.sort)!}">&raquo;</a></li>
+									<li class="${((customers.number + 1) == customers.totalPages || customers.totalPages == 0)?string('disabled', '')}"><a href="/secure/customer?page=${customers.totalPages}&sort=${(RequestParameters.sort)!}">Last</a></li>
 								</ul>
 							</div>
 							<div class="hidden-xs hidden-sm">

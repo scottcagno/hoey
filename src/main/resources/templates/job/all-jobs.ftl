@@ -19,14 +19,14 @@
 						</div>
 						<div class="panel-body">
 							<div id="pagenator" class="text-center">
-								<#assign prev = ((jobs.firstPage) ? string('1', jobs.number))/>
-								<#assign next = ((jobs.lastPage) ? string (jobs.number +1, jobs.number + 2)) />
+								<#assign prev = (((jobs.number + 1) == 1) ? string('1', jobs.number))/>
+								<#assign next = (((jobs.number +1) == jobs.totalPages) ? string (jobs.number +1, jobs.number + 2)) />
 								<ul class="pagination">
-									<li ${(jobs.firstPage)?string('class="disabled"', '')}><a href="/secure/job?page=1&sort=${(RequestParameters.sort)!}">First</a></li>
-									<li ${(jobs.firstPage)?string('class="disabled"', '')}><a href="/secure/job?page=${prev}&sort=${(RequestParameters.sort)!}">&laquo;</a></li>
+									<li class="${((jobs.number + 1) == 1)?string('disabled', '')}"><a href="/secure/job?page=1&sort=${(RequestParameters.sort)!}">First</a></li>
+									<li class="${((jobs.number + 1) == 1)?string('disabled', '')}"><a href="/secure/job?page=${prev}&sort=${(RequestParameters.sort)!}">&laquo;</a></li>
 									<li class="active"><a href="/secure/job?page=${jobs.number + 1}&sort=${(RequestParameters.sort)!}">${jobs.number + 1}</a></li>
-									<li ${(jobs.lastPage)?string('class="disabled"', '')}><a href="/secure/job?page=${next}&sort=${(RequestParameters.sort)!}">&raquo;</a></li>
-									<li ${(jobs.lastPage)?string('class="disabled"', '')}><a href="/secure/job?page=${jobs.totalPages}&sort=${(RequestParameters.sort)!}">Last</a></li>
+									<li class="${((jobs.number + 1) == jobs.totalPages || jobs.totalPages == 0)?string('disabled', '')}"><a href="/secure/job?page=${next}&sort=${(RequestParameters.sort)!}">&raquo;</a></li>
+									<li class="${((jobs.number + 1) == jobs.totalPages || jobs.totalPages == 0)?string('disabled', '')}"><a href="/secure/job?page=${jobs.totalPages}&sort=${(RequestParameters.sort)!}">Last</a></li>
 								</ul>
 							</div>
                         </div>
