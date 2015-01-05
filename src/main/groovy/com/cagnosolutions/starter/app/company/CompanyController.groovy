@@ -21,6 +21,9 @@ class CompanyController {
     @Autowired
     JobService jobService
 
+    @Autowired
+    CompanySession companySession
+
     @RequestMapping(method = RequestMethod.GET)
     String view(Model model) {
         model.addAllAttributes([company: companyService.findOne(), invoices: jobService.findAllInvoiced()])
@@ -39,6 +42,7 @@ class CompanyController {
             }
 			companyService.save current
 		}
+        companySession.isComplete = companyService.isComplete()
         attr.addFlashAttribute("alertSuccess", "Information has successfully been updated!")
         "redirect:/secure/company"
     }

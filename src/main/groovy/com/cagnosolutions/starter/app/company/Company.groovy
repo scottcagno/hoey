@@ -16,7 +16,7 @@ class Company {
     Short active = 1
 
     String toString(){
-        "${company}\n${street} ${city}, ${state} ${zip}\n${phone}\n${email}"
+        "${company}\n${street} ${city}, ${state} ${zip}\n${phone}\n${username}"
     }
 
 }
