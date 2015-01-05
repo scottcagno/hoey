@@ -1,5 +1,6 @@
 package com.cagnosolutions.starter.app.config
 
+import com.cagnosolutions.starter.app.CustomAuthenticationSuccessHandler
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
@@ -31,7 +32,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/secure/**").hasAnyRole("ADMIN")
-		http.formLogin().loginPage("/login")
+		http.formLogin().loginPage("/login").successHandler(new CustomAuthenticationSuccessHandler())
 		http.sessionManagement()
 				.maximumSessions(1)
 				.expiredUrl("/login?expired")
