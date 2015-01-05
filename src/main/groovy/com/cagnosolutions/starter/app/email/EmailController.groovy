@@ -16,15 +16,14 @@ class EmailController {
 	EmailService emailService
 
 	@RequestMapping(method = RequestMethod.GET)
-	def email() {
+	String email() {
 		"email/email"
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	def sendEmail(@RequestParam String from, @RequestParam String to,
+	String sendEmail(@RequestParam String from, @RequestParam String to,
 					 	@RequestParam String subject, @RequestParam String text) {
 		emailService.send from, to, subject, text
-		//println "${new Date()}\tEMAIL SENT --- FROM:${from}, TO:${to}, SUBJECT:${subject}, BODY:${text}"
 		"redirect:/email"
 	}
 
