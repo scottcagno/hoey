@@ -1,14 +1,12 @@
 package com.cagnosolutions.starter.app.customer
 
+import com.cagnosolutions.starter.app.validators.CustomerValidator
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
-
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -39,6 +37,20 @@ class CustomerService {
 
 	def delete(Long id) {
 		repo.delete id
+	}
+
+	Customer generateFromValidator(CustomerValidator customerValidator) {
+		def customer = new Customer()
+		mergeProperties customerValidator, customer
+		customer
+	}
+
+	// helper method
+	def mergeProperties(source, target) {
+		source.properties.each { key, value ->
+			if (target.hasProperty(key as String) && !(key in ['class', 'metaClass']) && value != null)
+				target[key as String] = value
+		}
 	}
 
 }

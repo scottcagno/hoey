@@ -1,4 +1,6 @@
 package com.cagnosolutions.starter.app.material
+
+import com.cagnosolutions.starter.app.validators.MaterialValidator
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
@@ -45,5 +47,20 @@ class MaterialService {
 		}
 		new HashSet<String>(categories);
 	}
+
+	Material generateFromValidator(MaterialValidator materialValidator) {
+		def material = new Material()
+		mergeProperties materialValidator, material
+		material
+	}
+
+	// helper method
+	def mergeProperties(source, target) {
+		source.properties.each { key, value ->
+			if (target.hasProperty(key as String) && !(key in ['class', 'metaClass']) && value != null)
+				target[key as String] = value
+		}
+	}
 }
+
 

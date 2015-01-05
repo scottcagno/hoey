@@ -14,20 +14,23 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Add Customer</div>
 						<div class="panel-body">
-							<form role="form" method="post" action="/secure/customer">
+							<form role="form" method="post" action="/secure/customer" >
 								<div class="form-group">
 									<input type="text" id="company" name="company" class="form-control"
 										   placeholder="Company" value="${(customer.company)!}"/>
 								</div>
 								<div class="form-group">
+									<span class="text-error">${(errors.name)!}</span>
 									<input type="text" id="name" name="name" class="form-control"
 										   placeholder="Name" required="true" value="${(customer.name)!}"/>
 								</div>
 								<div class="form-group">
+									<span class="text-error">${(errors.email)!}</span>
 									<input type="email" id="email" name="email" class="form-control"
 										   placeholder="Email" required="true" value="${(customer.email)!}"/>
 								</div>
 								<div class="form-group">
+									<span class="text-error">${(errors.phone)!}</span>
 									<input type="text" id="phone" name="phone" class="form-control"
 										   placeholder="Phone number" required="true" value="${(customer.phone)!}"/>
 								</div>

@@ -19,7 +19,7 @@
 									Details
 								</a>
 							</div>
-							<div id="toggle" class="panel-collapse collapse">
+							<div id="toggle" class="panel-collapse collapse ${(errors??)?string('in', '')}">
 								<div class="panel-body">
 									<form role="form" method="post" action="/secure/customer">
 										<div class="form-group">
@@ -27,14 +27,17 @@
 											       placeholder="Company" value="${(customer.company)!}"/>
 										</div>
 										<div class="form-group">
+											<span class="text-error">${(errors.name)!}</span>
 											<input type="text" id="name" name="name" class="form-control"
 											       placeholder="Name" required="true" value="${(customer.name)!}"/>
 										</div>
 										<div class="form-group">
+											<span class="text-error">${(errors.email)!}</span>
 											<input type="email" id="email" name="email" class="form-control"
 											       placeholder="Email" required="true" value="${(customer.email)!}"/>
 										</div>
 										<div class="form-group">
+											<span class="text-error">${(errors.phone)!}</span>
 											<input type="text" id="phone" name="phone" class="form-control"
 											       placeholder="Phone number" required="true" value="${(customer.phone)!}"/>
 										</div>
@@ -58,12 +61,14 @@
 						<div class="panel-body">
 							<form id="" role="form" method="post" action="/secure/customer/${customer.id}/addjob">
 								<div class="form-group">
+									<span class="text-error">${(jobErrors.name)!}</span>
 									<input type="text" id="name" name="name" class="form-control"
-									       placeholder="Job Name" />
+									       placeholder="Job Name" value="${(job.name)!}"/>
 								</div>
 								<div class="form-group">
+									<span class="text-error">${(jobErrors.notes)!}</span>
 									<textarea id="notes" name="notes" class="form-control" rows="5"
-									          style="resize:none;" placeholder="Notes"></textarea>
+									          style="resize:none;" placeholder="Notes">${(job.notes)!}</textarea>
 								</div>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button class="btn btn-md btn-primary btn-block" type="submit">Add</button>

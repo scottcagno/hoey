@@ -1,4 +1,6 @@
 package com.cagnosolutions.starter.app.room
+
+import com.cagnosolutions.starter.app.validators.RoomValidator
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
@@ -31,6 +33,20 @@ class RoomService {
 
 	def delete(Long id) {
 		repo.delete id
+	}
+
+	Room generateFromValidator(RoomValidator roomValidator) {
+		def room = new Room()
+		mergeProperties roomValidator, room
+		room
+	}
+
+	// helper method
+	def mergeProperties(source, target) {
+		source.properties.each { key, value ->
+			if (target.hasProperty(key as String) && !(key in ['class', 'metaClass']) && value != null)
+				target[key as String] = value
+		}
 	}
 
 }

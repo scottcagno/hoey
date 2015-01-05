@@ -18,16 +18,18 @@
 						</div>
 						<div class="panel-body">
 							<form role="form" method="post" action="/secure/material">
-
 								<div class="form-group">
+									<span class="text-error">${(errors.cat)!}</span>
 									<input type="text" id="cat" name="cat" class="form-control"
 									       placeholder="Category" required="true" value="${(material.cat)!}"/>
 								</div>
 								<div class="form-group">
+									<span class="text-error">${(errors.name)!}</span>
 									<input type="text" id="name" name="name" class="form-control"
 									       placeholder="Name" required="true" value="${(material.name)!}"/>
 								</div>
 								<div class="form-group">
+									<span class="text-error">${(errors.cost)!}</span>
 									<input type="number" step="any" id="cost" name="cost" class="form-control"
 									       placeholder="Cost" required="true" value="${(material.cost?c)!}"/>
 								</div>
@@ -50,7 +52,7 @@
 								<input type="hidden" name="id" value="${(material.id)!}"/>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button class="btn btn-md btn-primary btn-block" type="submit">Add Material</button>
-								<#if material?? >
+								<#if material?? && material.id??>
 									<hr/>
 									<a href="#" class="btn btn-danger btn-block" data-id="${(material.id)!}" data-toggle="modal" data-target="#deleteCheck">
 										Delete

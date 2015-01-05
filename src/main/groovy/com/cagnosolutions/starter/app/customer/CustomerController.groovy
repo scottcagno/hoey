@@ -4,15 +4,21 @@ import com.cagnosolutions.starter.app.company.CompanySession
 import com.cagnosolutions.starter.app.email.EmailService
 import com.cagnosolutions.starter.app.job.Job
 import com.cagnosolutions.starter.app.job.JobService
+import com.cagnosolutions.starter.app.validators.CustomerValidator
+import com.cagnosolutions.starter.app.validators.JobValidator
+import com.cagnosolutions.starter.app.validators.ValidationWrapper
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+
+import javax.validation.Valid
 
 @CompileStatic
 @Controller
@@ -34,6 +40,9 @@ class CustomerController {
 	@Autowired
 	CompanySession companySession
 
+	@Autowired
+	ValidationWrapper validationWrapper
+
 	// GET view all customers
 	@RequestMapping(method = RequestMethod.GET)
 	String viewAll(Model model, @RequestParam(required = false) Integer page,
@@ -49,7 +58,14 @@ class CustomerController {
 
 	// POST add/edit customer
 	@RequestMapping(method = RequestMethod.POST)
-	String addOrEdit(Customer customer, RedirectAttributes attr) {
+	String addOrEdit(@Valid CustomerValidator customerValidator, BindingResult bindingResult,RedirectAttributes attr) {
+		if (bindingResult.hasErrors()) {
+			attr.addFlashAttribute("alertError", "There is an error in the form")
+			attr.addFlashAttribute "errors", validationWrapper.bindErrors(bindingResult)
+			attr.addFlashAttribute("customer", customerValidator)
+			return (customerValidator.id == null) ? "redirect:/secure/customer" : "redirect:/secure/customer/${customerValidator.id}"
+		}
+		def customer = customerService.generateFromValidator customerValidator
 		customer.company = customer.company == "" ? "N/A" : customer.company
 		if (customer.id != null) {
 			Customer existingCustomer = customerService.findOne(customer.id)
@@ -87,17 +103,21 @@ class CustomerController {
 
 	// POST add job
 	@RequestMapping(value = "/{customerId}/addjob", method = RequestMethod.POST)
-	String addJob(Job job, @PathVariable Long customerId) {
+	String addJob(@Valid JobValidator jobValidator, BindingResult bindingResult,@PathVariable Long customerId, RedirectAttributes attr) {
+		if (bindingResult.hasErrors()) {
+			attr.addFlashAttribute("alertError", "There is an error in the form")
+			attr.addFlashAttribute "jobErrors", validationWrapper.bindErrors(bindingResult)
+			attr.addFlashAttribute("job", jobValidator)
+			return "redirect:/secure/customer/${customerId}"
+		}
 		Customer customer = customerService.findOne customerId
+		def job = jobService.generateFromValidator jobValidator
 		job.created =  new Date()
 		job.status = 0
 		job.laborHours = 0D
 		job.laborTotal = 0D
 		job.total =  0D
 		customer.addJob(job)
-		if (job.name == "" || job.name == null) {
-			job.name = "${customer.name}'s Job # ${customer.jobs.indexOf(job) + 1}"
-		}
 		customerService.save customer
 		"redirect:/secure/customer/${customerId}"
 	}

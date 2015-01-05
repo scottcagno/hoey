@@ -6,10 +6,13 @@ import com.cagnosolutions.starter.app.item.ItemService
 import com.cagnosolutions.starter.app.job.Job
 import com.cagnosolutions.starter.app.job.JobService
 import com.cagnosolutions.starter.app.material.MaterialService
+import com.cagnosolutions.starter.app.validators.RoomValidator
+import com.cagnosolutions.starter.app.validators.ValidationWrapper
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 import javax.servlet.http.HttpSession
+import javax.validation.Valid
 
 @CompileStatic
 @Controller
@@ -38,6 +42,9 @@ class RoomController {
 	@Autowired
 	CompanySession companySession
 
+	@Autowired
+	ValidationWrapper validationWrapper
+
 	// GET view room
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	String view(@PathVariable Long id, @PathVariable Long jobId, @PathVariable Long customerId, Model model,
@@ -53,17 +60,25 @@ class RoomController {
 
 	// POST add/edit room
 	@RequestMapping(method = RequestMethod.POST)
-	String edit(@PathVariable Long jobId, @PathVariable Long customerId, Room room) {
-		room.items = new ArrayList<Item>()
+	String edit(@PathVariable Long jobId, @PathVariable Long customerId, @Valid RoomValidator roomValidator,
+				BindingResult bindingResult, RedirectAttributes attr) {
+		if (bindingResult.hasErrors()) {
+			attr.addFlashAttribute("alertError", "There is an error in the form")
+			attr.addFlashAttribute "roomErrors", validationWrapper.bindErrors(bindingResult)
+			attr.addFlashAttribute("room", roomValidator)
+			return (roomValidator.id == null) ? "redirect:/secure/customer/${customerId}/job/${jobId}" :
+					"redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomValidator.id}"
+		}
+		def room = roomService.generateFromValidator roomValidator
 		if (room.id != null) {
-			Room existingRoom = roomService.findOne(room.id)
-			room.items = existingRoom.items
-			room.total = existingRoom.total
-			roomService.save(room)
+			def existingRoom = roomService.findOne room.id
+			roomService.mergeProperties(existingRoom, room)
+			roomService.save room
 		} else {
-			Job job = jobService.findOne(jobId)
-			job.addRoom(room)
-			jobService.save(job)
+			room.items = new ArrayList<Item>()
+			Job job = jobService.findOne jobId
+			job.addRoom room
+			jobService.save job
 		}
 		"redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
@@ -92,34 +107,36 @@ class RoomController {
 		"room/materials"
 	}
 
+	// POST add item
+	@RequestMapping(value = "/{roomId}/additem", method = RequestMethod.POST)
+	String addItem(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
+				   HttpSession session, Double count, Long materialId, RedirectAttributes attr) {
+		if (count == null || count == 0 || count == "") {
+			attr.addFlashAttribute("alertError", "Item count cannot be empty")
+			return "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}/additem"
+		}
+		def room = roomService.findOne(roomId)
+		def item = new Item([material: materialService.findOne(materialId), count: count])
+		room.addItem item
+		roomService.save room
+		attr.addFlashAttribute "alertSuccess", "${item.count} ${item.material.name}(s) have been added to ${room.name}"
+		if(session.getAttribute("update") == null) session.setAttribute "update", true
+		"redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}/additem"
+	}
+
 	// POST update item
 	@RequestMapping(value = "/{roomId}/edititem", method = RequestMethod.POST)
 	String editItem(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
 					HttpSession session, Long materialId, Item item, RedirectAttributes attr) {
-		if (item.id == null) {
-            attr.addFlashAttribute "alertError", "Could not update item count"
+		if (item.id == null || item.count == null || item.count == 0 || item.count == "") {
+            attr.addFlashAttribute "alertError", "Item count cannot be empty"
             return "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}"
 		}
         item.material = materialService.findOne materialId
-       /* item.updateTotal()*/
         itemService.save item
         if(session.getAttribute("update") == null) session.setAttribute "update", true
         "redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
-
-    // POST add item
-    @RequestMapping(value = "/{roomId}/additem", method = RequestMethod.POST)
-    String addItem(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
-					HttpSession session, Double count, Long materialId, RedirectAttributes attr) {
-        def room = roomService.findOne(roomId)
-        def item = new Item([material: materialService.findOne(materialId), count: count])
-       /* item.updateTotal()*/
-        room.addItem item
-        roomService.save room
-        attr.addFlashAttribute "alertSuccess", "${item.count} ${item.material.name}(s) have been added to ${room.name}"
-        if(session.getAttribute("update") == null) session.setAttribute "update", true
-        "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}/additem"
-    }
 
 	// POST delete item
 	@RequestMapping(value = "/delitem/{itemId}", method = RequestMethod.POST)

@@ -1,5 +1,6 @@
 package com.cagnosolutions.starter.app.job
 
+import com.cagnosolutions.starter.app.validators.JobValidator
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
@@ -40,6 +41,12 @@ class JobService {
 
 	Long findCustomerIdByJob(Long jobId) {
 		repo.findCustomerIdByJob(jobId)
+	}
+
+	Job generateFromValidator(JobValidator jobValidator) {
+		def job = new Job()
+		mergeProperties jobValidator, job
+		job
 	}
 
 	// helper method

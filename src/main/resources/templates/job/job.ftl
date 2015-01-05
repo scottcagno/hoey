@@ -20,14 +20,16 @@
                                     Details
                                 </a>
 					    	</div>
-                            <div id="toggle" class="panel-collapse collapse">
+                            <div id="toggle" class="panel-collapse collapse ${(errors??)?string('in', '')}">
 					    	    <div class="panel-body">
 					    	    	<form role="form" method="post" action="/secure/customer/${customerId}/job">
 					    	    		<div class="form-group">
+											<span class="text-error">${(errors.name)!}</span>
 					    	    			<input type="text" id="name" name="name" class="form-control"
-					    	    				   placeholder="Name" value="${(job.name)!}"/>
+					    	    				   placeholder="Job Name" value="${(job.name)!}"/>
 					    	    		</div>
 					    	    		<div class="form-group">
+											<span class="text-error">${(errors.notes)!}</span>
 					    	    			<textarea id="notes" name="notes" class="form-control" rows="5"
 					    	    					  style="resize:none;" placeholder="Notes">${(job.notes)!}</textarea>
 					    	    		</div>
@@ -50,10 +52,12 @@
 						<div class="panel-body">
 							<form role="form" method="post" action="/secure/customer/${customerId}/job/${job.id}/room">
 								<div class="form-group">
+									<span class="text-error">${(roomErrors.name)!}</span>
 									<input type="text" id="name" name="name" class="form-control"
 										   placeholder="Name" required="true" value="${(room.name)!}"/>
 								</div>
 								<div class="form-group">
+									<span class="text-error">${(roomErrors.notes)!}</span>
 									<textarea id="notes" name="notes" class="form-control" rows="5"
 											  style="resize:none;" placeholder="Notes">${(room.notes)!}</textarea>
 								</div>
@@ -62,7 +66,7 @@
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button class="btn btn-md btn-primary btn-block" type="submit">Save Room</button>
 							</form>
-							<#if room??>
+							<#if room?? && room.id??>
 								<hr/>
 								<a href="#" class="btn btn-danger btn-block" data-id="${(room.id)!}"
 								   data-toggle="modal" data-target="#roomDeleteCheck">
@@ -135,7 +139,7 @@
 												<td>${item.material.cat}</td>
 												<td id="${item.id?c}" class="text-center col-lg-1 col-md-1 count">
 													<form role="form" id="count_${item.id?c}" action="/secure/customer/${customerId}/job/${job.id}/room/${room.id}/edititem" method="post">
-														<input class="input-sm form-control" id="${item.id?c}" name="count" value="${item.count?c}" disabled="disabled">
+														<input class="input-sm form-control" id="${item.id?c}" name="count" value="${item.count?c}" disabled="disabled" required="true">
 														<input name="id" type="hidden" value="${item.id?c}">
 														<input type="hidden" name="materialId" value="${item.material.id?c}">
 														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

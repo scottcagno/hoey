@@ -1,16 +1,17 @@
 package com.cagnosolutions.starter.app.job
-
 import com.cagnosolutions.starter.app.company.CompanyService
 import com.cagnosolutions.starter.app.company.CompanySession
 import com.cagnosolutions.starter.app.customer.Customer
 import com.cagnosolutions.starter.app.customer.CustomerService
 import com.cagnosolutions.starter.app.email.EmailService
-import com.cagnosolutions.starter.app.room.Room
 import com.cagnosolutions.starter.app.room.RoomService
+import com.cagnosolutions.starter.app.validators.JobValidator
+import com.cagnosolutions.starter.app.validators.ValidationWrapper
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 import javax.servlet.http.HttpSession
+import javax.validation.Valid
 
 @CompileStatic
 @Controller
@@ -42,6 +44,9 @@ class JobController {
 	@Autowired
 	CompanySession companySession
 
+	@Autowired
+	ValidationWrapper validationWrapper
+
 	// GET view all jobs
 	@RequestMapping(value = "/job", method = RequestMethod.GET)
 	String viewAll(Model model, @RequestParam(required = false) Integer page,
@@ -57,7 +62,15 @@ class JobController {
 
 	// POST edit job
 	@RequestMapping(value = "/customer/{customerId}/job", method = RequestMethod.POST)
-	String edit(@PathVariable Long customerId, Job job, HttpSession session) {
+	String edit(@PathVariable Long customerId, @Valid JobValidator jobValidator, BindingResult bindingResult,
+				HttpSession session, RedirectAttributes attr) {
+		if (bindingResult.hasErrors()) {
+			attr.addFlashAttribute("alertError", "There is an error in the form")
+			attr.addFlashAttribute "errors", validationWrapper.bindErrors(bindingResult)
+			attr.addFlashAttribute("job", jobValidator)
+			return "redirect:/secure/customer/${customerId}/job/${jobValidator.id}"
+		}
+		def job = jobService.generateFromValidator jobValidator
 		job.name = job.name == "" ? null : job.name
 		if (job.id != null) {
 			Job existingJob = jobService.findOne(job.id)
@@ -103,15 +116,6 @@ class JobController {
 		jobService.delete id
 		attr.addFlashAttribute "alertSuccess", "Job deleted successfully"
 		"redirect:/secure/job"
-	}
-
-	// POST add room
-	@RequestMapping(value = "/customer/{customerId}/job/{jobId}/addroom", method = RequestMethod.POST)
-	String addRoom(@PathVariable Long jobId, @PathVariable Long customerId, Room room) {
-		Job job = jobService.findOne(jobId)
-		job.addRoom(room)
-		jobService.save(job)
-		"redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 
 	// POST delete room

@@ -1,6 +1,7 @@
 package com.cagnosolutions.starter.app.room
 
 import com.cagnosolutions.starter.app.item.Item
+import groovy.transform.CompileStatic
 
 import javax.persistence.CascadeType
 import javax.persistence.Entity
@@ -9,6 +10,7 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.OneToMany
 
+@CompileStatic
 @Entity
 class Room {
 
