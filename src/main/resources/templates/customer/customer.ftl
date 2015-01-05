@@ -8,6 +8,9 @@
 		<#include "../stubs/navbar.ftl"/>
 		<div id="content" class="container">
 			<div class="row">
+				<div class="col-lg-12">
+					<legend>Customer Details</legend>
+				</div>
 				<!-- add/edit -->
 				<div class="col-md-4">
 					<div class="panel-group" id="accordion">
@@ -21,7 +24,7 @@
 							</div>
 							<div id="toggle" class="panel-collapse collapse ${(errors??)?string('in', '')}">
 								<div class="panel-body">
-									<form role="form" method="post" action="/secure/customer">
+									<form role="form" method="post" action="/secure/customer" novalidate>
 										<div class="form-group">
 											<input type="text" id="company" name="company" class="form-control"
 											       placeholder="Company" value="${(customer.company)!}"/>
@@ -63,11 +66,11 @@
 								<div class="form-group">
 									<span class="text-error">${(jobErrors.name)!}</span>
 									<input type="text" id="name" name="name" class="form-control"
-									       placeholder="Job Name" value="${(job.name)!}"/>
+									       placeholder="Job Name" value="${(job.name)!}" required="true"/>
 								</div>
 								<div class="form-group">
 									<span class="text-error">${(jobErrors.notes)!}</span>
-									<textarea id="notes" name="notes" class="form-control" rows="5"
+									<textarea id="notes" name="notes" class="form-control" rows="5" required="true"
 									          style="resize:none;" placeholder="Notes">${(job.notes)!}</textarea>
 								</div>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -124,7 +127,7 @@
 												<td>
 													<form action="/secure/customer/${customer.id}/mail" method="post">
 														<input type="hidden" name="jobId" value="${job.id}"/>
-														<button class="btn btn-default btn-md" type="submit">Send to customer</button>
+														<button class="btn btn-default btn-md" type="submit">${(job.status == 0)?string('Email', 'Re-Email')} to customer</button>
 														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 													</form>
 												</td>

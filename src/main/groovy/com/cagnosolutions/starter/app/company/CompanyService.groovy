@@ -20,7 +20,7 @@ class CompanyService  {
 
     Boolean isComplete() {
         def company = repo.findOne 1L
-        return (company.markup != null && company.laborRate != null && company.laborRate != "")
+        return (company != null && company.markup != null && company.laborRate != null && company.laborRate != "")
     }
 
     // helper method

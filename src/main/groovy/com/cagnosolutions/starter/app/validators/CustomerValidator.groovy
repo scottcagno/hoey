@@ -1,5 +1,6 @@
 package com.cagnosolutions.starter.app.validators
 import groovy.transform.CompileStatic
+import org.hibernate.validator.constraints.Email
 import org.hibernate.validator.constraints.NotBlank
 
 import javax.validation.constraints.Pattern
@@ -19,6 +20,7 @@ class CustomerValidator {
 	String name
 
 	@NotBlank(message = "Required field")
+	@Email(message = "Must be a valid email address")
 	String email
 
 	@NotBlank(message = "Required field")

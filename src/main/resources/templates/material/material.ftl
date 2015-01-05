@@ -51,7 +51,7 @@
 								</div>
 								<input type="hidden" name="id" value="${(material.id)!}"/>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button class="btn btn-md btn-primary btn-block" type="submit">Add Material</button>
+								<button class="btn btn-md btn-primary btn-block" type="submit">Save Material</button>
 								<#if material?? && material.id??>
 									<hr/>
 									<a href="#" class="btn btn-danger btn-block" data-id="${(material.id)!}" data-toggle="modal" data-target="#deleteCheck">

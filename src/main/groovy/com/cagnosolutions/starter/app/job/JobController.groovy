@@ -82,17 +82,24 @@ class JobController {
 		"redirect:/secure/customer/${customerId}/job/${job.id}"
 	}
 
-	// POST delete job
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	String delete(@PathVariable Long id, RedirectAttributes attr) {
-		jobService.delete id
-		attr.addFlashAttribute "alertSuccess", "Job deleted successfully"
-		"redirect:/secure/job"
+	// POST add labor
+	@RequestMapping(value = "/labor", method = RequestMethod.POST)
+	String labor(@PathVariable Long customerId, Long id, Double laborHours, RedirectAttributes attr, HttpSession session) {
+		if (laborHours == null || laborHours == "") {
+			attr.addFlashAttribute("alertError", "Labor hours cannot be empty")
+			return "redirect:/secure/customer/${customerId}/job/${id}"
+		}
+		def job = jobService.findOne id
+		job.laborHours = laborHours
+		jobService.save job
+		attr.addFlashAttribute("alertSuccess", "Successfully updated labor hours")
+		if(session.getAttribute("update") == null) session.setAttribute "update", true
+		"redirect:/secure/customer/${customerId}/job/${id}"
 	}
 
 	// POST delete room
 	@RequestMapping(value = "/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
-	String delRoom(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
+	String delRoom(@PathVariable Long customerId, @PathVariable Long jobId, @PathVariable Long roomId,
 				   HttpSession session, RedirectAttributes attr) {
 		roomService.delete roomId
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted room")

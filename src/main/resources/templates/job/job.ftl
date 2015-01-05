@@ -9,6 +9,9 @@
 		<!-- content -->
 		<div id="content" class="container">
 			<div class="row">
+				<div class="col-lg-12">
+					<legend>Job Details</legend>
+				</div>
 				<!-- edit job-->
 				<div class="col-lg-4 col-md-4">
                     <div class="panel-group" id="accordion">
@@ -83,7 +86,7 @@
 							<form action="/secure/customer/${customerId}/job/${job.id}/mail" class="col-xs-12 col-sm-6 pull-right" method="post">
 								<div class="btn-group">
 									<a href="/secure/customer/${customerId}" class="btn btn-default"><i class="fa fa-reply"></i> Customer</a>
-									<button class="btn btn-default" type="submit">Email Quote</button>
+									<button class="btn btn-default" type="submit">${(job.status == 0)?string('Email', 'Re-Email')} Quote</button>
 								</div>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							</form>
@@ -168,7 +171,7 @@
 									</#list>
 										<tr>
 											<td colspan="4" id="laborHours">
-												<form id="laborForm" class="form-horizontal" role="form" method="post" action="/secure/customer/${customerId}/job">
+												<form id="laborForm" class="form-horizontal" role="form" method="post" action="/secure/customer/${customerId}/job/labor">
 													<label class="col-xs-offset-3 col-xs-5 control-label">Labor Hours:</label>
 													<div class="col-xs-4">
 														<input type="number" id="laborHours" name="laborHours" class="form-control input-sm"
