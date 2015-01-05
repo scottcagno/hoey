@@ -5,18 +5,46 @@
 	</head>
 	<body>
 		<div style="margin: 25px;">
-			<div style="width:600px;margin:0px auto;background-color:#f5f6f5;border:1px solid #dddddd;-moz-border-radius:3px;-webkit-border-radius:3px;">
-				<div style="padding-left: 27px;padding-right: 27px;padding-bottom: 27px;">
-                    <div id="heading" style="border:0px solid #999;margin-top:25px;padding:15px;">
+			<div style="width:600px;margin:0 auto;background-color:#f5f6f5;border:1px solid #dddddd;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;">
+                <div style="padding-left:15px;padding-right:15px;">
+                    <table cellpadding="10">
+                        <tr>
+                            <td colspan="3">
+                                <h1>ESTIMATE</h1>
+                            </td>
+                        </tr>
+						<tr>
+							<td style="font-weight:700;" colspan="2">To:</td>
+							<td>${customer.name!'John Doe'}: <a href="mailto:${customer.email!'user@example.com'}">${customer.email!'user@example.com'}</a></td>
+						</tr>
+						<tr>
+							<td style="font-weight:700;" colspan="2">Re:</td>
+							<td>${customer.street!'123 Example Street'}, ${customer.city!'Some City'} ${customer.state!'ST'}</td>
+						</tr>
+						<tr>
+							<td style="font-weight:700;" colspan="2">From:</td>
+							<td>Shock & Awe Electric, Steve Hoey</td>
+						</tr>
+						<tr>
+							<td style="font-weight:700;" colspan="2">Date:</td>
+							<td>${.now?date}</td>
+						</tr>
+                    </table>
+					<hr style="width:97%;"/>
+
+
+                    <div id="heading" style="padding:10px;">
                         <div style="float:left;width:49%;">
+                            <strong>From:</strong> <br/>
                             ${company.company!} <br/>
                             ${company.street!} <br/>
                             ${company.city!}, ${company.state!} ${company.zip!} <br/>
                             ${company.phone!}
                         </div>
                         <div style="text-align:right;">
-                            Proposal For: <br/>
-                            ${customer.name!} ${customer.company!} <br/>
+                            <strong>To:</strong> <br/>
+                            ${customer.name!} <br/>
+                            ${customer.company!} <br/>
                             ${customer.email!} <br/>
                             ${customer.phone!}
                         </div>
