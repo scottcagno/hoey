@@ -8,4 +8,5 @@ import org.springframework.stereotype.Component
 class CompanySession {
 
 	boolean isComplete
+	boolean update
 }

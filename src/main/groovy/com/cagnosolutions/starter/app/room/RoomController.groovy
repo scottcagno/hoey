@@ -1,5 +1,4 @@
 package com.cagnosolutions.starter.app.room
-
 import com.cagnosolutions.starter.app.company.CompanySession
 import com.cagnosolutions.starter.app.item.Item
 import com.cagnosolutions.starter.app.item.ItemService
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
-import javax.servlet.http.HttpSession
 import javax.validation.Valid
 
 @CompileStatic
@@ -110,7 +108,7 @@ class RoomController {
 	// POST add item
 	@RequestMapping(value = "/{roomId}/additem", method = RequestMethod.POST)
 	String addItem(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
-				   HttpSession session, Double count, Long materialId, RedirectAttributes attr) {
+				   Double count, Long materialId, RedirectAttributes attr) {
 		if (count == null || count == 0 || count == "") {
 			attr.addFlashAttribute("alertError", "Item count cannot be empty")
 			return "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}/additem"
@@ -120,14 +118,14 @@ class RoomController {
 		room.addItem item
 		roomService.save room
 		attr.addFlashAttribute "alertSuccess", "${item.count} ${item.material.name}(s) have been added to ${room.name}"
-		if(session.getAttribute("update") == null) session.setAttribute "update", true
+		if(!companySession.update) companySession.update = true
 		"redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}/additem"
 	}
 
 	// POST update item
 	@RequestMapping(value = "/{roomId}/edititem", method = RequestMethod.POST)
 	String editItem(@PathVariable Long jobId, @PathVariable Long roomId, @PathVariable Long customerId,
-					HttpSession session, Long materialId, Item newItem, RedirectAttributes attr) {
+					Long materialId, Item newItem, RedirectAttributes attr) {
 		if (newItem.id == null || newItem.count == null || newItem.count == 0 || newItem.count == "") {
             attr.addFlashAttribute "alertError", "Item count cannot be empty"
             return "redirect:/secure/customer/${customerId}/job/${jobId}/room/${roomId}"
@@ -135,17 +133,17 @@ class RoomController {
 		def item = itemService.findOne newItem.id
 		itemService.mergeProperties(newItem, item)
         itemService.save item
-        if(session.getAttribute("update") == null) session.setAttribute "update", true
+		if(!companySession.update) companySession.update = true
         "redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 
 	// POST delete item
 	@RequestMapping(value = "/delitem/{itemId}", method = RequestMethod.POST)
 	String delItem(@PathVariable Long jobId, @PathVariable Long itemId, @PathVariable Long customerId,
-					HttpSession session, RedirectAttributes attr) {
+					 RedirectAttributes attr) {
 		itemService.delete itemId
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted item")
-        if(session.getAttribute("update") == null) session.setAttribute "update", true
+		if(!companySession.update) companySession.update = true
         "redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 

@@ -6,6 +6,28 @@
 	</head>
 	<body id="body">
 		<#include "../stubs/navbar.ftl"/>
+
+		<!-- delete item alert -->
+		<div class="container">
+			<div id="delete-item-confirm" class="hide alert alert-danger alert-dismissible wow fadeIn" role="alert">
+				<form role="form" method="post" class="form-inline" action="">
+					<div class="form-group">
+						<button class="btn btn-sm btn-danger" type="submit">Yes, I'm sure</button>
+					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<div class="form-group">
+						<button id="delete-item-confirm-cancel" type="button" class="btn btn-default">No, cancel</button>
+					</div>
+					<div class="form-group pull-right">
+						<p class="text-danger">
+							Are you sure you want to permanently remove this?
+						</p>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- delete item alert -->
+
 		<!-- content -->
 		<div id="content" class="container">
 			<div class="row">
@@ -49,14 +71,17 @@
 										</label>
 									</div>
 								</div>
-								<input type="hidden" name="id" value="${(material.id)!}"/>
+								<input type="hidden" name="id" value="${(material.id?c)!}"/>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button class="btn btn-md btn-primary btn-block" type="submit">Save Material</button>
 								<#if material?? && material.id??>
 									<hr/>
-									<a href="#" class="btn btn-danger btn-block" data-id="${(material.id)!}" data-toggle="modal" data-target="#deleteCheck">
-										Delete
+									<!-- delete material trigger -->
+									<a href="#delete-item-confirm" id="delete-item" data-id="/secure/material/${material.id?c}"
+									   class="btn btn-md btn-danger btn-block" style="cursor:pointer;">
+										<i class="fa fa-trash-o"></i> Delete
 									</a>
+									<!-- delete material trigger -->
 								</#if>
 							</form>
 						</div>
@@ -107,7 +132,7 @@
 												<td>${(material.markup)?string('Yes', 'No')}</td>
 												<td>${(material.taxed)?string('Yes', 'No')}</td>
 												<td>
-													<a href="/secure/material/${(material.id)!}" class="btn btn-sm btn-primary">
+													<a href="/secure/material/${(material.id?c)!}" class="btn btn-sm btn-primary">
 														<i class="fa fa-pencil"></i>
 													</a>
 												</td>
@@ -123,7 +148,7 @@
 								<br/>
 								<div class="list-group">
 									<#list materials as material>
-										<a href="/secure/material/${(material.id)!}" class="list-group-item">
+										<a href="/secure/material/${(material.id?c)!}" class="list-group-item">
 											<strong>${(material.cat)!} : ${(material.name)!}</strong> <br/>
 											Cost: ${(material.cost?string.currency)!} <br/>
 											Markup/Taxed: ${(material.markup)?string('Yes', 'No')} / ${(material.taxed)?string('Yes', 'No')} <br/>
@@ -137,35 +162,9 @@
 			</div>
 		<!-- view all -->
 		</div>
-
-		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title">Are you sure?</h4>
-					</div>
-					<div class="modal-body">
-						Permantly remove material? This action cannot be undone.
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
-						</button>
-						<span id="delete">
-							<form role="form" method="post" action="/secure/material/{id}">
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Material</button>
-							</form>
-						</span>
-
-					</div>
-				</div>
-			</div>
-		</div>
 		<!-- content -->
 		<#include "../stubs/footer.ftl"/>
 		<#include "../stubs/scripts.ftl"/>
-		<script src="/static/js/delete-modal.js"></script>
+		<script src="/static/js/delete-item.js"></script>
 	</body>
 </html>

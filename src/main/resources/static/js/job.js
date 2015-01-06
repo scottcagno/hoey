@@ -1,22 +1,4 @@
 $(function() {
-	// toggle safe delete modal popup
-	$('a[data-toggle="modal"]').click(function(){
-		var id = $(this).data('id');
-		var form = $('.modal #jobDelete');
-		form.html(form.html().replace('{id}',id));
-	});
-	// toggle safe delete modal popup
-	$('a[data-toggle="modal"]').click(function(){
-		var id = $(this).data('id');
-		var form = $('.modal #roomDelete');
-		form.html(form.html().replace('{id}',id));
-	});
-	// toggle safe delete modal popup
-	$('a[data-toggle="modal"]').click(function(){
-		var id = $(this).data('id');
-		var form = $('.modal #itemDelete');
-		form.html(form.html().replace('{id}',id));
-	});
 	$('tr.header').on('show.bs.collapse', function() {
 		$('i[id="' + this.id + '"]').addClass('fa-rotate-90');
 	});
@@ -33,12 +15,12 @@ $(function() {
 		this.onblur = function() {this.setAttribute('disabled', true)}
 		this.onchange = function() {$('form[id="count_' + this.id + '"]').submit()}
 	});
-	// enable quantity field on td click
+	// enable labor field on td click
 	$('td[id="laborHours"]').click(function() {
 		$('input[id="laborHours"]').removeAttr('disabled');
 		$('input[id="laborHours"]').focus();
 	});
-	// register submit, disable, and focus actions on count fields
+	// register submit, disable, and focus actions on labor field
 	$('input[name="laborHours"]').focus(function() {
 		this.onblur = function() {this.setAttribute('disabled', true)}
 		this.onchange = function() {$('form[id="laborForm"]').submit()}

@@ -62,7 +62,7 @@
 										</td>
 										<td>${(job.total?string.currency)!}</td>
 										<td>
-											<a href="/secure/job/${(job.id)!}" class="btn btn-sm btn-primary">
+											<a href="/secure/job/${(job.id?c)!}" class="btn btn-sm btn-primary">
 												<i class="fa fa-pencil"></i>
 											</a>
 										</td>
@@ -74,7 +74,7 @@
 						<div class="visible-xs-block visible-sm-block">
 							<div class="list-group">
 								<#list jobs.content as job>
-									<a href="/secure/job/${(job.id)!}" class="list-group-item">
+									<a href="/secure/job/${(job.id?c)!}" class="list-group-item">
 										<strong>${job.name!}</strong> <br/>
 										<#switch job.status>
 											<#case 0>

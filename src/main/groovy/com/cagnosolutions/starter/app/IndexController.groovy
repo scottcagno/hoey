@@ -36,6 +36,7 @@ class IndexController {
 
 	@RequestMapping(value = "/login/success", method = RequestMethod.GET)
 	String customLoginSuccessHandler(String redirect, RedirectAttributes attr) {
+		companySession.update = false
 		if (companyService.isComplete()) {
 			companySession.isComplete = true
 			return "redirect:${redirect}"

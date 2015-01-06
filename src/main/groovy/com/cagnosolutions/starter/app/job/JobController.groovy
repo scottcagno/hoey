@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
-import javax.servlet.http.HttpSession
 import javax.validation.Valid
 
 @CompileStatic
@@ -48,14 +47,14 @@ class JobController {
 
 	// GET view job
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	String view(HttpSession session, @PathVariable Long id, @PathVariable Long customerId, Model model, RedirectAttributes attr) {
+	String view(@PathVariable Long id, @PathVariable Long customerId, Model model, RedirectAttributes attr) {
 		if (!companySession.isComplete) {
 			attr.addFlashAttribute("alertError", "The markup and labor rate field must be filled out")
 			return "redirect:/secure/company"
 		}
 		def job = jobService.findOne id
-		if(session.getAttribute("update") != null) {
-			session.removeAttribute("update")
+		if(companySession.update) {
+			companySession.update = false
 			job.updateTotals(companyService.findOne().markup, companyService.findOne().laborRate)
 			job = jobService.save job
 			model.addAttribute "alertSuccess", "Job total has been updated!"
@@ -67,7 +66,7 @@ class JobController {
 	// POST edit job
 	@RequestMapping(method = RequestMethod.POST)
 	String edit(@PathVariable Long customerId, @Valid JobValidator jobValidator, BindingResult bindingResult,
-				HttpSession session, RedirectAttributes attr) {
+				RedirectAttributes attr) {
 		if (bindingResult.hasErrors()) {
 			attr.addFlashAttribute("alertError", "There is an error in the form")
 			attr.addFlashAttribute "errors", validationWrapper.bindErrors(bindingResult)
@@ -78,13 +77,13 @@ class JobController {
 		def job = jobService.findOne newJob.id
 		jobService.mergeProperties(newJob, job)
 		jobService.save job
-		if(session.getAttribute("update") == null) session.setAttribute "update", true
+		if(!companySession.update) companySession.update = true
 		"redirect:/secure/customer/${customerId}/job/${job.id}"
 	}
 
 	// POST add labor
 	@RequestMapping(value = "/labor", method = RequestMethod.POST)
-	String labor(@PathVariable Long customerId, Long id, Double laborHours, RedirectAttributes attr, HttpSession session) {
+	String labor(@PathVariable Long customerId, Long id, Double laborHours, RedirectAttributes attr) {
 		if (laborHours == null || laborHours == "") {
 			attr.addFlashAttribute("alertError", "Labor hours cannot be empty")
 			return "redirect:/secure/customer/${customerId}/job/${id}"
@@ -93,17 +92,17 @@ class JobController {
 		job.laborHours = laborHours
 		jobService.save job
 		attr.addFlashAttribute("alertSuccess", "Successfully updated labor hours")
-		if(session.getAttribute("update") == null) session.setAttribute "update", true
+		if(!companySession.update) companySession.update = true
 		"redirect:/secure/customer/${customerId}/job/${id}"
 	}
 
 	// POST delete room
 	@RequestMapping(value = "/{jobId}/delroom/{roomId}", method = RequestMethod.POST)
 	String delRoom(@PathVariable Long customerId, @PathVariable Long jobId, @PathVariable Long roomId,
-				   HttpSession session, RedirectAttributes attr) {
+				   RedirectAttributes attr) {
 		roomService.delete roomId
 		attr.addFlashAttribute("alertSuccess", "Successfully deleted room")
-        if(session.getAttribute("update") == null) session.setAttribute "update", true
+		if(!companySession.update) companySession.update = true
 		"redirect:/secure/customer/${customerId}/job/${jobId}"
 	}
 

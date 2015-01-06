@@ -35,7 +35,7 @@
 										   placeholder="Phone number" required="true" value="${(customer.phone)!}"/>
 								</div>
 
-								<input type="hidden" name="id" value="${(customer.id)!}"/>
+								<input type="hidden" name="id" value="${(customer.id?c)!}"/>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<button class="btn btn-md btn-primary btn-block" type="submit">Save</button>
 							</form>
@@ -81,7 +81,7 @@
 												<td>${(customer.email)!}</td>
 												<td>${(customer.phone)!}</td>
 												<td>
-													<a href="/secure/customer/${(customer.id)!}"
+													<a href="/secure/customer/${(customer.id?c)!}"
 													   class="btn btn-md btn-primary">
 														<i class="fa fa-pencil"></i>
 													</a>
@@ -95,7 +95,7 @@
 							<div class="visible-xs-block visible-sm-block">
 								<div class="list-group">
 									<#list customers.content as customer>
-										<a href="/secure/customer/${(customer.id)!}" class="list-group-item">
+										<a href="/secure/customer/${(customer.id?c)!}" class="list-group-item">
 											<strong>${customer.company!}</strong> <br/>
 											${customer.name!} <br/>
 											${customer.email!} <br/>

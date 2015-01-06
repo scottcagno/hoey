@@ -5,7 +5,30 @@
 		<#include "../stubs/header.ftl"/>
 	</head>
 	<body id="body">
+
 		<#include "../stubs/navbar.ftl"/>
+
+		<!-- delete item alert -->
+		<div class="container">
+			<div id="delete-item-confirm" class="hide alert alert-danger alert-dismissible wow fadeIn" role="alert">
+				<form role="form" method="post" class="form-inline" action="">
+					<div class="form-group">
+						<button class="btn btn-sm btn-danger" type="submit">Yes, I'm sure</button>
+					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<div class="form-group">
+						<button id="delete-item-confirm-cancel" type="button" class="btn btn-default">No, cancel</button>
+					</div>
+					<div class="form-group pull-right">
+						<p class="text-danger">
+							Are you sure you want to permanently remove this?
+						</p>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- delete item alert -->
+
 		<div id="content" class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -24,7 +47,7 @@
 							</div>
 							<div id="toggle" class="panel-collapse collapse ${(errors??)?string('in', '')}">
 								<div class="panel-body">
-									<form role="form" method="post" action="/secure/customer" novalidate>
+									<form role="form" method="post" action="/secure/customer" >
 										<div class="form-group">
 											<input type="text" id="company" name="company" class="form-control"
 											       placeholder="Company" value="${(customer.company)!}"/>
@@ -44,16 +67,16 @@
 											<input type="text" id="phone" name="phone" class="form-control"
 											       placeholder="Phone number" required="true" value="${(customer.phone)!}"/>
 										</div>
-										<input type="hidden" name="id" value="${(customer.id)!}"/>
+										<input type="hidden" name="id" value="${(customer.id?c)!}"/>
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										<button class="btn btn-md btn-primary btn-block" type="submit">Update Customer</button>
-										<#if customer??>
-											<hr/>
-											<a href="#" class="btn btn-danger btn-block" data-id="${(customer.id)!}"
-											   data-toggle="modal" data-target="#deleteCheck">
-												Delete Customer
-											</a>
-										</#if>
+										<hr/>
+										<!-- delete job trigger -->
+										<a href="#delete-item-confirm" id="delete-item" data-id="/secure/customer/${customer.id?c}"
+										   class="btn btn-md btn-danger btn-block" style="cursor:pointer;">
+											<i class="fa fa-trash-o"></i> Delete
+										</a>
+										<!-- delete job trigger -->
 									</form>
 								</div>
 							</div>
@@ -62,7 +85,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Add Job</div>
 						<div class="panel-body">
-							<form id="" role="form" method="post" action="/secure/customer/${customer.id}/addjob">
+							<form id="" role="form" method="post" action="/secure/customer/${customer.id?c}/addjob" >
 								<div class="form-group">
 									<span class="text-error">${(jobErrors.name)!}</span>
 									<input type="text" id="name" name="name" class="form-control"
@@ -120,13 +143,13 @@
 												</td>
 												<td>${(job.total?string.currency)!}</td>
 												<td>
-													<a href="/secure/customer/${customer.id}/job/${(job.id)!}" class="btn btn-md btn-primary">
+													<a href="/secure/customer/${customer.id?c}/job/${(job.id?c)!}" class="btn btn-md btn-primary">
 														<i class="fa fa-pencil"></i>
 													</a>
 												</td>
 												<td>
-													<form action="/secure/customer/${customer.id}/mail" method="post">
-														<input type="hidden" name="jobId" value="${job.id}"/>
+													<form action="/secure/customer/${customer.id?c}/mail" method="post">
+														<input type="hidden" name="jobId" value="${job.id?c}"/>
 														<button class="btn btn-default btn-md" type="submit">${(job.status == 0)?string('Email', 'Re-Email')} to customer</button>
 														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 													</form>
@@ -142,7 +165,7 @@
 								<br/>
 								<div class="list-group panel-group">
 									<#list customer.jobs as job>
-										<a href="/secure/customer/${customer.id!}/job/${job.id!}" class="list-group-item">
+										<a href="/secure/customer/${customer.id?c!}/job/${job.id?c!}" class="list-group-item">
 											<strong>${job.name!}</strong> <br/>
 											${job.created?string.short} <br/>
 												<#switch job.status>
@@ -170,34 +193,8 @@
 				</div>
 			</div>
 		</div>
-		<!-- delete modal -->
-		<div class="modal fade" id="deleteCheck" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title">Are you sure?</h4>
-					</div>
-					<div class="modal-body">
-						Permanently remove customer? This action cannot be undone.
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default btn-md pull-left" data-dismiss="modal">No, Cancel
-						</button>
-						<span id="delete">
-							<form role="form" method="post" action="/secure/customer/{id}">
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<button type="submit" class="btn btn-primary btn-md">Yes, Remove Customer</button>
-							</form>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- delete modal -->
 		<#include "../stubs/footer.ftl"/>
 		<#include "../stubs/scripts.ftl"/>
-		<script src="/static/js/delete-modal.js"></script>
+		<script src="/static/js/delete-item.js"></script>
 	</body>
 </html>
