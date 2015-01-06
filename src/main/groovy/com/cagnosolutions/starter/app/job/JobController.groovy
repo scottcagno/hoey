@@ -111,7 +111,7 @@ class JobController {
 	@RequestMapping(value = "/{jobId}/mail", method = RequestMethod.POST)
 	String mail(@PathVariable Long customerId, @PathVariable Long jobId, RedirectAttributes attr) {
 		def job = jobService.findOne jobId
-		def map = [job : job, customer : customerService.findOne(customerId), company: companyService.findOne()]
+		def map = [job : job, customer : customerService.findOne(customerId)]
 		emailService.send("Shock & Awe Electric <noreply@shockaweelectric.com>", (map.customer as Customer).email as String,
 				"Job Proposal", job.textProposal(), "mail/mail.ftl", map)
 		job.status = 1

@@ -1,4 +1,6 @@
 package com.cagnosolutions.starter.app.company
+
+import com.cagnosolutions.starter.app.validators.CompanyValidator
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -23,6 +25,12 @@ class CompanyService  {
         return (company != null && company.markup != null && company.laborRate != null && company.laborRate != "")
     }
 
+    Company generateFromValidator(CompanyValidator companyValidator) {
+        def company = new Company()
+        mergeProperties companyValidator, company
+        company
+    }    
+    
     // helper method
     def mergeProperties(source, target) {
         source.properties.each { key, value ->
