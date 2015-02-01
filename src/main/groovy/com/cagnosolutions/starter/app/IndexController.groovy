@@ -20,17 +20,17 @@ class IndexController {
 	CompanySession companySession
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	String index() {
+	static String index() {
 		"index"
 	}
 
 	@RequestMapping(value = "/login")
-	String login() {
+	static String login() {
 		"login"
 	}
 
 	@RequestMapping(value = ["/home", "/index"], method = RequestMethod.GET)
-	String indexRedirect() {
+	static String indexRedirect() {
 		"redirect:/"
 	}
 

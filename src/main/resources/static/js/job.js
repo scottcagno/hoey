@@ -12,7 +12,7 @@ $(function() {
 	});
 	// register submit, disable, and focus actions on count fields
 	$('input[name="count"]').focus(function() {
-		this.onblur = function() {this.setAttribute('disabled', true)}
+		this.onblur = function() {this.setAttribute('disabled', true)};
 		this.onchange = function() {$('form[id="count_' + this.id + '"]').submit()}
 	});
 	// enable labor field on td click
@@ -22,7 +22,7 @@ $(function() {
 	});
 	// register submit, disable, and focus actions on labor field
 	$('input[name="laborHours"]').focus(function() {
-		this.onblur = function() {this.setAttribute('disabled', true)}
+		this.onblur = function() {this.setAttribute('disabled', true)};
 		this.onchange = function() {$('form[id="laborForm"]').submit()}
 	});
 });
